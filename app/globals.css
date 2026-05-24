@@ -1,6 +1,14 @@
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 @import "tailwindcss";
 
+@font-face {
+  font-family: "SBAggroM";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SBAggroM.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --background: #0b0e14;
   --foreground: #f8faff;
@@ -25,6 +33,10 @@ body {
   color: var(--foreground);
   font-family: "Pretendard", sans-serif;
   word-break: keep-all;
+}
+
+.font-aggro {
+  font-family: "SBAggroM", "Pretendard", sans-serif;
 }
 
 /* Gradient border buttons */

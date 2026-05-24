@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
+import { DesignFeedbackWidget } from "./components/dev/DesignFeedbackWidget";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -97,6 +98,7 @@ export default function RootLayout({
     <html lang="ko" className="h-full antialiased">
       <body className="min-h-full flex flex-col">
         {children}
+        {process.env.NODE_ENV !== "production" ? <DesignFeedbackWidget /> : null}
         <Script src="https://www.googletagmanager.com/gtag/js?id=G-7HYQPRP75Y" strategy="afterInteractive" />
         <Script id="gtag-init" strategy="afterInteractive">{`
           window.dataLayer = window.dataLayer || [];

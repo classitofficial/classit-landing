@@ -3,7 +3,7 @@ const faqs = [
     question: "Q. 클래스잇은 어떤 서비스 인가요?",
     answer: (
       <>
-        <p className="mb-0">복잡한 개발 없이 '자동화 교육 플랫폼'을 구축해 드리는 올인원 솔루션입니다.</p>
+        <p className="mb-0">복잡한 개발 없이 &apos;자동화 교육 플랫폼&apos;을 구축해 드리는 올인원 솔루션입니다.</p>
         <p className="mt-[21px] mb-0">수강생 관리부터 결제, 보안까지 플랫폼 운영에 필요한 모든 기능을 완벽하게 제공합니다.</p>
         <ul className="list-disc mt-0 pl-[21px]">
           <li>운영 자동화: AI 기반 교육 운영 및 출결·진도율 관리, 알림톡 자동 발송</li>
@@ -37,7 +37,7 @@ const faqs = [
   },
 ];
 
-function Divider({ highlight }: { highlight?: boolean }) {
+function Divider() {
   return (
     <div className="w-full h-px" style={{
       background: "linear-gradient(90deg, rgba(94,103,122,0) 0%, rgba(94,103,122,0.4) 49.52%, rgba(94,103,122,0) 100%)"}} 

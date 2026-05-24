@@ -1,12 +1,22 @@
 "use client";
 
 import Link from "next/link";
-
-function scrollTo(id: string) {
-  document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-}
+import { usePathname, useRouter } from "next/navigation";
 
 export default function Header() {
+  const pathname = usePathname();
+  const router = useRouter();
+
+  function moveToSection(id: string) {
+    const section = document.getElementById(id);
+    if (pathname === "/" && section) {
+      section.scrollIntoView({ behavior: "smooth" });
+      return;
+    }
+
+    router.push(`/#${id}`);
+  }
+
   return (
     <header className="fixed top-8 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-40px)] md:w-[calc(100%-80px)] max-w-[1360px] h-[64px] md:h-[80px]">
       <div className="backdrop-blur-[10px] bg-[rgba(255,255,255,0.04)] border border-[rgba(255,255,255,0.04)] flex items-center justify-between px-6 md:pl-10 md:pr-5 rounded-[40px] h-full">
@@ -31,22 +41,22 @@ export default function Header() {
           </svg>
           </Link>
           <button
-            onClick={() => scrollTo("pricing")}
+            onClick={() => moveToSection("pricing")}
             className="hidden md:block text-[#fefefe] text-[16px] font-medium leading-6 tracking-[-0.24px] whitespace-nowrap hover:opacity-80 transition-opacity"
           >
             가격안내
           </button>
-          <button
-            onClick={() => scrollTo("pricing")}
+          <Link
+            href="/blog"
             className="hidden md:block text-[#fefefe] text-[16px] font-medium leading-6 tracking-[-0.24px] whitespace-nowrap hover:opacity-80 transition-opacity"
           >
             블로그
-          </button>
+          </Link>
         </div>
 
         {/* 오른쪽: CTA */}
         <button
-          onClick={() => scrollTo("contact")}
+          onClick={() => moveToSection("contact")}
           className="hidden md:flex btn-gradient btn-gradient-blue items-center gap-1 h-[52px] px-6 rounded-[32px] border border-white hover:opacity-90 transition-opacity"
         >
           <span className="text-[#fefefe] text-[14px] font-bold leading-[21px] whitespace-nowrap">
