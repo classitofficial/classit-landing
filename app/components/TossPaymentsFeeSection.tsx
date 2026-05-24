@@ -1,3 +1,5 @@
+import React from "react";
+
 const imgTossIcon = "/images/nicepayment.png";
 
 function Divider({ highlight }: { highlight?: boolean }) {
@@ -72,7 +74,7 @@ function FeeTable({ rows, mobile }: { rows: FeeRow[]; mobile?: boolean }) {
       {/* 데이터 행 */}
       <div className="flex flex-col">
         {rows.map((row, i) => (
-          <>
+          <React.Fragment key={i}>
             <div className="flex items-center w-full">
               <div className={`flex ${cellH} items-center justify-center flex-1`}>
                 <span className={`text-[#F8FAFF] font-medium whitespace-nowrap tracking-[-0.18px] ${textSize}`}>
@@ -97,7 +99,7 @@ function FeeTable({ rows, mobile }: { rows: FeeRow[]; mobile?: boolean }) {
               </div>
             </div>
             {i < rows.length - 1 && <Divider/>}
-          </>
+          </React.Fragment>
         ))}
       </div>
     </div>
