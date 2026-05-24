@@ -120,7 +120,7 @@ export default function TossPaymentsFeeSection() {
           </div>
           <div className="flex flex-col gap-2 items-center text-center">
             <div className="text-[#f8faff] text-[28px] font-bold leading-[36px] tracking-[-0.42px]">
-              <p>제로피에듀는</p>
+              <p>클래스잇은</p>
               <p>나이스페이먼츠 공식 제휴사입니다</p>
             </div>
             <p className="text-[#f8faff] text-[14px] font-medium leading-[21px] tracking-[-0.21px]">
@@ -141,7 +141,7 @@ export default function TossPaymentsFeeSection() {
           </div>
           <div className="flex flex-col gap-2">
             <div className="text-[#f8faff] text-[28px] font-bold leading-[36px] tracking-[-0.42px]">
-              <p>제로피에듀는</p>
+              <p>클래스잇은</p>
               <p>나이스페이먼츠 공식 제휴사입니다</p>
             </div>
             <p className="text-[#f8faff] text-[14px] font-medium leading-[21px] tracking-[-0.21px]">

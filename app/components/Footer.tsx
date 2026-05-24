@@ -47,7 +47,7 @@ export default function Footer() {
           <div className="flex flex-col gap-1">
             <FooterLogo />
             <p className="text-[#a9b1c1] text-[12px] font-medium leading-4 tracking-[-0.12px]">
-              제로피는 통신판매 중개자이며, 통신판매의 당사자가 아닙니다.
+              클래스잇은 통신판매 중개자이며, 통신판매의 당사자가 아닙니다.
             </p>
           </div>
 
@@ -58,7 +58,7 @@ export default function Footer() {
           <div className="flex-1 flex flex-col gap-1">
             <FooterLogo />
             <p className="text-[#a9b1c1] text-[12px] font-medium leading-4 tracking-[-0.12px]">
-              제로피는 통신판매 중개자이며, 통신판매의 당사자가 아닙니다.
+              클래스잇은 통신판매 중개자이며, 통신판매의 당사자가 아닙니다.
             </p>
           </div>
           <NiceBadge />

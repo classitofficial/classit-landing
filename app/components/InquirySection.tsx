@@ -61,7 +61,7 @@ function SuccessPopup({ contactMethod, onClose }: { contactMethod: ContactMethod
             </button>
           </div>
           <p className="text-[#f8faff] text-[16px] font-medium leading-[24px] tracking-[-0.24px]">
-            제로피에듀를 찾아주셔서 감사합니다.<br />
+            클래스잇을 찾아주셔서 감사합니다.<br />
             담당자가 1영업일 이내로 {label}{particle} 연락드리도록 하겠습니다.
           </p>
         </div>

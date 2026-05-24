@@ -6,15 +6,18 @@ const premiumFeatures = [
   "강의별 질의응답 커뮤니티",
   "전용 결제 모듈(나이스페이먼츠)",
   "전용 도메인 연결",
-  "PDF & 영상 파일 용량 무제한",
   "출결 & 진도율 관리",
-  "PDF & 영상 다운로드, 캡쳐, 녹화 방지",
-  "결제 & 리포트 등 알림톡 발송",
+  "강의 영상 다운로드, 캡쳐, 녹화 방지",
   "수강생 유입/전환 데이터",
+  "PDF & 영상 파일 저장 용량 제공",
+  "카카오 알림톡 발송량 제공"
 ];
 
 const enterpriseFeatures = [
-  "레포트 & 질의응답 & 후기 알림톡 발송 무제한",
+  "PDF & 영상 파일 저장 용량 무제한",
+  "카카오 알림톡 발송량 무제한",
+  "실시간 라이브 강의 연동",
+  "정기 결제 (구독 결제) 연동",
   "교재 발주 및 배송 지원",
   "맞춤형 디자인",
   "맞춤형 기능",
@@ -24,7 +27,7 @@ const enterpriseFeatures = [
 function CheckIcon() {
   return (
     <img
-      src="/icons/plan-check.svg"
+      src="/images/plan-check-new.png"
       alt=""
       className="size-4 shrink-0"
       aria-hidden="true"
@@ -116,7 +119,7 @@ function PremiumCard({ mobile }: { mobile?: boolean }) {
                 </div>
               </div>
               <p className="text-[#e9ecf2] text-[14px] font-normal leading-[1.5] tracking-[-0.28px] w-full">
-                AI와 함께 자동으로 운영하는 인강 플랫폼
+                AI와 함께 자동으로 운영하는 교육 플랫폼
               </p>
             </div>
             <CtaButton label="도입 상담 신청하기" />

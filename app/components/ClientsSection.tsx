@@ -146,7 +146,7 @@ export default function ClientsSection() {
       <h2 className="text-[#fefefe] text-[28px] font-bold leading-[36px] tracking-[-0.42px] text-center">
         많은 학원과 강사님들이
         <br />
-        제로피에듀와 함께하고 있어요
+        클래스잇과 함께하고 있어요
       </h2>
 
       {/* 모바일: 3줄 마퀴 */}

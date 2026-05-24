@@ -22,10 +22,12 @@ export default function Index() {
       <TossPaymentsFeeSection />
       <PricingSection />
       <PlanComparisonSection />
+{/*       
       <OnboardingSection />
       <InquirySection />
       <FaqSection />
       <Footer />
+ */}
     </main>
   );
 }

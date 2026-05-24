@@ -7,7 +7,7 @@ const eslintConfig = defineConfig([
   ...nextTs,
   {
     rules: {
-      "react/no-unknown-property": "off",
+      "react/no-unknown-property": "error",
     },
   },
   // Override default ignores of eslint-config-next.

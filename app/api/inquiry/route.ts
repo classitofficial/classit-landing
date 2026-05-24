@@ -36,13 +36,13 @@ export async function POST(request: NextRequest) {
 
   const slackPayload = {
     channel,
-    text: "제로피에듀 도입 상담 신청",
+    text: "클래스잇 도입 상담 신청",
     blocks: [
       {
         type: "header",
         text: {
           type: "plain_text",
-          text: "📋 제로피에듀 도입 상담 신청",
+          text: "📋 클래스잇 도입 상담 신청",
         },
       },
       {
