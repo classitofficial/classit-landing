@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   },
   // 브라우저 탭, 북마크, 검색 결과 등에 쓰이는 사이트 아이콘입니다.
   icons: {
-    icon: "/images/eduFavicon.png",
+    icon: "/images/favicon.png",
   },
   // 카카오톡, Slack, Facebook 등에서 공유될 때 쓰이는 Open Graph 미리보기 정보입니다.
   openGraph: {
