@@ -1,6 +1,4 @@
 const imgTossIcon = "/images/nicepayment.png";
-// const imgTossIcon = "/images/toss-icon.png";
-const imgTossMask = "/images/toss-mask.png";
 
 function Divider({ highlight }: { highlight?: boolean }) {
   return (

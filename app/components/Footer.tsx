@@ -82,11 +82,11 @@ export default function Footer() {
 
         {/* 사업자 정보 */}
         <div className="flex flex-col gap-1 text-[12px] text-[#a9b1c1] leading-4 tracking-[-0.12px] font-medium">
-          <p>사업자등록번호 : 487-28-01888  |  대표 : 이동규  |  개인정보처리담당자 : 이동규</p>
+          <p>사업자등록번호 : 519-43-01174  |  대표 : 이동규 | 개인정보처리담당자 : 이동규</p>
           <p>주소 : 경기도 고양시 덕양구 동축로70, A동 9층 901호(동산동, 현대프리미어캠퍼스)</p>
           <p>통신판매업신고번호 : 2026-고양덕양구-1043</p>
-          <p>메일 : contact@zerofee.kr</p>
-          <p className="font-bold">Copyright ⓒ 2026 zerofee. All rights reserved.</p>
+          <p>메일 : classit.official@gmail.com</p>
+          <p className="font-bold">Copyright ⓒ 2026 classit. All rights reserved.</p>
         </div>
 
         {/* 모바일에서만 보이게 */}

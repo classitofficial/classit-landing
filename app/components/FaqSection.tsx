@@ -35,15 +35,6 @@ const faqs = [
       </p>
     ),
   },
-  {
-    question: "Q. 사업자가 없어도 교육 플랫폼을 운영할 수 있을가요?",
-    answer: (
-      <>
-        <p className="mb-0">클래스잇은 통신판매중개업 사업자로서, 별도의 복잡한 결제 모듈 계약이나 행정 절차 없이도</p>
-        <p>클래스잇 사업자 명의로 소셜(간편) 로그인 및 결제 모듈을 연동하여 운영하실 수 있습니다.</p>
-      </>
-    ),
-  },
 ];
 
 function Divider({ highlight }: { highlight?: boolean }) {
