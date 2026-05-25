@@ -1,8 +1,6 @@
-import Link from "next/link";
 import type { ReactNode } from "react";
 import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
-import AdminLogoutButton from "@/app/components/blog/AdminLogoutButton";
 
 export function BlogShell({ children }: { children: ReactNode }) {
   return (
@@ -10,42 +8,6 @@ export function BlogShell({ children }: { children: ReactNode }) {
       <Header />
       {children}
       <Footer />
-    </main>
-  );
-}
-
-export function AdminShell({ children }: { children: ReactNode }) {
-  return (
-    <main className="min-h-screen bg-[#0b0e14] text-[#f8faff]">
-      <div className="flex min-h-[560px]">
-        <aside className="hidden w-[320px] shrink-0 flex-col gap-8 bg-[#0f1219] px-10 py-[52px] lg:flex">
-          <div className="flex items-center gap-3">
-            <div className="flex size-12 items-center justify-center rounded-full bg-[#081021] text-[#3d82f5]">⌾</div>
-            <div>
-              <p className="text-[16px] font-bold leading-6 text-white">클래스잇</p>
-              <p className="text-[12px] font-medium leading-[18px] text-white">classit.official@gmail.com</p>
-            </div>
-          </div>
-          <nav className="flex flex-col gap-2">
-            <Link href="/admin/blog" className="rounded-2xl px-4 py-4 text-[14px] font-bold leading-[21px] text-[#f8faff]">
-              블로그 관리
-            </Link>
-            <Link href="/admin/banners" className="rounded-2xl px-4 py-4 text-[14px] font-bold leading-[21px] text-[#f8faff]">
-              배너 관리
-            </Link>
-          </nav>
-          <div className="mt-auto flex flex-col gap-3">
-            <AdminLogoutButton />
-            <Link
-              href="/"
-              className="flex h-[52px] items-center justify-center rounded-[32px] border border-white bg-gradient-to-r from-[#3d82f5] to-[#0360ef] px-4 text-[14px] font-bold leading-[21px]"
-            >
-              랜딩페이지로 이동
-            </Link>
-          </div>
-        </aside>
-        <section className="min-w-0 flex-1 px-5 py-[52px] md:px-10">{children}</section>
-      </div>
     </main>
   );
 }

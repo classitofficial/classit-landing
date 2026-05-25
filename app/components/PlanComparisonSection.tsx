@@ -13,7 +13,7 @@ function CheckIcon() {
   );
 }
 
-function Divider({ highlight }: { highlight?: boolean }) {
+function Divider() {
   return (
     <div className="w-full h-px" style={{
       background: "linear-gradient(90deg, rgba(94,103,122,0) 0%, rgba(94,103,122,0.4) 49.52%, rgba(94,103,122,0) 100%)"}} 
@@ -21,9 +21,9 @@ function Divider({ highlight }: { highlight?: boolean }) {
   );
 }
 
-function ColDivider() {
+function ColDivider({ className = "" }: { className?: string }) {
   return (
-    <div className="w-px h-8 shrink-0" style={{
+    <div className={`w-px h-8 ${className}`} style={{
       background: "linear-gradient(180deg, rgba(94,103,122,0) 0%, #5E677A 49.52%, rgba(94,103,122,0) 100%)"
     }} />
   );
@@ -116,16 +116,16 @@ export default function PlanComparisonSection() {
 
       {/* 모바일: 768px 미만에서 노출 */}
       <div className="flex min-[768px]:hidden flex-col w-full px-5">
-        <div className="bg-[#0f1219] flex h-[64px] items-center rounded-[16px] mb-5">
-          <div className="flex flex-1 h-full items-center justify-center px-3">
+        <div className="relative bg-[#0f1219] grid grid-cols-3 h-[64px] items-center rounded-[16px] mb-5">
+          <div className="flex h-full min-w-0 items-center justify-center px-3">
             <span className="text-white text-[12px] font-bold leading-[18px] tracking-[0.18px] whitespace-nowrap">핵심 기능</span>
           </div>
-          <ColDivider />
-          <div className="flex flex-1 h-full items-center justify-center">
+          <ColDivider className="absolute left-1/3 top-1/2 -translate-y-1/2" />
+          <div className="flex h-full min-w-0 items-center justify-center">
             <span className="text-white text-[12px] font-bold leading-[18px] tracking-[0.18px] whitespace-nowrap">Premium</span>
           </div>
-          <ColDivider />
-          <div className="flex flex-1 h-full items-center justify-center">
+          <ColDivider className="absolute left-2/3 top-1/2 -translate-y-1/2" />
+          <div className="flex h-full min-w-0 items-center justify-center">
             <span className="text-white text-[12px] font-bold leading-[18px] tracking-[0.18px] whitespace-nowrap">Enterprise</span>
           </div>
         </div>
@@ -133,17 +133,17 @@ export default function PlanComparisonSection() {
         <div className="flex flex-col gap-2">
           {rows.map((row, i) => (
             <Fragment key={`mob-${i}`}>
-              {i === HIGHLIGHT_DIVIDER_BEFORE && <Divider highlight />}
-              <div className="flex items-center w-full">
-                <div className="flex flex-1 min-h-[52px] items-center justify-center px-3" style={{ maxWidth: "33.333%" }}>
+              {i === HIGHLIGHT_DIVIDER_BEFORE && <Divider />}
+              <div className="grid grid-cols-3 items-center w-full">
+                <div className="flex min-h-[52px] min-w-0 items-center justify-center px-3">
                   <span className="text-[#f8faff] text-[11px] font-medium leading-[16px] tracking-[-0.18px] text-center">
                     {row.feature}
                   </span>
                 </div>
-                <div className="flex flex-1 min-h-[52px] items-center justify-center px-1" style={{ maxWidth: "33.333%" }}>
+                <div className="flex min-h-[52px] min-w-0 items-center justify-center px-1">
                   <Cell value={row.premium} isSubtext={row.isSubtext} mobile />
                 </div>
-                <div className="flex flex-1 min-h-[52px] items-center justify-center px-1" style={{ maxWidth: "33.333%" }}>
+                <div className="flex min-h-[52px] min-w-0 items-center justify-center px-1">
                   <Cell value={row.enterprise} isSubtext={row.isSubtext} mobile />
                 </div>
               </div>
@@ -155,18 +155,18 @@ export default function PlanComparisonSection() {
 
       {/* 데스크탑: 768px 이상에서 노출 */}
       <div className="hidden min-[768px]:block w-full max-w-[1360px] px-10">
-        <div className="bg-[#0f1219] flex h-[64px] items-center rounded-2xl mb-5">
-          <div className="flex flex-1 h-full items-center justify-center px-8">
+        <div className="relative bg-[#0f1219] grid grid-cols-3 h-[64px] items-center rounded-2xl mb-5">
+          <div className="flex h-full min-w-0 items-center justify-center px-8">
             <span className="text-white text-[14px] font-bold leading-[21px]">핵심 기능</span>
           </div>
-          <ColDivider />
-          <div className="flex flex-1 flex-col h-full items-center justify-center px-8">
+          <ColDivider className="absolute left-1/3 top-1/2 -translate-y-1/2" />
+          <div className="flex flex-col h-full min-w-0 items-center justify-center px-8">
             <span className="text-white text-[14px] font-bold leading-6 tracking-[-0.24px] whitespace-nowrap">
               Premium Plan
             </span>
           </div>
-          <ColDivider />
-          <div className="flex flex-1 flex-col h-full items-center justify-center px-8">
+          <ColDivider className="absolute left-2/3 top-1/2 -translate-y-1/2" />
+          <div className="flex flex-col h-full min-w-0 items-center justify-center px-8">
             <span className="text-white text-[14px] font-bold leading-6 tracking-[-0.24px] whitespace-nowrap">
               Enterprise Plan
             </span>
@@ -176,17 +176,17 @@ export default function PlanComparisonSection() {
         <div className="flex flex-col gap-2">
           {rows.map((row, i) => (
             <Fragment key={`pc-${i}`}>
-              {i === HIGHLIGHT_DIVIDER_BEFORE && <Divider highlight />}
-              <div className="flex items-center justify-center w-full">
-                <div className="flex flex-1 h-[52px] items-center justify-center px-8">
+              {i === HIGHLIGHT_DIVIDER_BEFORE && <Divider />}
+              <div className="grid grid-cols-3 items-center w-full">
+                <div className="flex h-[52px] min-w-0 items-center justify-center px-8">
                   <span className="text-[#f8faff] text-[14px] font-medium leading-[21px] tracking-[-0.21px] whitespace-nowrap">
                     {row.feature}
                   </span>
                 </div>
-                <div className="flex flex-1 h-[52px] items-center justify-center px-8">
+                <div className="flex h-[52px] min-w-0 items-center justify-center px-8">
                   <Cell value={row.premium} isSubtext={row.isSubtext} />
                 </div>
-                <div className="flex flex-1 h-[52px] items-center justify-center px-8">
+                <div className="flex h-[52px] min-w-0 items-center justify-center px-8">
                   <Cell value={row.enterprise} isSubtext={row.isSubtext} />
                 </div>
               </div>

@@ -1,6 +1,6 @@
 # Vercel 배포 가이드
 
-Classit 랜딩과 블로그 CMS는 Vercel의 기본 Next.js 배포로 운영한다.
+Classit 공개 랜딩과 공개 블로그는 Vercel의 기본 Next.js 배포로 운영한다.
 
 ## Build Settings
 
@@ -16,13 +16,11 @@ Vercel Project Settings의 Environment Variables에 production 값을 넣는다.
 ```bash
 NEXT_PUBLIC_SUPABASE_URL=...
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=...
-SUPABASE_SECRET_KEY=...
-SUPABASE_STORAGE_BUCKET=blog-assets
 SLACK_BOT_TOKEN=...
 SLACK_CHANNEL_ID=...
 ```
 
-`SUPABASE_STORAGE_BUCKET` 기본값은 `blog-assets`다.
+이 저장소는 공개 조회만 담당하므로 Supabase service role key나 storage secret을 설정하지 않는다.
 
 임시 디자인 피드백을 배포 환경에서 받을 때만 추가한다.
 
@@ -37,6 +35,6 @@ SLACK_DESIGN_FEEDBACK_CHANNEL_ID=...
 
 - 공개 랜딩: `classit.kr`
 - 공개 블로그: `classit.kr/blog`
-- 관리자 CMS: 초기에는 `classit.kr/admin/blog`, 장기적으로는 `admin.classit.kr/blog` 분리 검토
+- 관리자 콘솔: 별도 프로젝트에서 `admin.classit.co.kr`로 운영
 
 Vercel Domains에서 `classit.kr`를 연결하고, 안내되는 DNS 레코드를 도메인 DNS 관리 화면에 추가한다.

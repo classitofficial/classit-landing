@@ -90,7 +90,7 @@ export const sampleBlogPosts: BlogPost[] = [
     slug: "course-package-management",
     summary: "단일 강의와 패키지 상품을 함께 운영할 때 필요한 권한, 기간, 가격 기준을 정리합니다.",
     content:
-      "패키지 상품은 객단가를 높일 수 있지만 운영 기준이 흐리면 문의가 늘어납니다.\n\n각 강의의 수강 기간, 제공 자료, 환불 기준, 추가 혜택을 명확히 구분해야 합니다.\n\n관리자 화면에서는 상품별 권한과 수강 기간을 빠르게 확인할 수 있어야 운영 실수가 줄어듭니다.",
+      "패키지 상품은 객단가를 높일 수 있지만 운영 기준이 흐리면 문의가 늘어납니다.\n\n각 강의의 수강 기간, 제공 자료, 환불 기준, 추가 혜택을 명확히 구분해야 합니다.\n\n상품별 권한과 수강 기간을 빠르게 확인할 수 있어야 운영 실수가 줄어듭니다.",
     published_at: "2026-05-06T00:00:00.000Z",
     seo_title: null,
     seo_description: null,
@@ -98,11 +98,11 @@ export const sampleBlogPosts: BlogPost[] = [
   }),
   samplePost({
     id: "sample-8",
-    title: "운영자가 먼저 보는 관리자 대시보드 구성",
-    slug: "admin-dashboard-first-view",
+    title: "운영자가 먼저 보는 핵심 지표 구성",
+    slug: "operation-dashboard-first-view",
     summary: "매출, 신규 수강생, 미수강자, 문의 현황처럼 첫 화면에 필요한 정보를 정리합니다.",
     content:
-      "관리자 대시보드는 모든 정보를 한 번에 보여주는 화면이 아닙니다.\n\n운영자가 매일 확인해야 하는 매출, 신규 수강생, 미수강자, 문의 현황을 우선 배치해야 합니다.\n\n자주 보는 지표가 첫 화면에 있으면 운영자는 문제를 더 빨리 발견하고 대응할 수 있습니다.",
+      "운영 대시보드는 모든 정보를 한 번에 보여주는 화면이 아닙니다.\n\n운영자가 매일 확인해야 하는 매출, 신규 수강생, 미수강자, 문의 현황을 우선 배치해야 합니다.\n\n자주 보는 지표가 첫 화면에 있으면 운영자는 문제를 더 빨리 발견하고 대응할 수 있습니다.",
     published_at: "2026-05-03T00:00:00.000Z",
     seo_title: null,
     seo_description: null,
