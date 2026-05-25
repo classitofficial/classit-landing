@@ -1,6 +1,6 @@
 import { requireAdminRequest } from "@/lib/admin-auth";
-import { createBlogPost, getAdminBlogPosts } from "@/lib/blog/supabase";
-import type { BlogPostInput } from "@/lib/blog/types";
+import { createBlogBanner, getAdminBlogBanners } from "@/lib/blog/supabase";
+import type { BlogBannerInput } from "@/lib/blog/types";
 
 export async function GET(request: Request) {
   const auth = await requireAdminRequest(request);
@@ -8,12 +8,12 @@ export async function GET(request: Request) {
     return Response.json({ message: auth.message }, { status: auth.status });
   }
 
-  const result = await getAdminBlogPosts();
+  const result = await getAdminBlogBanners();
   if (!result.ok) {
     return Response.json({ message: result.message }, { status: result.status });
   }
 
-  return Response.json({ posts: result.data });
+  return Response.json({ banners: result.data });
 }
 
 export async function POST(request: Request) {
@@ -22,12 +22,12 @@ export async function POST(request: Request) {
     return Response.json({ message: auth.message }, { status: auth.status });
   }
 
-  const payload = (await request.json()) as BlogPostInput;
-  const result = await createBlogPost(payload);
+  const payload = (await request.json()) as BlogBannerInput;
+  const result = await createBlogBanner(payload);
 
   if (!result.ok) {
     return Response.json({ message: result.message }, { status: result.status });
   }
 
-  return Response.json({ post: result.data }, { status: 201 });
+  return Response.json({ banner: result.data }, { status: 201 });
 }

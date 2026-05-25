@@ -1,5 +1,5 @@
 import { requireAdminRequest } from "@/lib/admin-auth";
-import { uploadBlogAsset } from "@/lib/blog/supabase";
+import { uploadBlogBannerAsset } from "@/lib/blog/supabase";
 
 export async function POST(request: Request) {
   const auth = await requireAdminRequest(request);
@@ -14,7 +14,7 @@ export async function POST(request: Request) {
     return Response.json({ message: "업로드할 파일이 필요합니다." }, { status: 400 });
   }
 
-  const result = await uploadBlogAsset(file);
+  const result = await uploadBlogBannerAsset(file);
   if (!result.ok) {
     return Response.json({ message: result.message }, { status: result.status });
   }

@@ -19,11 +19,10 @@ export default async function BlogPage() {
   const featuredPosts = posts.slice(0, 4);
   const rest = posts.slice(featuredPosts.length);
   const topPosts = rest.slice(0, 3);
-  const listPosts = rest.slice(3);
 
   return (
     <BlogShell>
-      <section className="mx-auto flex w-full max-w-[1090px] flex-col gap-[52px] px-5 pb-[104px] pt-[144px] md:px-0 md:pb-36 md:pt-[172px]">
+      <section className="mx-auto flex w-full max-w-[1090px] flex-col gap-[52px] px-5 pb-[104px] pt-[144px] md:px-10 md:pb-36 md:pt-[172px]">
         <div className="text-center">
           <h1 className="text-[28px] font-bold leading-9 tracking-[-0.42px] text-[#fefefe]">
             효율적인 온라인 교육 운영
@@ -49,7 +48,7 @@ export default async function BlogPage() {
         )}
 
         <div className="grid gap-[52px] lg:grid-cols-[1fr_330px]">
-          <BlogSearchSection posts={posts} defaultPosts={listPosts.length > 0 ? listPosts : rest} />
+          <BlogSearchSection posts={posts} />
 
           <BlogSidebarPromoCards />
         </div>

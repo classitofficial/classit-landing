@@ -1,3 +1,6 @@
+import { getPublicBlogBanners } from "@/lib/blog/supabase";
+import type { BlogBanner } from "@/lib/blog/types";
+
 const backgroundImage = "/images/gray-fluid-paint-running-black-background-abstract-image-texture-pattern-background-wallpaper.png";
 
 const promoCards = [
@@ -78,13 +81,31 @@ function PromoCard({ card }: { card: (typeof promoCards)[number] }) {
   );
 }
 
-export default function BlogSidebarPromoCards() {
+function ManagedBannerCard({ banner }: { banner: BlogBanner }) {
+  const image = <img src={banner.image_url} alt="" className="w-[330px] rounded-2xl border border-white/10 object-contain" />;
+
+  if (!banner.link_url) {
+    return image;
+  }
+
   return (
-    <aside className="hidden self-start lg:block">
-      <div className="sticky top-[132px] flex max-h-[calc(100svh-156px)] flex-col gap-5 overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        {promoCards.map((card) => (
-          <PromoCard key={card.eyebrow} card={card} />
-        ))}
+    <a href={banner.link_url} target="_blank" rel="noreferrer" className="block w-[330px]">
+      {image}
+    </a>
+  );
+}
+
+export default async function BlogSidebarPromoCards() {
+  const managedBanners = await getPublicBlogBanners();
+
+  return (
+    <aside className="hidden lg:block">
+      <div className="sticky top-[132px]">
+        <div className="flex max-h-[calc(100svh-156px)] flex-col gap-5 overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {managedBanners.length > 0
+            ? managedBanners.map((banner) => <ManagedBannerCard key={banner.id} banner={banner} />)
+            : promoCards.map((card) => <PromoCard key={card.eyebrow} card={card} />)}
+        </div>
       </div>
     </aside>
   );

@@ -2,10 +2,11 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
+import AdminLogoutButton from "@/app/components/blog/AdminLogoutButton";
 
 export function BlogShell({ children }: { children: ReactNode }) {
   return (
-    <main className="relative min-h-screen overflow-x-hidden bg-[#0b0e14] text-[#f8faff]">
+    <main className="relative min-h-screen bg-[#0b0e14] text-[#f8faff]">
       <Header />
       {children}
       <Footer />
@@ -29,18 +30,22 @@ export function AdminShell({ children }: { children: ReactNode }) {
             <Link href="/admin/blog" className="rounded-2xl px-4 py-4 text-[14px] font-bold leading-[21px] text-[#f8faff]">
               블로그 관리
             </Link>
-            <span className="rounded-2xl px-4 py-4 text-[14px] font-bold leading-[21px] text-[#a9b1c1]">도입상담 관리</span>
+            <Link href="/admin/banners" className="rounded-2xl px-4 py-4 text-[14px] font-bold leading-[21px] text-[#f8faff]">
+              배너 관리
+            </Link>
           </nav>
-          <Link
-            href="/"
-            className="mt-auto flex h-[52px] items-center justify-center rounded-[32px] border border-white bg-gradient-to-r from-[#3d82f5] to-[#0360ef] px-4 text-[14px] font-bold leading-[21px]"
-          >
-            랜딩페이지로 이동
-          </Link>
+          <div className="mt-auto flex flex-col gap-3">
+            <AdminLogoutButton />
+            <Link
+              href="/"
+              className="flex h-[52px] items-center justify-center rounded-[32px] border border-white bg-gradient-to-r from-[#3d82f5] to-[#0360ef] px-4 text-[14px] font-bold leading-[21px]"
+            >
+              랜딩페이지로 이동
+            </Link>
+          </div>
         </aside>
         <section className="min-w-0 flex-1 px-5 py-[52px] md:px-10">{children}</section>
       </div>
-      <Footer />
     </main>
   );
 }

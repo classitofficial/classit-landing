@@ -1,20 +1,21 @@
 import { sampleBlogPosts } from "@/lib/blog/sample";
-import type { BlogApiResult, BlogPost, BlogPostInput, SupabaseConfig } from "@/lib/blog/types";
+import type { BlogApiResult, BlogBanner, BlogBannerInput, BlogPost, BlogPostInput, SupabaseConfig } from "@/lib/blog/types";
 
 const TABLE = "blog_posts";
+const BANNER_TABLE = "blog_promo_banners";
 
 export function getSupabaseConfig(): SupabaseConfig | null {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const publishableKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+  const secretKey = process.env.SUPABASE_SECRET_KEY;
   const storageBucket = process.env.SUPABASE_STORAGE_BUCKET || "blog-assets";
 
-  if (!url || !anonKey || !serviceRoleKey) return null;
+  if (!url || !publishableKey || !secretKey) return null;
 
   return {
     url: url.replace(/\/$/, ""),
-    anonKey,
-    serviceRoleKey,
+    publishableKey,
+    secretKey,
     storageBucket,
   };
 }
@@ -25,15 +26,13 @@ export function isSupabaseConfigured() {
 
 function publicHeaders(config: SupabaseConfig) {
   return {
-    apikey: config.anonKey,
-    Authorization: `Bearer ${config.anonKey}`,
+    apikey: config.publishableKey,
   };
 }
 
 function adminHeaders(config: SupabaseConfig) {
   return {
-    apikey: config.anonKey,
-    Authorization: `Bearer ${config.serviceRoleKey}`,
+    apikey: config.secretKey,
   };
 }
 
@@ -256,6 +255,188 @@ export async function uploadBlogAsset(file: File): Promise<BlogApiResult<{ path:
 
   const extension = file.name.split(".").pop() || "bin";
   const path = `blog/${Date.now()}-${crypto.randomUUID()}.${extension}`;
+  const response = await fetch(`${config.url}/storage/v1/object/${config.storageBucket}/${path}`, {
+    method: "POST",
+    headers: {
+      ...adminHeaders(config),
+      "Content-Type": file.type || "application/octet-stream",
+      "x-upsert": "false",
+    },
+    body: file,
+  });
+
+  if (!response.ok) {
+    return { ok: false, status: response.status, message: await parseSupabaseError(response) };
+  }
+
+  return {
+    ok: true,
+    data: {
+      path,
+      url: `${config.url}/storage/v1/object/public/${config.storageBucket}/${path}`,
+    },
+  };
+}
+
+function normalizeBanner(input: BlogBannerInput) {
+  const now = new Date().toISOString();
+  return {
+    title: input.title?.trim() || "",
+    image_url: input.image_url.trim(),
+    image_path: input.image_path || null,
+    link_url: input.link_url?.trim() || null,
+    sort_order: Number.isFinite(input.sort_order) ? input.sort_order : 0,
+    is_active: input.is_active ?? true,
+    updated_at: now,
+  };
+}
+
+export async function getPublicBlogBanners(): Promise<BlogBanner[]> {
+  const config = getSupabaseConfig();
+  if (!config) return [];
+
+  const params = new URLSearchParams({
+    select: "*",
+    is_active: "eq.true",
+    order: "sort_order.asc,created_at.asc",
+  });
+
+  const response = await fetch(`${config.url}/rest/v1/${BANNER_TABLE}?${params}`, {
+    headers: publicHeaders(config),
+    next: { revalidate: 60 },
+  });
+
+  if (!response.ok) return [];
+  return response.json();
+}
+
+export async function getAdminBlogBanners(): Promise<BlogApiResult<BlogBanner[]>> {
+  const config = getSupabaseConfig();
+  if (!config) {
+    return { ok: false, status: 503, message: "Supabase 환경변수가 설정되지 않았습니다." };
+  }
+
+  const params = new URLSearchParams({
+    select: "*",
+    order: "sort_order.asc,created_at.asc",
+  });
+
+  const response = await fetch(`${config.url}/rest/v1/${BANNER_TABLE}?${params}`, {
+    headers: adminHeaders(config),
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    return { ok: false, status: response.status, message: await parseSupabaseError(response) };
+  }
+
+  return { ok: true, data: await response.json() };
+}
+
+export async function getAdminBlogBannerById(id: string): Promise<BlogApiResult<BlogBanner | null>> {
+  const config = getSupabaseConfig();
+  if (!config) {
+    return { ok: false, status: 503, message: "Supabase 환경변수가 설정되지 않았습니다." };
+  }
+
+  const params = new URLSearchParams({
+    select: "*",
+    id: `eq.${id}`,
+    limit: "1",
+  });
+
+  const response = await fetch(`${config.url}/rest/v1/${BANNER_TABLE}?${params}`, {
+    headers: adminHeaders(config),
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    return { ok: false, status: response.status, message: await parseSupabaseError(response) };
+  }
+
+  const banners = (await response.json()) as BlogBanner[];
+  return { ok: true, data: banners[0] || null };
+}
+
+export async function createBlogBanner(input: BlogBannerInput): Promise<BlogApiResult<BlogBanner>> {
+  const config = getSupabaseConfig();
+  if (!config) {
+    return { ok: false, status: 503, message: "Supabase 환경변수가 설정되지 않았습니다." };
+  }
+
+  const payload = normalizeBanner(input);
+  if (!payload.image_url) {
+    return { ok: false, status: 400, message: "배너 이미지는 필수입니다." };
+  }
+
+  const response = await fetch(`${config.url}/rest/v1/${BANNER_TABLE}`, {
+    method: "POST",
+    headers: jsonHeaders(config),
+    body: JSON.stringify(payload),
+  });
+
+  if (!response.ok) {
+    return { ok: false, status: response.status, message: await parseSupabaseError(response) };
+  }
+
+  const banners = (await response.json()) as BlogBanner[];
+  return { ok: true, data: banners[0] };
+}
+
+export async function updateBlogBanner(id: string, input: BlogBannerInput): Promise<BlogApiResult<BlogBanner>> {
+  const config = getSupabaseConfig();
+  if (!config) {
+    return { ok: false, status: 503, message: "Supabase 환경변수가 설정되지 않았습니다." };
+  }
+
+  const payload = normalizeBanner(input);
+  if (!payload.image_url) {
+    return { ok: false, status: 400, message: "배너 이미지는 필수입니다." };
+  }
+
+  const response = await fetch(`${config.url}/rest/v1/${BANNER_TABLE}?id=eq.${id}`, {
+    method: "PATCH",
+    headers: jsonHeaders(config),
+    body: JSON.stringify(payload),
+  });
+
+  if (!response.ok) {
+    return { ok: false, status: response.status, message: await parseSupabaseError(response) };
+  }
+
+  const banners = (await response.json()) as BlogBanner[];
+  return { ok: true, data: banners[0] };
+}
+
+export async function deleteBlogBanner(id: string): Promise<BlogApiResult<null>> {
+  const config = getSupabaseConfig();
+  if (!config) {
+    return { ok: false, status: 503, message: "Supabase 환경변수가 설정되지 않았습니다." };
+  }
+
+  const response = await fetch(`${config.url}/rest/v1/${BANNER_TABLE}?id=eq.${id}`, {
+    method: "DELETE",
+    headers: {
+      ...adminHeaders(config),
+      Prefer: "return=minimal",
+    },
+  });
+
+  if (!response.ok) {
+    return { ok: false, status: response.status, message: await parseSupabaseError(response) };
+  }
+
+  return { ok: true, data: null };
+}
+
+export async function uploadBlogBannerAsset(file: File): Promise<BlogApiResult<{ path: string; url: string }>> {
+  const config = getSupabaseConfig();
+  if (!config) {
+    return { ok: false, status: 503, message: "Supabase 환경변수가 설정되지 않았습니다." };
+  }
+
+  const extension = file.name.split(".").pop() || "bin";
+  const path = `banners/${Date.now()}-${crypto.randomUUID()}.${extension}`;
   const response = await fetch(`${config.url}/storage/v1/object/${config.storageBucket}/${path}`, {
     method: "POST",
     headers: {

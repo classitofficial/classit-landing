@@ -31,10 +31,31 @@ export type BlogPostInput = {
   author_name?: string | null;
 };
 
+export type BlogBanner = {
+  id: string;
+  title: string;
+  image_url: string;
+  image_path: string | null;
+  link_url: string | null;
+  sort_order: number;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
+export type BlogBannerInput = {
+  title?: string | null;
+  image_url: string;
+  image_path?: string | null;
+  link_url?: string | null;
+  sort_order: number;
+  is_active?: boolean;
+};
+
 export type SupabaseConfig = {
   url: string;
-  anonKey: string;
-  serviceRoleKey: string;
+  publishableKey: string;
+  secretKey: string;
   storageBucket: string;
 };
 

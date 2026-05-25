@@ -1,3 +1,4 @@
+import { requireAdminRequest } from "@/lib/admin-auth";
 import { getAdminBlogPostById, updateBlogPost } from "@/lib/blog/supabase";
 import type { BlogPostInput } from "@/lib/blog/types";
 
@@ -5,7 +6,12 @@ type RouteProps = {
   params: Promise<{ id: string }>;
 };
 
-export async function GET(_request: Request, { params }: RouteProps) {
+export async function GET(request: Request, { params }: RouteProps) {
+  const auth = await requireAdminRequest(request);
+  if (!auth.ok) {
+    return Response.json({ message: auth.message }, { status: auth.status });
+  }
+
   const { id } = await params;
   const result = await getAdminBlogPostById(id);
 
@@ -21,6 +27,11 @@ export async function GET(_request: Request, { params }: RouteProps) {
 }
 
 export async function PATCH(request: Request, { params }: RouteProps) {
+  const auth = await requireAdminRequest(request);
+  if (!auth.ok) {
+    return Response.json({ message: auth.message }, { status: auth.status });
+  }
+
   const { id } = await params;
   const payload = (await request.json()) as BlogPostInput;
   const result = await updateBlogPost(id, payload);

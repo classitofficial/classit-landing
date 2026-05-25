@@ -22,13 +22,13 @@ function matchesPost(post: BlogPost, query: string) {
   return target.includes(query);
 }
 
-export default function BlogSearchSection({ posts, defaultPosts }: { posts: BlogPost[]; defaultPosts: BlogPost[] }) {
+export default function BlogSearchSection({ posts }: { posts: BlogPost[] }) {
   const [query, setQuery] = useState("");
   const normalizedQuery = query.trim().toLowerCase();
   const visiblePosts = useMemo(() => {
-    if (!normalizedQuery) return defaultPosts;
+    if (!normalizedQuery) return posts;
     return posts.filter((post) => matchesPost(post, normalizedQuery));
-  }, [defaultPosts, normalizedQuery, posts]);
+  }, [normalizedQuery, posts]);
 
   return (
     <div className="flex flex-col gap-6">
