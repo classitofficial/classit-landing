@@ -16,6 +16,12 @@ type ElementSnapshot = {
 
 type FeedbackStep = "idle" | "selecting" | "writing" | "saved";
 
+type DesignFeedbackWidgetProps = {
+  visibleByDefault?: boolean;
+};
+
+const FEEDBACK_STORAGE_KEY = "classit:design-feedback-visible";
+
 function escapeSelectorPart(value: string) {
   if (typeof CSS !== "undefined" && typeof CSS.escape === "function") {
     return CSS.escape(value);
@@ -73,22 +79,49 @@ function getHighlightStyle(target: Element | null): CSSProperties | undefined {
   };
 }
 
-export function DesignFeedbackWidget() {
+export function DesignFeedbackWidget({ visibleByDefault = false }: DesignFeedbackWidgetProps) {
   const [step, setStep] = useState<FeedbackStep>("idle");
   const [hoveredElement, setHoveredElement] = useState<Element | null>(null);
   const [selectedElement, setSelectedElement] = useState<ElementSnapshot | null>(null);
   const [comment, setComment] = useState("");
   const [message, setMessage] = useState("");
   const [isSaving, setIsSaving] = useState(false);
+  const [isVisible, setIsVisible] = useState(visibleByDefault);
 
-  const isEnabled = process.env.NODE_ENV !== "production";
   const highlightStyle = useMemo(
     () => getHighlightStyle(step === "writing" ? null : hoveredElement),
     [hoveredElement, step]
   );
 
   useEffect(() => {
-    if (!isEnabled || step !== "selecting") {
+    const timeoutId = window.setTimeout(() => {
+      const params = new URLSearchParams(window.location.search);
+      const feedbackParam = params.get("design-feedback");
+
+      if (feedbackParam === "1") {
+        window.localStorage.setItem(FEEDBACK_STORAGE_KEY, "1");
+        setIsVisible(true);
+        return;
+      }
+
+      if (feedbackParam === "0") {
+        window.localStorage.removeItem(FEEDBACK_STORAGE_KEY);
+        setIsVisible(false);
+        return;
+      }
+
+      if (!visibleByDefault && window.localStorage.getItem(FEEDBACK_STORAGE_KEY) === "1") {
+        setIsVisible(true);
+      }
+    }, 0);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [visibleByDefault]);
+
+  useEffect(() => {
+    if (!isVisible || step !== "selecting") {
       return undefined;
     }
 
@@ -133,9 +166,9 @@ export function DesignFeedbackWidget() {
       document.removeEventListener("click", handleClick, true);
       document.removeEventListener("keydown", handleKeyDown, true);
     };
-  }, [isEnabled, step]);
+  }, [isVisible, step]);
 
-  if (!isEnabled) {
+  if (!isVisible) {
     return null;
   }
 

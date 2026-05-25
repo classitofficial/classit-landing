@@ -1,6 +1,4 @@
-import { mkdir, writeFile } from "fs/promises";
 import { NextRequest, NextResponse } from "next/server";
-import path from "path";
 
 export const runtime = "nodejs";
 
@@ -23,6 +21,14 @@ type FeedbackPayload = {
 
 function json(status: number, body: { message?: string; ok: boolean }) {
   return NextResponse.json(body, { status });
+}
+
+function isDesignFeedbackEnabled() {
+  return process.env.NODE_ENV !== "production" || process.env.DESIGN_FEEDBACK_ENABLED === "1";
+}
+
+function shouldSendToSlack() {
+  return process.env.NODE_ENV === "production" || process.env.DESIGN_FEEDBACK_DESTINATION === "slack";
 }
 
 function isFiniteNumber(value: unknown): value is number {
@@ -126,8 +132,74 @@ function formatFeedbackMarkdown(feedback: FeedbackPayload) {
   ].join("\n");
 }
 
+function slackText(feedback: FeedbackPayload) {
+  const elementLabel = feedback.element.selector
+    ? `${feedback.element.tagName} / ${feedback.element.selector}`
+    : feedback.element.tagName;
+
+  return [
+    "*Classit 디자인 피드백*",
+    `*URL:* ${feedback.url}`,
+    `*Path:* ${feedback.path}`,
+    `*Element:* ${elementLabel}`,
+    `*Rect:* ${feedback.element.width}x${feedback.element.height} at ${feedback.element.x}, ${feedback.element.y}`,
+    `*Text:* ${feedback.element.text || "-"}`,
+    "",
+    "*Comment:*",
+    feedback.comment,
+  ].join("\n");
+}
+
+async function saveFeedbackFile(feedback: FeedbackPayload) {
+  const [{ mkdir, writeFile }, path] = await Promise.all([import("fs/promises"), import("path")]);
+  const directory = path.join(process.cwd(), "docs", "design-feedback");
+  const fileName = `${formatKoreaTimestamp()}-${pageSlug(feedback.path)}.md`;
+  const filePath = path.join(directory, fileName);
+
+  await mkdir(directory, { recursive: true });
+  await writeFile(filePath, formatFeedbackMarkdown(feedback), "utf8");
+
+  return fileName;
+}
+
+async function sendFeedbackToSlack(feedback: FeedbackPayload) {
+  const token = process.env.SLACK_BOT_TOKEN;
+  const channel = process.env.SLACK_DESIGN_FEEDBACK_CHANNEL_ID || process.env.SLACK_CHANNEL_ID;
+
+  if (!token || !channel) {
+    throw new Error("Slack environment variables are missing.");
+  }
+
+  const slackRes = await fetch("https://slack.com/api/chat.postMessage", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      channel,
+      text: "Classit 디자인 피드백",
+      blocks: [
+        {
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: slackText(feedback),
+          },
+        },
+      ],
+    }),
+  });
+
+  const slackData = (await slackRes.json()) as { error?: string; ok?: boolean };
+
+  if (!slackData.ok) {
+    throw new Error(`Slack error: ${slackData.error ?? "unknown_error"}`);
+  }
+}
+
 export async function POST(request: NextRequest) {
-  if (process.env.NODE_ENV === "production") {
+  if (!isDesignFeedbackEnabled()) {
     return json(404, { ok: false, message: "요청한 리소스를 찾을 수 없습니다." });
   }
 
@@ -138,13 +210,13 @@ export async function POST(request: NextRequest) {
     return json(400, { ok: false, message: "피드백 내용을 확인해주세요." });
   }
 
-  const directory = path.join(process.cwd(), "docs", "design-feedback");
-  const fileName = `${formatKoreaTimestamp()}-${pageSlug(feedback.path)}.md`;
-  const filePath = path.join(directory, fileName);
-
   try {
-    await mkdir(directory, { recursive: true });
-    await writeFile(filePath, formatFeedbackMarkdown(feedback), "utf8");
+    if (shouldSendToSlack()) {
+      await sendFeedbackToSlack(feedback);
+      return NextResponse.json({ ok: true });
+    }
+
+    const fileName = await saveFeedbackFile(feedback);
     return NextResponse.json({ ok: true, fileName });
   } catch (error) {
     console.error("Save design feedback failed", error);

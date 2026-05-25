@@ -94,11 +94,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const isDesignFeedbackVisibleByDefault =
+    process.env.NODE_ENV !== "production" || process.env.NEXT_PUBLIC_DESIGN_FEEDBACK_VISIBLE === "1";
+
   return (
     <html lang="ko" className="h-full antialiased">
       <body className="min-h-full flex flex-col">
         {children}
-        {process.env.NODE_ENV !== "production" ? <DesignFeedbackWidget /> : null}
+        <DesignFeedbackWidget visibleByDefault={isDesignFeedbackVisibleByDefault} />
         <Script src="https://www.googletagmanager.com/gtag/js?id=G-7HYQPRP75Y" strategy="afterInteractive" />
         <Script id="gtag-init" strategy="afterInteractive">{`
           window.dataLayer = window.dataLayer || [];
