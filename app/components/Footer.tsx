@@ -11,18 +11,6 @@ function NiceBadge() {
   );
 }
 
-function SgicBadge() {
-  return (
-    <div className="flex items-center gap-1 h-10 px-4 bg-[#0f1219] border border-[#1b1f2a] rounded-[24px] shrink-0 w-fit">
-      <div className="size-5 overflow-hidden relative shrink-0">
-        <img src="/images/footer-sgic.png" alt="" className="absolute h-[136.67%] -left-[20.07%] -top-[22.12%] w-[533.33%] max-w-none" />
-      </div>
-      <span className="text-[#a9b1c1] text-[12px] font-medium leading-4 tracking-[-0.12px] whitespace-nowrap">
-        서울보증보험 가입 확인서
-      </span>
-    </div>
-  );
-}
 
 function Divider() {
   return <div className="w-full border-t border-dashed border-[#1b1f2a]" />;
@@ -62,7 +50,6 @@ export default function Footer() {
             </p>
           </div>
           <NiceBadge />
-          <SgicBadge />
         </div>
 
         <Divider />
@@ -92,7 +79,6 @@ export default function Footer() {
         {/* 모바일에서만 보이게 */}
         <div className="md:hidden flex flex-col gap-1 flex-wrap">
           <NiceBadge />
-          <SgicBadge />
         </div>
 
       </div>
