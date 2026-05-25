@@ -4,7 +4,8 @@ import BlogFeaturedCarousel from "@/app/components/blog/BlogFeaturedCarousel";
 import BlogSearchSection from "@/app/components/blog/BlogSearchSection";
 import BlogSidebarPromoCards from "@/app/components/blog/BlogSidebarPromoCards";
 import { BlogShell } from "@/app/components/blog/BlogChrome";
-import { getPublicBlogPosts } from "@/lib/blog/supabase";
+import { getBlogIndexPosts } from "@/lib/blog/selection";
+import { getPublicBlogBanners, getPublicBlogPosts, getPublicFeaturedBlogPosts } from "@/lib/blog/supabase";
 
 export const metadata: Metadata = {
   title: "블로그",
@@ -15,11 +16,14 @@ export const metadata: Metadata = {
 };
 
 export default async function BlogPage() {
-  const posts = await getPublicBlogPosts();
-  const featuredPosts = posts.slice(0, 4);
-  const rest = posts.slice(featuredPosts.length);
-  const topPosts = rest.slice(0, 3);
-
+  const [posts, featuredPosts, managedBanners] = await Promise.all([
+    getPublicBlogPosts(),
+    getPublicFeaturedBlogPosts(),
+    getPublicBlogBanners(),
+  ]);
+  const { regularPosts, topPosts } = getBlogIndexPosts(posts, featuredPosts);
+  const contentGridClassName =
+    managedBanners.length > 0 ? "grid gap-[52px] lg:grid-cols-[1fr_330px]" : "grid gap-[52px]";
   return (
     <BlogShell>
       <section className="mx-auto flex w-full max-w-[1090px] flex-col gap-[52px] px-5 pb-[104px] pt-[144px] md:px-10 md:pb-36 md:pt-[172px]">
@@ -31,26 +35,28 @@ export default async function BlogPage() {
           </h1>
         </div>
 
-        {featuredPosts.length > 0 ? (
-          <BlogFeaturedCarousel posts={featuredPosts} />
-        ) : (
+        {posts.length === 0 && (
           <div className="rounded-2xl border border-[#1b1f2a] bg-[#0f1219] p-10 text-center text-[#a9b1c1]">
             게시된 블로그 글이 없습니다.
           </div>
         )}
 
+        {featuredPosts.length > 0 && <BlogFeaturedCarousel posts={featuredPosts} />}
+
         {topPosts.length > 0 && (
-          <div className="grid gap-8 md:grid-cols-3 md:gap-5">
+          <div className="grid auto-cols-[calc(100vw-64px)] grid-flow-col gap-4 overflow-x-auto overscroll-x-contain pb-1 snap-x snap-mandatory [scrollbar-width:none] md:auto-cols-fr md:grid-flow-row md:grid-cols-3 md:gap-5 md:overflow-visible md:pb-0 [&::-webkit-scrollbar]:hidden">
             {topPosts.map((post) => (
-              <BlogGridCard key={post.id} post={post} />
+              <div key={post.id} className="snap-start">
+                <BlogGridCard post={post} />
+              </div>
             ))}
           </div>
         )}
 
-        <div className="grid gap-[52px] lg:grid-cols-[1fr_330px]">
-          <BlogSearchSection posts={posts} />
+        <div className={contentGridClassName}>
+          <BlogSearchSection posts={regularPosts} />
 
-          <BlogSidebarPromoCards />
+          {managedBanners.length > 0 && <BlogSidebarPromoCards managedBanners={managedBanners} />}
         </div>
       </section>
     </BlogShell>

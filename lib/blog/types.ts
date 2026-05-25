@@ -9,6 +9,12 @@ export type BlogPost = {
   thumbnail_url: string | null;
   thumbnail_path: string | null;
   status: BlogPostStatus;
+  is_featured: boolean | null;
+  featured_sort_order: number | null;
+  featured_image_url: string | null;
+  featured_image_path: string | null;
+  featured_title: string | null;
+  featured_description: string | null;
   published_at: string | null;
   seo_title: string | null;
   seo_description: string | null;

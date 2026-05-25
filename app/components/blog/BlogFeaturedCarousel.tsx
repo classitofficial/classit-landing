@@ -107,36 +107,42 @@ export default function BlogFeaturedCarousel({ posts }: { posts: BlogPost[] }) {
             transitionDuration: dragOffset === 0 ? "300ms" : "0ms",
           }}
         >
-          {posts.map((post) => (
-            <div key={post.id} className="w-full shrink-0">
-              <div
-                role="link"
-                tabIndex={0}
-                onClick={() => handleCardClick(post)}
-                onKeyDown={(event) => handleCardKeyDown(event, post)}
-                className="group block outline-none"
-              >
-                <article className="relative h-[350px] overflow-hidden rounded-2xl border border-[rgba(255,255,255,0.04)] md:h-[480px]">
-                  {post.thumbnail_url ? (
-                    <img src={post.thumbnail_url} alt="" draggable={false} className="absolute inset-0 size-full object-cover" />
-                  ) : (
-                    <div className="absolute inset-0 size-full bg-[linear-gradient(135deg,#111827_0%,#0b0e14_48%,#123d91_100%)]">
-                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(61,130,245,0.45),transparent_38%)]" />
+          {posts.map((post) => {
+            const imageUrl = post.featured_image_url || post.thumbnail_url;
+            const title = post.featured_title || post.title;
+            const description = post.featured_description || post.summary;
+
+            return (
+              <div key={post.id} className="w-full shrink-0">
+                <div
+                  role="link"
+                  tabIndex={0}
+                  onClick={() => handleCardClick(post)}
+                  onKeyDown={(event) => handleCardKeyDown(event, post)}
+                  className="group block outline-none"
+                >
+                  <article className="relative h-[350px] overflow-hidden rounded-2xl border border-[rgba(255,255,255,0.04)] md:h-[480px]">
+                    {imageUrl ? (
+                      <img src={imageUrl} alt="" draggable={false} className="absolute inset-0 size-full object-cover" />
+                    ) : (
+                      <div className="absolute inset-0 size-full bg-[linear-gradient(135deg,#111827_0%,#0b0e14_48%,#123d91_100%)]">
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(61,130,245,0.45),transparent_38%)]" />
+                      </div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-b from-[rgba(18,18,18,0)] to-[#121212]" />
+                    <div className="absolute bottom-6 left-6 right-6 flex flex-col gap-2 md:bottom-10 md:left-10 md:right-10">
+                      <h2 className="line-clamp-2 text-[20px] font-bold leading-7 tracking-[-0.5px] text-white md:text-[24px] md:leading-8">
+                        {title}
+                      </h2>
+                      <p className="line-clamp-2 text-[14px] font-medium leading-[21px] tracking-[-0.35px] text-[#eaeaea] md:text-[16px] md:leading-6">
+                        {description}
+                      </p>
                     </div>
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-b from-[rgba(18,18,18,0)] to-[#121212]" />
-                  <div className="absolute bottom-6 left-6 right-6 flex flex-col gap-2 md:bottom-10 md:left-10 md:right-10">
-                    <h2 className="line-clamp-2 text-[20px] font-bold leading-7 tracking-[-0.5px] text-white md:text-[24px] md:leading-8">
-                      {post.title}
-                    </h2>
-                    <p className="line-clamp-2 text-[14px] font-medium leading-[21px] tracking-[-0.35px] text-[#eaeaea] md:text-[16px] md:leading-6">
-                      {post.summary}
-                    </p>
-                  </div>
-                </article>
+                  </article>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
       {posts.length > 1 && (

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BlogListItem, PostMeta } from "@/app/components/blog/BlogCards";
 import { BlogShell } from "@/app/components/blog/BlogChrome";
+import BlogMarkdownContent from "@/app/components/blog/BlogMarkdownContent";
 import { getPublicBlogPostBySlug, getPublicBlogPosts } from "@/lib/blog/supabase";
 
 type PageProps = {
@@ -57,11 +58,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
           <img src={post.thumbnail_url} alt="" className="max-h-[520px] w-full rounded-2xl object-cover" />
         )}
 
-        <div className="flex max-w-none flex-col gap-5 text-[16px] font-medium leading-7 tracking-[-0.16px] text-white">
-          {post.content.split("\n").map((line, index) => (
-            <p key={`${line}-${index}`}>{line || "\u00a0"}</p>
-          ))}
-        </div>
+        <BlogMarkdownContent content={post.content} />
 
         <Link
           href="/blog"
