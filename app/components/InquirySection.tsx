@@ -22,7 +22,7 @@ function RadioCircle({ selected }: { selected: boolean }) {
 }
 
 const inputCls =
-  "bg-[#0b0e14] border border-[#1b1f2a] h-[52px] w-full px-4 rounded-2xl text-[#f8faff] text-[14px] font-medium leading-[21px] tracking-[-0.21px] placeholder-[#a9b1c1] outline-none focus:border-[#3d82f5] transition-colors";
+  "bg-[#0b0e14] border border-[#1b1f2a] h-[52px] w-full px-4 rounded-2xl text-[#f8faff] text-[14px] font-medium leading-[21px] tracking-[-0.21px] placeholder-[#5E677A] outline-none focus:border-[#3d82f5] transition-colors";
 const labelCls =
   "text-[#f8faff] text-[14px] font-medium leading-[21px] tracking-[-0.21px] whitespace-nowrap";
 
@@ -203,7 +203,7 @@ function FormFields({
           value={comments}
           onChange={(e) => setComments(e.target.value)}
           placeholder="궁금하신 사항을 작성해주시면 해당 내용을 중심으로 상담 도와드리겠습니다."
-          className="bg-[#0b0e14] border border-[#1b1f2a] h-[160px] w-full px-4 py-[14px] rounded-2xl text-[#f8faff] text-[14px] font-medium leading-[21px] tracking-[-0.21px] placeholder-[#5E677A)] outline-none focus:border-[#3d82f5] transition-colors resize-none"
+          className="bg-[#0b0e14] border border-[#1b1f2a] h-[160px] w-full px-4 py-[14px] rounded-2xl text-[#f8faff] text-[14px] font-medium leading-[21px] tracking-[-0.21px] placeholder-[#5E677A] outline-none focus:border-[#3d82f5] transition-colors resize-none"
         />
       </div>
 

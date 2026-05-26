@@ -2,8 +2,8 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import LegalPage from "./LegalPage";
 
-vi.mock("@/app/components/Header", () => ({ default: () => <header /> }), { virtual: true });
-vi.mock("@/app/components/Footer", () => ({ default: () => <footer /> }), { virtual: true });
+vi.mock("@/app/components/Header", () => ({ default: () => <header /> }));
+vi.mock("@/app/components/Footer", () => ({ default: () => <footer /> }));
 vi.mock("next/navigation", () => ({
   usePathname: () => "/privacy",
   useRouter: () => ({ push: vi.fn() }),

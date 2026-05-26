@@ -56,9 +56,9 @@ export default function Footer() {
         <div className="flex md:hidden flex-col gap-4">
           <div className="flex flex-col gap-1">
             <FooterLogo gradientId="footer-logo-gradient-mobile" />
-            <p className="text-[#a9b1c1] text-[12px] font-medium leading-4 tracking-[-0.12px]">
+            {/* <p className="text-[#a9b1c1] text-[12px] font-medium leading-4 tracking-[-0.12px]">
               클래스잇은 통신판매 중개자이며, 통신판매의 당사자가 아닙니다.
-            </p>
+            </p> */}
           </div>
 
         </div>
@@ -67,9 +67,9 @@ export default function Footer() {
         <div className="hidden md:flex items-start gap-1 w-full">
           <div className="flex-1 flex flex-col gap-1">
             <FooterLogo gradientId="footer-logo-gradient-desktop" />
-            <p className="text-[#a9b1c1] text-[12px] font-medium leading-4 tracking-[-0.12px]">
+            {/* <p className="text-[#a9b1c1] text-[12px] font-medium leading-4 tracking-[-0.12px]">
               클래스잇은 통신판매 중개자이며, 통신판매의 당사자가 아닙니다.
-            </p>
+            </p> */}
           </div>
           <NiceBadge />
         </div>
@@ -93,7 +93,7 @@ export default function Footer() {
         <div className="flex flex-col gap-1 text-[12px] text-[#a9b1c1] leading-4 tracking-[-0.12px] font-medium">
           <p>사업자등록번호 : 519-43-01174  |  대표 : 이동규 | 개인정보처리담당자 : 이동규</p>
           <p>주소 : 경기도 고양시 덕양구 동축로70, A동 9층 901호(동산동, 현대프리미어캠퍼스)</p>
-          <p>통신판매업신고번호 : 2026-고양덕양구-1043</p>
+          {/* <p>통신판매업신고번호 : 2026-고양덕양구-1043</p> */}
           <p>메일 : classit.official@gmail.com</p>
           <p className="font-bold">Copyright ⓒ 2026 classit. All rights reserved.</p>
         </div>

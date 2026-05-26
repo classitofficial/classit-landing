@@ -2,15 +2,41 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useEffect } from "react";
+
+function scrollToSection(id: string, attempt = 0) {
+  const section = document.getElementById(id);
+  if (section) {
+    section.scrollIntoView({ behavior: "smooth" });
+    return;
+  }
+
+  if (attempt < 20) {
+    requestAnimationFrame(() => scrollToSection(id, attempt + 1));
+  }
+}
 
 export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
 
+  useEffect(() => {
+    if (pathname !== "/") return;
+
+    const scrollToHash = () => {
+      const id = window.location.hash.slice(1);
+      if (id) scrollToSection(id);
+    };
+
+    scrollToHash();
+    window.addEventListener("hashchange", scrollToHash);
+    return () => window.removeEventListener("hashchange", scrollToHash);
+  }, [pathname]);
+
   function moveToSection(id: string) {
-    const section = document.getElementById(id);
-    if (pathname === "/" && section) {
-      section.scrollIntoView({ behavior: "smooth" });
+    if (pathname === "/") {
+      scrollToSection(id);
+      window.history.replaceState(null, "", `/#${id}`);
       return;
     }
 
@@ -42,7 +68,7 @@ export default function Header() {
           </Link>
           <button
             onClick={() => moveToSection("pricing")}
-            className="hidden md:block text-[#fefefe] text-[16px] font-medium leading-6 tracking-[-0.24px] whitespace-nowrap hover:opacity-80 transition-opacity"
+            className="hidden md:block cursor-pointer text-[#fefefe] text-[16px] font-medium leading-6 tracking-[-0.24px] whitespace-nowrap hover:opacity-80 transition-opacity"
           >
             가격안내
           </button>
@@ -63,6 +89,13 @@ export default function Header() {
             도입 상담 신청하기
           </span>
         </button>
+        <Link
+            href="/blog"
+            className="md:hidden text-[#fefefe] text-[16px] font-medium leading-6 tracking-[-0.24px] whitespace-nowrap hover:opacity-80 transition-opacity"
+        >
+          블로그
+        </Link>
+
       </div>
     </header>
   );

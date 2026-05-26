@@ -50,11 +50,11 @@ export function BlogGridCard({ post }: { post: BlogPost }) {
           <Thumbnail post={post} className="absolute inset-0 size-full" />
         </div>
         <div className="flex flex-col gap-4">
-          <PostMeta post={post} />
           <div className="flex flex-col gap-2">
             <h3 className="line-clamp-2 text-[18px] font-bold leading-7 tracking-[-0.45px] text-white">{post.title}</h3>
             <p className="line-clamp-3 text-[14px] font-medium leading-[21px] tracking-[-0.35px] text-[#eaeaea]">{post.summary}</p>
           </div>
+          <PostMeta post={post} />
         </div>
       </article>
     </Link>
@@ -64,13 +64,13 @@ export function BlogGridCard({ post }: { post: BlogPost }) {
 export function BlogListItem({ post }: { post: BlogPost }) {
   return (
     <Link href={`/blog/${post.slug}`} className="block">
-      <article className="flex gap-4">
-        <div className="relative size-[96px] shrink-0 overflow-hidden rounded-2xl md:size-[148px]">
+      <article className="flex flex-col gap-5 md:flex-row md:gap-4">
+        <div className="relative aspect-square w-full shrink-0 overflow-hidden rounded-2xl md:size-[148px] md:w-[148px]">
           <Thumbnail post={post} className="absolute inset-0 size-full" />
         </div>
-        <div className="flex min-w-0 flex-1 flex-col justify-center gap-3">
-          <div>
-            <h3 className="line-clamp-1 text-[18px] font-bold leading-7 tracking-[-0.45px] text-white">{post.title}</h3>
+        <div className="flex min-w-0 flex-1 flex-col gap-4 md:justify-center md:gap-3">
+          <div className="flex flex-col gap-2">
+            <h3 className="line-clamp-2 text-[18px] font-bold leading-7 tracking-[-0.45px] text-white md:line-clamp-1">{post.title}</h3>
             <p className="line-clamp-2 text-[14px] font-medium leading-[21px] tracking-[-0.35px] text-[#eaeaea]">{post.summary}</p>
           </div>
           <PostMeta post={post} />
@@ -84,8 +84,7 @@ export function PostMeta({ post }: { post: BlogPost }) {
   return (
     <div className="flex items-center gap-2 text-[14px] font-medium leading-[21px] tracking-[-0.14px] text-white">
       <ClassitIcon />
-      <span>{formatDate(post.published_at || post.created_at)}</span>
-      {/* <span>{formatDate(post.published_at || post.created_at)} · {post.author_name || "Classit"}</span> */}
+      <span>{formatDate(post.published_at || post.created_at)} · {post.author_name || "Classit"}</span>
     </div>
   );
 }
