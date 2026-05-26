@@ -15,6 +15,14 @@ export const metadata: Metadata = {
   },
 };
 
+const Divider = () => {
+  return (
+    <div className="w-full h-px" style={{
+      background: "linear-gradient(90deg, rgba(94,103,122,0) 0%, rgba(94,103,122,0.4) 49.52%, rgba(94,103,122,0) 100%)"}} 
+    />
+  );
+}
+
 export default async function BlogPage() {
   const [posts, featuredPosts, managedBanners] = await Promise.all([
     getPublicBlogPosts(),
@@ -68,6 +76,8 @@ export default async function BlogPage() {
             </div>
           </div>
         )}
+
+        <Divider/>
 
         <div className={contentGridClassName}>
           <BlogSearchSection posts={regularPosts} />
