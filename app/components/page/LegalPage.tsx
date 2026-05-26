@@ -14,6 +14,10 @@ interface LegalPageProps {
   addendum?: string;
 }
 
+function normalizeLegalText(value: string) {
+  return value.replace(/\\n/g, "\n");
+}
+
 export default function LegalPage({ title, effectiveDate, sections, addendum }: LegalPageProps) {
   return (
     <main className="bg-[#0b0e14]">
@@ -47,7 +51,7 @@ export default function LegalPage({ title, effectiveDate, sections, addendum }: 
                 </h3>
                 {section.content && (
                   <p className="text-[#a9b1c1] text-[14px] font-medium leading-[21px] tracking-[-0.21px] whitespace-pre-wrap">
-                    {section.content}
+                    {normalizeLegalText(section.content)}
                   </p>
                 )}
               </div>
@@ -57,14 +61,13 @@ export default function LegalPage({ title, effectiveDate, sections, addendum }: 
           {addendum && (
             <div className="flex flex-col gap-2 mt-6 pt-6 border-t border-[#1b1f2a]">
               <h3 className="text-[#f8faff] text-[14px] font-bold leading-[21px] tracking-[-0.21px]">부칙</h3>
-              <p className="text-[#a9b1c1] text-[14px] font-medium leading-[21px] tracking-[-0.21px]">
-                {addendum}
+              <p className="text-[#a9b1c1] text-[14px] font-medium leading-[21px] tracking-[-0.21px] whitespace-pre-wrap">
+                {normalizeLegalText(addendum)}
               </p>
             </div>
           )}
         </div>
       </div>
-
       <Footer />
     </main>
   );
