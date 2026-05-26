@@ -15,24 +15,26 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://classit.kr"),
   // 브라우저 탭과 검색 결과 제목에 쓰이며, 하위 페이지가 title을 지정하면 template이 적용됩니다.
   title: {
-    default: "Classit | 온라인 클래스 운영 플랫폼",
+    default: "클래잇",
     template: "%s | Classit",
   },
   // 검색 결과 설명과 SNS 공유 설명의 기본 문구입니다.
   description:
-    "온라인 클래스 운영에 필요한 VOD 수강, 수강생 관리, 결제와 알림 자동화까지 Classit에서 한 번에 관리하세요.",
+    "인터넷 강의 수강, AI 수강생 관리, 결제 및 알림톡 자동화까지 온라인 학원 운영 솔루션 클래스잇",
   // 브라우저나 OS가 앱/사이트 이름을 표시할 때 사용하는 이름입니다.
   applicationName: "Classit",
   // 검색엔진에 페이지 주제를 보조적으로 알려주는 키워드입니다.
   keywords: [
-    "Classit",
-    "클래스잇",
+    "인터넷 강의",
+    "인강",
     "온라인 클래스",
-    "온라인 강의",
-    "인강 플랫폼",
-    "수강생 관리",
+    "온라인 강의 사이트",
+    "온라인 강의 플랫폼",
+    "인강 사이트",
+    "학원 홈페이지",
+    "학원 홈페이지 제작",
+    "온라인 학원",
     "교육 플랫폼",
-    "클래스 운영",
   ],
   // 대표 URL을 하나로 지정해 중복 URL 평가가 분산되지 않게 합니다.
   alternates: {
