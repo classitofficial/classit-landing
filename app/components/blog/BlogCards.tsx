@@ -11,6 +11,18 @@ export function formatDate(value: string | null) {
   return `${year}년 ${month}월 ${day}일`;
 }
 
+function getContentPreview(post: BlogPost) {
+  const text = post.content
+    .replace(/!\[[^\]]*]\([^)]*\)/g, " ")
+    .replace(/\[([^\]]+)]\([^)]*\)/g, "$1")
+    .replace(/[`*_>#~\-]/g, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  return text || post.summary;
+}
+
 function Thumbnail({ post, className }: { post: BlogPost; className: string }) {
   if (post.thumbnail_url) {
     return <img src={post.thumbnail_url} alt="" draggable={false} className={`${className} object-cover`} />;
@@ -71,7 +83,7 @@ export function BlogListItem({ post }: { post: BlogPost }) {
         <div className="flex min-w-0 flex-1 flex-col gap-4 md:justify-center md:gap-3">
           <div className="flex flex-col gap-2">
             <h3 className="line-clamp-2 text-[18px] font-bold leading-7 tracking-[-0.45px] text-white md:line-clamp-1">{post.title}</h3>
-            <p className="line-clamp-2 text-[14px] font-medium leading-[21px] tracking-[-0.35px] text-[#eaeaea]">{post.summary}</p>
+            <p className="line-clamp-3 text-[14px] font-medium leading-[21px] tracking-[-0.35px] text-[#eaeaea]">{getContentPreview(post)}</p>
           </div>
           <PostMeta post={post} />
         </div>
