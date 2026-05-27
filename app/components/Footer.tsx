@@ -91,7 +91,12 @@ export default function Footer() {
 
         {/* 사업자 정보 */}
         <div className="flex flex-col gap-1 text-[12px] text-[#a9b1c1] leading-4 tracking-[-0.12px] font-medium">
-          <p>사업자등록번호 : 519-43-01174  |  대표 : 이동규 | 개인정보처리담당자 : 이동규</p>
+          <p className="max-[768px]:hidden">사업자등록번호 : 519-43-01174  |  대표 : 이동규 | 개인정보처리담당자 : 이동규</p>
+          <div className="hidden max-[768px]:flex flex-col gap-1">
+            <p>사업자등록번호 : 519-43-01174</p>
+            <p>대표 : 이동규</p>
+            <p>개인정보처리담당자 : 이동규</p>
+          </div>
           <p>주소 : 경기도 고양시 덕양구 동축로70, A동 9층 901호(동산동, 현대프리미어캠퍼스)</p>
           {/* <p>통신판매업신고번호 : 2026-고양덕양구-1043</p> */}
           <p>메일 : classit.official@gmail.com</p>

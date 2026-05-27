@@ -82,7 +82,7 @@ function CtaButton({ label }: { label: string }) {
 }
 
 function PremiumCard({ mobile }: { mobile?: boolean }) {
-  const p = mobile ? "p-6" : "p-8";
+  const p = mobile ? "p-5" : "p-5 min-[769px]:p-8";
   const gap = mobile ? "gap-6" : "gap-8";
   const priceValueClass = mobile
     ? "text-[#f8faff] text-[20px] font-bold leading-[30px] tracking-[-0.3px] whitespace-nowrap"
@@ -127,7 +127,7 @@ function PremiumCard({ mobile }: { mobile?: boolean }) {
                   월 관리비
                 </p>
                 <p className={priceValueClass}>
-                  440,000원
+                  390,000원
                 </p>
               </div>
             </div>
@@ -146,7 +146,7 @@ function PremiumCard({ mobile }: { mobile?: boolean }) {
 }
 
 function EnterpriseCard({ mobile }: { mobile?: boolean }) {
-  const p = mobile ? "p-6" : "p-8";
+  const p = mobile ? "p-5" : "p-5 min-[769px]:p-8";
   const gap = mobile ? "gap-8" : "gap-8";
   const h = mobile ? "" : "h-[610px]";
   const priceValueClass = mobile
