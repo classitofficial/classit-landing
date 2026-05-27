@@ -1,3 +1,5 @@
+export const SITE_URL = "https://www.classit.co.kr";
+
 export const DEFAULT_OG_IMAGE = {
   url: "/images/classit-og-1200x630.png",
   width: 1200,

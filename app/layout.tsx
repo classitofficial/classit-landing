@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { DesignFeedbackWidget } from "./components/dev/DesignFeedbackWidget";
-import { DEFAULT_OG_IMAGE, DEFAULT_TWITTER_IMAGE } from "./shared-metadata";
+import { DEFAULT_OG_IMAGE, DEFAULT_TWITTER_IMAGE, SITE_URL } from "./shared-metadata";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -12,8 +12,8 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  // 상대 경로로 적은 canonical, OG 이미지 URL 등을 classit.kr 기준의 절대 URL로 변환합니다.
-  metadataBase: new URL("https://classit.kr"),
+  // 상대 경로로 적은 canonical, OG 이미지 URL 등을 실제 공유 도메인 기준의 절대 URL로 변환합니다.
+  metadataBase: new URL(SITE_URL),
   // 브라우저 탭과 검색 결과 제목에 쓰이며, 하위 페이지가 title을 지정하면 template이 적용됩니다.
   title: {
     default: "클래스잇",
