@@ -53,7 +53,7 @@ const features = [
       "선생님의 부담은 절반으로 줄일 수 있습니다.",
       "AI가 완성하는 스마트한 질의응답 시스템을 경험해 보세요.",
     ],
-    pcImg: "slide_3.png",
+    pcImg: "new_slide_3.png",
   },
   {
     badge: "4",

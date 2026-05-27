@@ -5,7 +5,7 @@ import { Fragment } from "react";
 function CheckIcon() {
   return (
     <img
-      src="/images/plan-check-new24x.png"
+      src="/images/plan-check-new2.png"
       alt=""
       className="size-6 shrink-0"
       aria-hidden="true"

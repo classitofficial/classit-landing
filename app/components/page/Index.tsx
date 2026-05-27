@@ -16,7 +16,7 @@ export default function Index() {
     <main className="bg-[#0b0e14]">
       <Header />
       <HeroSection />
-      <ClientsSection />
+      {/* <ClientsSection /> */}
       <FeaturesSection />
       <ReviewsSection />
       <TossPaymentsFeeSection />
