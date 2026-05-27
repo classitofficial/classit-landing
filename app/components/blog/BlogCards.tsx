@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ClassitIcon } from "@/app/components/blog/BlogChrome";
+import { getBlogContentPreview } from "@/lib/blog/preview";
 import type { BlogPost } from "@/lib/blog/types";
 
 export function formatDate(value: string | null) {
@@ -9,18 +10,6 @@ export function formatDate(value: string | null) {
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
   return `${year}년 ${month}월 ${day}일`;
-}
-
-function getContentPreview(post: BlogPost) {
-  const text = post.content
-    .replace(/!\[[^\]]*]\([^)]*\)/g, " ")
-    .replace(/\[([^\]]+)]\([^)]*\)/g, "$1")
-    .replace(/[`*_>#~\-]/g, " ")
-    .replace(/<[^>]+>/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-
-  return text || post.summary;
 }
 
 function Thumbnail({ post, className }: { post: BlogPost; className: string }) {
@@ -45,8 +34,8 @@ export function FeaturedPostCard({ post }: { post: BlogPost }) {
           <h2 className="line-clamp-2 text-[20px] font-bold leading-7 tracking-[-0.5px] text-white md:text-[24px] md:leading-8">
             {post.title}
           </h2>
-          <p className="line-clamp-2 text-[14px] font-medium leading-[21px] tracking-[-0.35px] text-[#eaeaea] md:text-[16px] md:leading-6">
-            {post.summary}
+          <p className="line-clamp-3 text-[14px] font-medium leading-[21px] tracking-[-0.35px] text-[#eaeaea] md:text-[16px] md:leading-6">
+            {getBlogContentPreview(post)}
           </p>
         </div>
       </article>
@@ -64,7 +53,7 @@ export function BlogGridCard({ post }: { post: BlogPost }) {
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <h3 className="line-clamp-2 text-[18px] font-bold leading-7 tracking-[-0.45px] text-white">{post.title}</h3>
-            <p className="line-clamp-3 text-[14px] font-medium leading-[21px] tracking-[-0.35px] text-[#eaeaea]">{post.summary}</p>
+            <p className="line-clamp-3 text-[14px] font-medium leading-[21px] tracking-[-0.35px] text-[#eaeaea]">{getBlogContentPreview(post)}</p>
           </div>
           <PostMeta post={post} />
         </div>
@@ -83,7 +72,7 @@ export function BlogListItem({ post }: { post: BlogPost }) {
         <div className="flex min-w-0 flex-1 flex-col gap-4 md:justify-center md:gap-3">
           <div className="flex flex-col gap-2">
             <h3 className="line-clamp-2 text-[18px] font-bold leading-7 tracking-[-0.45px] text-white md:line-clamp-1">{post.title}</h3>
-            <p className="line-clamp-3 text-[14px] font-medium leading-[21px] tracking-[-0.35px] text-[#eaeaea]">{getContentPreview(post)}</p>
+            <p className="line-clamp-3 text-[14px] font-medium leading-[21px] tracking-[-0.35px] text-[#eaeaea]">{getBlogContentPreview(post)}</p>
           </div>
           <PostMeta post={post} />
         </div>

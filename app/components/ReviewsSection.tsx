@@ -32,38 +32,36 @@ const reviewAvatars: Record<number, React.ReactNode> = {
 const reviews = [
   {
     id: 1,
+    headline: "Enterprise Plan Review",
     name: "장문 한상우 대표",
-    tag: "#수학 입시 교육 강사",
-    text: "그 동안 운영한 시스템은 사람의 손에 크게 의존하는 구조라 비효율적인 부분이 많았습니다. 지금까지 구축한 시스템을 자동화시켜 강의 서비스로 만들고 싶었지만, 회사에서 IT 직군이 없는 상황이었습니다.\n\n버블박스가 현재 구축된 시스템을 분석해 기획부터 디자인, 개발까지 알아서 진행해줬고, 그 동안 구축한 시스템을 완벽히 반영해 서비스를 만들어 줬습니다. 특히 대표님이 IT PM 출신이라 그런지 저희가 잘 모르는 부분까지 알아서 처리해주셨습니다.\n\n단순히 서비스를 완성시켜서 던져주는 외주가 아니라, 하나의 전문 팀으로 케어 받는 느낌을 매번 받았습니다. 저희가 미처 고려하지 못해서 놓친 기능도 먼저 알려주시고, 리소스가 남았다면서 무료로 처리해주셨습니다.",
-    url: "https://nocoders.kr/portfolio_detail/1737077802199x529684414129591360", // TODO: URL 입력
+    tags: ["#수학 입시", "#10만 수학 유튜버"],
+    text: "기존에 운영하던 시스템은 사람의 손에 많이 의존하는 구조라 비효율적인 부분이 많았습니다. 지금까지 쌓아온 운영 방식을 자동화해서 하나의 강의 서비스로 만들고 싶었지만, 회사 내부에 IT 직군이 없다 보니 어디서부터 시작해야 할지 막막했습니다.\n\n클래스잇은 저희가 현재 운영하고 있는 시스템을 먼저 분석해주셨고, 그 내용을 바탕으로 기획부터 디자인, 개발까지 전반적인 과정을 알아서 진행해주셨습니다. 덕분에 그동안 저희가 구축해온 운영 방식이 서비스 안에 잘 반영될 수 있었습니다.\n\n특히 담당자분이 IT PM 출신이라 그런지, 저희가 잘 알지 못하는 부분까지 먼저 파악하고 챙겨주신 점이 인상적이었습니다. 단순히 요청한 기능만 만들어주는 것이 아니라, 서비스가 실제로 잘 운영될 수 있도록 필요한 부분들을 함께 고민해주셨습니다.\n\n외주를 맡겼다는 느낌보다는, 하나의 전문 팀에게 케어를 받고 있다는 느낌을 자주 받았습니다. 저희가 미처 고려하지 못해 놓칠 수 있었던 기능들도 먼저 제안해주셨고, 리소스가 남았다며 일부 작업은 무료로 처리해주셔서 감사했습니다.\n\n결과적으로 서비스 완성도와 진행 과정 모두 만족스러웠고, 이후 클래스잇과 중장기적인 운영 계약까지 체결하게 되었습니다.",
   },
   {
     id: 2,
-    name: "범작가 김범준 대표",
-    tag: "#국어 입시 교육 강사",
-    text: "노코더스와 함께하면서 제 도서 판매 사이트가 실시간 리뷰와 구매 현황까지 반영되는 멋진 플랫폼으로 완성됐습니다.\n\n유저들이 배송 정보를 쉽게 확인할 수 있는 시스템까지 구현해 주셔서 정말 만족스럽습니다. 처음부터 끝까지 세심하게 신경 써주신 덕분에 더 많은 독자들과 연결될 수 있었습니다.",
-    url: "https://nocoders.kr/portfolio_detail/1737093020312x552808229090801600", // TODO: URL 입력
+    headline: "Enterprise Plan Review",
+    name: "페탈 김진우 강사",
+    tags: ["#수능 입시", "#4만 수능 유튜버"],
+    text: "처음에는 지인 유튜버 분께 소개를 받아 클래스잇을 알게 되었습니다.\n같은 교육계 유튜브를 운영하시는 분들 중에서도 클래스잇을 이용하신 분들이 여러 분 계셨고, 그분들의 리뷰를 보고 믿고 맡겨도 되겠다고 생각했습니다.\n\n제가 요청드린 서비스는 VOD 강의를 제공하고, 수강생이 질문을 남길 수 있는 질의응답 서비스였습니다. 처음에는 원하는 기능들이 오류 없이 잘 작동하는 것과 수강생들이 보기에도 깔끔한 홈페이지가 만들어지는 것을 기대했습니다.\n\n결과물은 정말 만족스러웠습니다.\n원했던 기능들이 전부 구현되었고, 디자인도 제가 추상적으로 설명드린 부분까지 빠르게 이해해주셔서 기대했던 방향으로 잘 완성되었습니다.\n\n온라인 강의 사이트 제작에 대해 거의 모르는 상태였지만, 필요한 기능만 설명드리면 나머지는 알아서 기획하고 제작해주셔서 초보자 입장에서 정말 편했습니다. 디자인도 전체적인 분위기뿐만 아니라 디테일한 부분까지 마음에 들었습니다.\n\n개발 과정에서는 제가 직접 해야 하는 부분들에 대한 안내가 체계적으로 되어 있어 크게 불편한 점이 없었습니다. 작은 수정 요청도 여러 번 드렸는데, 빠르게 확인하고 반영해주신 점이 특히 만족스러웠습니다.\n\n주변 지인에게 클래스잇을 소개한다면, 온라인 강의 사이트 제작에 대해 잘 모르는 사람도 걱정 없이 맡길 수 있는 서비스라고 소개하고 싶습니다.",
   },
   {
     id: 3,
-    name: "누보영어 구하은 대표",
-    tag: "#영어 입시 교육 강사",
-    text: "처음엔 다른 업체에 꽤 큰 비용을 들여 홈페이지를 만들었는데, 결과물이 마음에 들지 않아 다시 제작을 고민하게 됐어요. 그때 주변 추천으로 노코더스를 알게 됐고, 포트폴리오를 보자마자 \"여기다\" 싶었습니다.\n\n이번엔 VOD 강의 판매랑 학생 관리 기능이 포함된 사이트였는데, 제가 원한 기능은 다 구현됐고, 추가 요청도 빠르게 반영해주셔서 너무 편했어요. 비용도 합리적이었고요.\n\n디자인은 막연하게 걱정했는데, 센스 있게 잘 잡아주셔서 따로 수정할 필요도 없었고, 무엇보다 '무한 수정'이라는 점이 정말 인상 깊었어요.",
-    url: "https://nocoders.kr/portfolio_detail/1750912766248x320809888917284540", // TODO: URL 입력
-  },
-  {
-    id: 4,
-    name: "다정북스 김동우 대표",
-    tag: "#수학 입시 교육 강사",
-    text: "연락하고 지낸 수학 강사, 땅우 쌤이 자신의 사이트를 클래스잇은 통해 만들었다고 알려주셨습니다. 땅우 쌤이 사이트가 필요하면 클래스잇을 찾아보라고 해서 연락을 드렸습니다.\n\n직접 저희 사이트와 제품을 서치해서 레퍼런스를 공유해주면, 관련 이미지나 댓글, 후기, 설명 등을 디자이너님이 알아서 반영해주셔서 편했습니다.\n\n개발도 빠르게 작업해 필요한 사이트를 금방 만들어 주셨습니다. 오히려 저희가 개발에 필요한 정보를 맞춰서 준비하지 못할 정도였습니다.",
-    url: "https://nocoders.kr/portfolio_detail/1742971795914x880813719770505100", // TODO: URL 입력
+    headline: "Enterprise Plan Review",
+    name: "누보영어 구하은 원장",
+    tags: ["#영어 입시", "#인스타그램 10만 팔로워"],
+    text: "주변인의 추천으로 클래스잇을 알게 되었습니다.\n여러 외주사를 찾아보던 중 클래스잇의 포트폴리오를 보게 되었는데, 작업물들이 전부 마음에 들어 의뢰를 결정하게 되었습니다.\n\n사실 이전에도 꽤 큰 비용을 들여 홈페이지를 제작한 적이 있었지만, 결과물이 마음에 들지 않아 다시 새롭게 제작을 맡기게 된 상황이었습니다. 그래서 이번에는 반응 속도가 빠르고, 원하는 기능이 제대로 구현된 홈페이지가 만들어지길 기대했습니다.\n\n결과물은 아주 만족스럽습니다.\n원했던 기능들이 전부 구현되었고, 운영 중간에 추가 기능이 필요할 때도 추가 계약을 통해 손쉽게 확장할 수 있다는 점이 좋았습니다. 비용도 비교적 합리적인 편이라 부담이 크지 않았습니다.\n\n기획 과정에서는 소통이 잘 되고 설명이 굉장히 친절했던 점이 가장 만족스러웠고, 디자인도 정말 만족스러웠습니다.\n제가 디자인 감각이 좋은 편이 아니라 걱정이 많았는데, 디자이너분이 알아서 잘 만들어주셨고 수정 요청도 계속 반영해주셔서 좋았습니다.\n\n개발 작업 역시 원하던 기능들이 모두 구현되어 개선점을 따로 말하기 어려울 정도였습니다. 커뮤니케이션도 정말 잘 되어, 언제 출근하시고 언제 퇴근하시는지 궁금할 정도였습니다.\n\n주변 지인에게 클래스잇을 소개한다면, 한마디로 “VOD 강의 판매와 학생 관리 홈페이지 제작 최강자”라고 소개하고 싶습니다.",
   },
 ];
 
-function ReviewCard({ review, mobile }: { review: (typeof reviews)[0]; mobile?: boolean }) {
+function ReviewCard({ review }: { review: (typeof reviews)[0] }) {
   return (
-    <div className={`flex flex-col gap-5 items-start p-5 bg-[#0f1219] border border-[#1b1f2a] rounded-2xl shrink-0 ${mobile ? "w-[280px]" : "w-[540px]"}`}>
-      {/* Header */}
+    <div className="flex flex-col gap-8 items-start p-5 bg-[#0F1219] border border-[#1B1F2A] rounded-[16px] w-full max-w-[440px]">
+      <div className="btn-gradient btn-gradient-blue inline-flex items-center rounded-full px-4 py-1.5">
+        <span className="font-['Pretendard'] text-[14px] font-bold leading-[21px] text-[var(--_,#F8FAFF)]">
+          {review.headline}
+        </span>
+      </div>
+
       <div className="flex gap-3 items-center">
         <div className="size-10 rounded-2xl bg-[#F8FAFF] border border-[#2a2f3d] flex items-center justify-center shrink-0">
           {reviewAvatars[review.id]}
@@ -72,55 +70,36 @@ function ReviewCard({ review, mobile }: { review: (typeof reviews)[0]; mobile?: 
           <p className="text-[#f8faff] text-[16px] font-bold leading-6 tracking-[-0.4px]">
             {review.name}
           </p>
-          <p className="text-[#f8faff] text-[12px] font-medium leading-4 tracking-[-0.3px]">
-            {review.tag}
-          </p>
+          <div className="flex items-center gap-2">
+            {review.tags.map((tag) => (
+              <p key={tag} className="text-[#F8FAFF] text-[12px] font-medium leading-4 tracking-[-0.3px]">
+                {tag}
+              </p>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Body */}
-      <div className="flex flex-col gap-5 items-end w-full">
-        <p className="text-[#f8faff] text-[14px] font-medium leading-[21px] tracking-[-0.35px] whitespace-pre-wrap w-full max-h-[105px] line-clamp-5 overflow-hidden">
+      <div className="w-full">
+        <p className="text-[#f1f5ff] text-[14px] font-medium leading-6 tracking-[-0.35px] whitespace-pre-wrap w-full">
           {review.text}
         </p>
-        <a href={review.url} target="_blank" rel="noopener noreferrer" className="flex gap-1 items-center">
-          <span className="text-[#f8faff] text-[14px] font-bold leading-[21px] tracking-[-0.35px]">
-            상세 리뷰 보기
-          </span>
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12.3584 9.40825L8.82507 5.87492C8.74761 5.79681 8.65544 5.73481 8.55389 5.69251C8.45234 5.6502 8.34342 5.62842 8.23341 5.62842C8.1234 5.62842 8.01448 5.6502 7.91293 5.69251C7.81138 5.73481 7.71921 5.79681 7.64174 5.87492C7.48653 6.03105 7.39941 6.24226 7.39941 6.46242C7.39941 6.68257 7.48653 6.89378 7.64174 7.04992L10.5917 9.99992L7.64174 12.9499C7.48653 13.1061 7.39941 13.3173 7.39941 13.5374C7.39941 13.7576 7.48653 13.9688 7.64174 14.1249C7.71961 14.2022 7.81195 14.2633 7.91349 14.3047C8.01502 14.3462 8.12374 14.3672 8.23341 14.3666C8.34308 14.3672 8.4518 14.3462 8.55333 14.3047C8.65486 14.2633 8.74721 14.2022 8.82507 14.1249L12.3584 10.5916C12.4365 10.5141 12.4985 10.4219 12.5408 10.3204C12.5831 10.2188 12.6049 10.1099 12.6049 9.99992C12.6049 9.88991 12.5831 9.78098 12.5408 9.67944C12.4985 9.57789 12.4365 9.48572 12.3584 9.40825Z" fill="#E9ECF2"/>
-          </svg>
-        </a>
       </div>
     </div>
   );
 }
 
 export default function ReviewsSection() {
-  const row1 = [...reviews, ...reviews];
-  const desktopDoubled = [...reviews, ...reviews];
-
   return (
-    <section className="flex flex-col gap-8 md:gap-[52px] items-center py-[104px] md:py-[144px] overflow-hidden">
+    <section className="flex flex-col gap-8 md:gap-[52px] items-center py-[104px] md:py-[144px]">
       <h2 className="text-[#f8faff] text-[28px] font-bold leading-9 tracking-[-0.42px] text-center shrink-0">
         학원 및 강사님 후기
       </h2>
 
-      <div className="md:hidden flex flex-col gap-3 w-full overflow-hidden">
-        <div className="flex gap-3 animate-marquee w-max">
-          {row1.map((review, i) => (
-            <ReviewCard key={`r1-${review.id}-${i}`} review={review} mobile={true} />
-          ))}
-        </div>
-      </div>
-
-      {/* 데스크톱: 1줄 마퀴 */}
-      <div className="hidden md:block w-full overflow-hidden">
-        <div className="flex gap-[9px] animate-marquee w-max">
-          {desktopDoubled.map((review, i) => (
-            <ReviewCard key={`${review.id}-${i}`} review={review} mobile={false} />
-          ))}
-        </div>
+      <div className="grid grid-cols-1 min-[769px]:grid-cols-2 min-[1080px]:grid-cols-3 gap-2 justify-items-center w-full max-w-fit px-5">
+        {reviews.map((review) => (
+          <ReviewCard key={review.id} review={review} />
+        ))}
       </div>
     </section>
   );

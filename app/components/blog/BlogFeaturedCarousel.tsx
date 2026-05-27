@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { KeyboardEvent as ReactKeyboardEvent, PointerEvent as ReactPointerEvent } from "react";
 import { useRouter } from "next/navigation";
+import { getBlogContentPreview } from "@/lib/blog/preview";
 import type { BlogPost } from "@/lib/blog/types";
 
 export default function BlogFeaturedCarousel({ posts }: { posts: BlogPost[] }) {
@@ -110,7 +111,7 @@ export default function BlogFeaturedCarousel({ posts }: { posts: BlogPost[] }) {
           {posts.map((post) => {
             const imageUrl = post.featured_image_url || post.thumbnail_url;
             const title = post.featured_title || post.title;
-            const description = post.featured_description || post.summary;
+            const description = getBlogContentPreview(post);
 
             return (
               <div key={post.id} className="w-full shrink-0">
@@ -134,7 +135,7 @@ export default function BlogFeaturedCarousel({ posts }: { posts: BlogPost[] }) {
                       <h2 className="line-clamp-2 text-[20px] font-bold leading-7 tracking-[-0.5px] text-white md:text-[24px] md:leading-8">
                         {title}
                       </h2>
-                      <p className="line-clamp-2 text-[14px] font-medium leading-[21px] tracking-[-0.35px] text-[#eaeaea] md:text-[16px] md:leading-6">
+                      <p className="line-clamp-3 text-[14px] font-medium leading-[21px] tracking-[-0.35px] text-[#eaeaea] md:text-[16px] md:leading-6">
                         {description}
                       </p>
                     </div>

@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { BlogListItem, PostMeta } from "@/app/components/blog/BlogCards";
 import { BlogShell } from "@/app/components/blog/BlogChrome";
 import BlogMarkdownContent from "@/app/components/blog/BlogMarkdownContent";
+import { getOpenGraphImages } from "@/app/shared-metadata";
 import { getPublicBlogPostBySlug, getPublicBlogPosts } from "@/lib/blog/supabase";
 
 type PageProps = {
@@ -31,7 +32,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: post.seo_description || post.summary,
       url: `/blog/${post.slug}`,
       type: "article",
-      images: post.thumbnail_url ? [post.thumbnail_url] : undefined,
+      siteName: "Classit",
+      locale: "ko_KR",
+      images: getOpenGraphImages(post.thumbnail_url),
     },
   };
 }

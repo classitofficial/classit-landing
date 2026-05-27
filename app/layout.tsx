@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { DesignFeedbackWidget } from "./components/dev/DesignFeedbackWidget";
+import { DEFAULT_OG_IMAGE, DEFAULT_TWITTER_IMAGE } from "./shared-metadata";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://classit.kr"),
   // 브라우저 탭과 검색 결과 제목에 쓰이며, 하위 페이지가 title을 지정하면 template이 적용됩니다.
   title: {
-    default: "클래잇",
+    default: "클래스잇",
     template: "%s | Classit",
   },
   // 검색 결과 설명과 SNS 공유 설명의 기본 문구입니다.
@@ -52,12 +53,12 @@ export const metadata: Metadata = {
   // 카카오톡, Slack, Facebook 등에서 공유될 때 쓰이는 Open Graph 미리보기 정보입니다.
   openGraph: {
     // 공유 카드의 제목입니다.
-    title: "Classit | 온라인 클래스 운영 플랫폼",
+    title: "클래스잇",
     // 공유 카드에 표시되는 사이트 이름입니다.
     siteName: "Classit",
     // 공유 카드의 설명 문구입니다.
     description:
-      "온라인 클래스 운영에 필요한 VOD 수강, 수강생 관리, 결제와 알림 자동화까지 Classit에서 한 번에 관리하세요.",
+      "인터넷 강의 수강, AI 수강생 관리, 결제 및 알림톡 자동화까지 온라인 학원 운영 솔루션 클래스잇",
     // 공유 카드가 가리키는 대표 URL입니다.
     url: "/",
     // 랜딩 페이지처럼 일반 웹사이트 페이지임을 나타냅니다.
@@ -66,15 +67,7 @@ export const metadata: Metadata = {
     locale: "ko_KR",
     // 공유 카드에 표시될 대표 이미지입니다.
     images: [
-      {
-        // metadataBase와 합쳐져 https://classit.kr/images/classit-og.png로 해석됩니다.
-        url: "/images/classit-og.png",
-        // 공유 플랫폼이 이미지 비율을 미리 계산할 수 있게 실제 이미지 크기를 명시합니다.
-        width: 512,
-        height: 342,
-        // 이미지가 표시되지 않거나 보조 기술에서 읽을 때 쓰는 대체 설명입니다.
-        alt: "Classit 온라인 클래스 운영 대시보드",
-      },
+      DEFAULT_OG_IMAGE,
     ],
   },
   // X(Twitter)에서 공유될 때 쓰이는 카드 미리보기 정보입니다.
@@ -82,12 +75,12 @@ export const metadata: Metadata = {
     // 큰 이미지가 포함된 공유 카드 형식을 사용합니다.
     card: "summary_large_image",
     // Twitter 카드의 제목입니다.
-    title: "Classit | 온라인 클래스 운영 플랫폼",
+    title: "클래스잇",
     // Twitter 카드의 설명 문구입니다.
     description:
-      "온라인 클래스 운영에 필요한 VOD 수강, 수강생 관리, 결제와 알림 자동화까지 Classit에서 한 번에 관리하세요.",
+      "인터넷 강의 수강, AI 수강생 관리, 결제 및 알림톡 자동화까지 온라인 학원 운영 솔루션 클래스잇",
     // Twitter 카드에 표시될 대표 이미지입니다.
-    images: ["/images/classit-og.png"],
+    images: [DEFAULT_TWITTER_IMAGE],
   },
 };
 
