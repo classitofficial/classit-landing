@@ -56,4 +56,29 @@ describe("inquiry API", () => {
       "> 추가 내용을 작성해주세요."
     );
   });
+
+  it("normalizes copied Slack environment values before sending", async () => {
+    vi.stubEnv("SLACK_BOT_TOKEN", ' "slack-token" ');
+    vi.stubEnv("SLACK_CHANNEL_ID", " 'slack-channel' ");
+
+    const response = await POST(createInquiryRequest({
+      plan: "enterprise",
+      institution: "클래스잇",
+      representativeName: "홍길동",
+      email: "hello@classit.kr",
+      phone: "010-1111-2222",
+      contactMethod: "email",
+      comments: "",
+    }));
+
+    expect(response.status).toBe(200);
+    const fetchMock = vi.mocked(globalThis.fetch);
+    const [, init] = fetchMock.mock.calls[0];
+    const payload = JSON.parse(String(init?.body));
+
+    expect(init?.headers).toMatchObject({
+      Authorization: "Bearer slack-token",
+    });
+    expect(payload.channel).toBe("slack-channel");
+  });
 });

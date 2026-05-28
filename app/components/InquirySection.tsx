@@ -112,6 +112,7 @@ interface FormFieldsProps {
   comments: string;
   setComments: (v: string) => void;
   status: Status;
+  errorMessage: string;
 }
 
 function FormFields({
@@ -133,6 +134,7 @@ function FormFields({
   comments,
   setComments,
   status,
+  errorMessage,
 }: FormFieldsProps) {
   return (
     <div className="flex flex-col gap-5 items-start w-full">
@@ -225,7 +227,9 @@ function FormFields({
       </div>
 
       {status === "error" && (
-        <p className="text-red-400 text-[14px] font-medium w-full text-center">신청 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.</p>
+        <p className="text-red-400 text-[14px] font-medium w-full text-center">
+          {errorMessage || "신청 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요."}
+        </p>
       )}
     </div>
   );
@@ -241,6 +245,7 @@ export default function InquirySection() {
   const [phone, setPhone] = useState("");
   const [comments, setComments] = useState("");
   const [status, setStatus] = useState<Status>("idle");
+  const [errorMessage, setErrorMessage] = useState("");
   const [showPopup, setShowPopup] = useState(false);
   const [submittedContactMethod, setSubmittedContactMethod] = useState<ContactMethod>("kakao");
 
@@ -254,6 +259,7 @@ export default function InquirySection() {
     setPhone("");
     setComments("");
     setStatus("idle");
+    setErrorMessage("");
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -263,17 +269,40 @@ export default function InquirySection() {
       return;
     }
     setStatus("loading");
+    setErrorMessage("");
     try {
       const res = await fetch("/api/inquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ plan, institution, representativeName: repName, email, phone, contactMethod, comments }),
       });
-      if (!res.ok) { setStatus("error"); return; }
+      if (!res.ok) {
+        const fallbackMessage = "신청 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.";
+        let message = fallbackMessage;
+
+        try {
+          const data = await res.json();
+          if (typeof data.error === "string" && data.error.trim()) {
+            message = data.error;
+          }
+        } catch {
+          message = fallbackMessage;
+        }
+
+        console.error("Inquiry submission failed.", {
+          status: res.status,
+          message,
+        });
+        setErrorMessage(message);
+        setStatus("error");
+        return;
+      }
       setSubmittedContactMethod(contactMethod);
       resetForm();
       setShowPopup(true);
-    } catch {
+    } catch (error) {
+      console.error("Inquiry submission failed.", error);
+      setErrorMessage("신청 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
       setStatus("error");
     }
   }
@@ -288,6 +317,7 @@ export default function InquirySection() {
     phone, setPhone,
     comments, setComments,
     status,
+    errorMessage,
   };
 
   const submitButton = (

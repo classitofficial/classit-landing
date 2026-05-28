@@ -11,10 +11,22 @@ const PLAN_LABELS: Record<string, string> = {
   enterprise: "Enterprise Plan",
 };
 
+function readEnvValue(name: string) {
+  const value = process.env[name];
+  if (!value) return "";
+
+  return value.trim().replace(/^(['"])(.*)\1$/, "$2").trim();
+}
+
 export async function POST(request: NextRequest) {
-  const token = process.env.SLACK_BOT_TOKEN;
-  const channel = process.env.SLACK_CHANNEL_ID;
+  const token = readEnvValue("SLACK_BOT_TOKEN");
+  const channel = readEnvValue("SLACK_CHANNEL_ID");
   if (!token || !channel) {
+    console.error("[inquiry] Slack environment variables are missing.", {
+      hasToken: Boolean(token),
+      hasChannel: Boolean(channel),
+    });
+
     return NextResponse.json(
       { error: "Slack 환경변수가 설정되지 않았습니다." },
       { status: 500 }
@@ -75,6 +87,13 @@ export async function POST(request: NextRequest) {
 
   const slackData = await slackRes.json();
   if (!slackData.ok) {
+    console.error("[inquiry] Slack chat.postMessage failed.", {
+      slackError: slackData.error ?? "unknown_error",
+      responseStatus: slackRes.status,
+      channelPrefix: channel.slice(0, 1),
+      channelLength: channel.length,
+    });
+
     return NextResponse.json(
       { error: `Slack 오류: ${slackData.error}` },
       { status: 500 }
