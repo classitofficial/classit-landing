@@ -219,7 +219,7 @@ function FormFields({
               <path d="M14 7L8.03374 13L6 10.9548" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
-          <span className="text-[#f8faff] text-[14px] font-medium leading-[21px] tracking-[-0.14px] whitespace-nowrap">개인정보 수집 및 이용 동의</span>
+          <span className="text-[#f8faff] text-[14px] font-medium leading-[21px] tracking-[-0.14px] whitespace-nowrap">개인정보 수집 및 이용 동의<RequiredMark /></span>
         </button>
         <Link href="/privacy" className="text-[#a9b1c1] text-[14px] font-medium leading-[21px] tracking-[-0.14px] whitespace-nowrap hover:text-[#f8faff] transition-colors">보기</Link>
       </div>

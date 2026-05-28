@@ -105,7 +105,7 @@ function PlanPriceColumn({
             <p className="text-[#a9b1c1] text-[12px] font-medium leading-[18px] tracking-[-0.18px] line-through whitespace-nowrap">
               {original}
             </p>
-            <p className="text-[#f98585] text-[12px] font-medium leading-[18px] tracking-[-0.18px] whitespace-nowrap">
+            <p className="text-[#FA9D9D] text-[12px] font-medium leading-[18px] tracking-[-0.18px] whitespace-nowrap">
               {discount}↓
             </p>
           </div>
