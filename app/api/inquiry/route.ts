@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 const CONTACT_METHOD_LABELS: Record<string, string> = {
-  kakao: "카카오톡/문자",
+  kakao: "카카오톡 /문자",
   email: "이메일",
   phone: "전화",
 };
@@ -33,23 +33,32 @@ export async function POST(request: NextRequest) {
 
   const planLabel = PLAN_LABELS[plan] ?? plan;
   const contactLabel = CONTACT_METHOD_LABELS[contactMethod] ?? contactMethod;
+  const additionalComments =
+    typeof comments === "string" && comments.trim()
+      ? comments.trim()
+      : "추가 내용을 작성해주세요.";
+  const slackMessage = [
+    "*:hammer_and_pick: 도입 상담 문의 접수*",
+    "",
+    `• 관심 플랜: ${planLabel}`,
+    `• 학원 / 기관명: ${institution}`,
+    `• 담당자 성함: ${representativeName}`,
+    `• 이메일: ${email}`,
+    `• 연락처: ${phone}`,
+    `• 연락 방법: ${contactLabel}`,
+    "",
+    `> ${additionalComments}`,
+  ].join("\n");
 
   const slackPayload = {
     channel,
-    text: "클래스잇 도입 상담 신청",
+    text: ":hammer_and_pick: 도입 상담 문의 접수",
     blocks: [
-      {
-        type: "header",
-        text: {
-          type: "plain_text",
-          text: "📋 클래스잇 도입 상담 신청",
-        },
-      },
       {
         type: "section",
         text: {
           type: "mrkdwn",
-          text: `>*플랜 :* ${planLabel}\n>*담당자 :* ${representativeName} / ${institution} (${email} / ${phone})\n>*연락 방법 :* ${contactLabel}${comments ? `\n>*추가 내용 :* ${comments}` : ""}`,
+          text: slackMessage,
         },
       },
     ],
