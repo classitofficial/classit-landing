@@ -1,9 +1,13 @@
 import ReactMarkdown, { defaultUrlTransform } from "react-markdown";
 import type { Components, UrlTransform } from "react-markdown";
 import remarkBreaks from "remark-breaks";
+import BlogHtmlContent, { normalizeBlogHtml } from "./BlogHtmlContent";
+
+export { normalizeBlogHtml };
 
 type BlogMarkdownContentProps = {
   content: string;
+  format?: "markdown" | "html" | null;
 };
 
 function normalizeImageUrl(url: string | Blob | undefined) {
@@ -60,6 +64,58 @@ const markdownComponents: Components = {
       </strong>
     );
   },
+  em({ node, children, ...props }) {
+    void node;
+    return (
+      <em className="italic text-white" {...props}>
+        {children}
+      </em>
+    );
+  },
+  ul({ node, children, ...props }) {
+    void node;
+    return (
+      <ul className="flex list-disc flex-col gap-2 pl-6 text-[16px] font-medium leading-7 text-white" {...props}>
+        {children}
+      </ul>
+    );
+  },
+  ol({ node, children, ...props }) {
+    void node;
+    return (
+      <ol className="flex list-decimal flex-col gap-2 pl-6 text-[16px] font-medium leading-7 text-white" {...props}>
+        {children}
+      </ol>
+    );
+  },
+  li({ node, children, ...props }) {
+    void node;
+    return (
+      <li className="pl-1" {...props}>
+        {children}
+      </li>
+    );
+  },
+  code({ node, className, children, ...props }) {
+    void node;
+    return (
+      <code className={`rounded-md bg-[#151a24] px-1.5 py-0.5 font-mono text-[14px] text-[#f8faff] ${className ?? ""}`} {...props}>
+        {children}
+      </code>
+    );
+  },
+  pre({ node, children, ...props }) {
+    void node;
+    return (
+      <pre className="overflow-x-auto rounded-2xl border border-white/10 bg-[#0f1219] p-4 text-[14px] leading-6 text-[#f8faff]" {...props}>
+        {children}
+      </pre>
+    );
+  },
+  hr({ node, ...props }) {
+    void node;
+    return <hr className="border-white/10" {...props} />;
+  },
   blockquote({ node, children, ...props }) {
     void node;
     return (
@@ -90,11 +146,21 @@ const markdownComponents: Components = {
   },
 };
 
-export default function BlogMarkdownContent({ content }: BlogMarkdownContentProps) {
+export function inferBlogContentFormat(content: string): "markdown" | "html" {
+  return /^\s*(<!doctype\s+html|<html\b|<body\b|<article\b|<section\b|<div\b|<main\b|<p\b|<h[1-6]\b)/i.test(content) ? "html" : "markdown";
+}
+
+export default function BlogMarkdownContent({ content, format }: BlogMarkdownContentProps) {
+  const resolvedFormat = format ?? inferBlogContentFormat(content);
+
+  if (resolvedFormat === "html") {
+    return <BlogHtmlContent html={content} />;
+  }
+
   return (
     <div className="flex max-w-none flex-col gap-5">
       <ReactMarkdown
-        allowedElements={["h1", "h2", "h3", "p", "strong", "blockquote", "img", "a", "br"]}
+        allowedElements={["h1", "h2", "h3", "p", "strong", "em", "ul", "ol", "li", "code", "pre", "hr", "blockquote", "img", "a", "br"]}
         components={markdownComponents}
         remarkPlugins={[remarkBreaks]}
         skipHtml

@@ -9,6 +9,7 @@ function post(id: string): BlogPost {
     slug: `post-${id}`,
     summary: "",
     content: "",
+    content_format: "markdown",
     thumbnail_url: null,
     thumbnail_path: null,
     status: "published",

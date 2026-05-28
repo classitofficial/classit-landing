@@ -110,7 +110,7 @@ function PremiumCard({ mobile }: { mobile?: boolean }) {
         <div className="flex flex-col gap-2 items-start w-full">
           <PlanBadge name="Premium" type="Plan" />
           <div className="flex flex-col gap-4 items-start w-full">
-            <p className="text-[#e9ecf2] text-[14px] font-normal leading-[1.5] tracking-[-0.28px] w-full">
+            <p className="text-[#e9ecf2] text-[14px] font-medium leading-[21px] tracking-[-0.21px] w-full">
               AI와 함께 자동으로 운영하는 교육 플랫폼
             </p>
             <div className={priceRowClass}>

@@ -1,4 +1,5 @@
 export type BlogPostStatus = "draft" | "published";
+export type BlogContentFormat = "markdown" | "html";
 
 export type BlogPost = {
   id: string;
@@ -6,6 +7,7 @@ export type BlogPost = {
   slug: string;
   summary: string;
   content: string;
+  content_format: BlogContentFormat | null;
   thumbnail_url: string | null;
   thumbnail_path: string | null;
   status: BlogPostStatus;

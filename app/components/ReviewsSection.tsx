@@ -812,7 +812,7 @@ const reviewAvatars: Record<number, React.ReactNode> = {
 
 function Divider({ highlight }: { highlight?: boolean }) {
   return (
-    <div className="w-full h-px my-2" style={{
+    <div className="w-full h-px" style={{
       background: "linear-gradient(90deg, rgba(94,103,122,0) 0%, rgba(94,103,122,0.4) 49.52%, rgba(94,103,122,0) 100%)"}} 
     />
   );

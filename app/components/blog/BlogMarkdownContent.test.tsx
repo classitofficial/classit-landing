@@ -1,6 +1,6 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
-import BlogMarkdownContent from "./BlogMarkdownContent";
+import BlogMarkdownContent, { normalizeBlogHtml } from "./BlogMarkdownContent";
 
 function renderMarkdown(markdown: string) {
   return renderToStaticMarkup(<BlogMarkdownContent content={markdown} />);
@@ -14,7 +14,21 @@ describe("BlogMarkdownContent", () => {
 
 ### Detail
 
-Plain **bold** text.
+Plain **bold** and _italic_ text.
+
+- Bullet one
+- Bullet two
+
+1. Ordered one
+2. Ordered two
+
+\`inline code\`
+
+\`\`\`
+code block
+\`\`\`
+
+---
 
 > Quoted line`);
 
@@ -26,6 +40,18 @@ Plain **bold** text.
     expect(html).toContain("Detail</h3>");
     expect(html).toContain("<strong");
     expect(html).toContain("bold</strong>");
+    expect(html).toContain("<em");
+    expect(html).toContain("italic</em>");
+    expect(html).toContain("<ul");
+    expect(html).toContain("<ol");
+    expect(html).toContain("<li");
+    expect(html).toContain("Bullet one");
+    expect(html).toContain("Ordered one");
+    expect(html).toContain("<code");
+    expect(html).toContain("inline code");
+    expect(html).toContain("<pre");
+    expect(html).toContain("code block");
+    expect(html).toContain("<hr");
     expect(html).toContain("<blockquote");
     expect(html).toContain("Quoted line");
   });
@@ -46,5 +72,34 @@ Next line`);
     expect(html).toContain(">Classit</a>");
     expect(html).toContain("<br");
     expect(html).toContain("Next line");
+  });
+
+  it("renders html content after extracting full document body", () => {
+    const html = renderToStaticMarkup(
+      <BlogMarkdownContent
+        format={null}
+        content={`<!doctype html>
+<html>
+  <head><title>Ignored</title></head>
+  <body><section class="post"><h2>HTML 본문</h2><p>잘 보여야 합니다.</p></section></body>
+</html>`}
+      />,
+    );
+
+    expect(html).toContain("블로그 HTML 콘텐츠");
+    expect(html).toContain("class=&quot;post&quot;");
+    expect(html).toContain("HTML 본문");
+    expect(html).toContain("잘 보여야 합니다.");
+    expect(html).not.toContain("<body");
+  });
+
+  it("removes unsafe html before rendering", () => {
+    const html = normalizeBlogHtml('<section onclick="alert(1)"><script>alert(1)</script><a href=javascript:alert(1)>link</a></section>');
+
+    expect(html).toContain("<section>");
+    expect(html).toContain(">link</a>");
+    expect(html).not.toContain("onclick");
+    expect(html).not.toContain("<script");
+    expect(html).not.toContain("javascript:");
   });
 });
