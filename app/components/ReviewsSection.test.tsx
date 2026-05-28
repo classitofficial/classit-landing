@@ -23,6 +23,15 @@ describe("ReviewsSection", () => {
     expect(html).toContain("처음 노코더스에 문의를 남겼을 때는");
   });
 
+  it("preserves paragraph line breaks in review card content", () => {
+    const html = renderToStaticMarkup(<ReviewsSection />);
+
+    expect(html).toContain("막막했습니다.\n\n클래스잇은");
+    expect(html).toContain("알게 되었습니다.\n같은 교육계");
+    expect(html).toContain("느꼈습니다.\n\n특히 커뮤니케이션이");
+    expect(html).toContain("알게 되었습니다.\n여러 외주사를");
+  });
+
   it("applies the review headline icon and Pretendard medium 14 style", () => {
     const html = renderToStaticMarkup(<ReviewsSection />);
 

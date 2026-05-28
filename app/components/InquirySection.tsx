@@ -26,6 +26,10 @@ const inputCls =
 const labelCls =
   "text-[#f8faff] text-[14px] font-medium leading-[21px] tracking-[-0.21px] whitespace-nowrap";
 
+function RequiredMark() {
+  return <span className="text-[var(--color-red-400)]">*</span>;
+}
+
 const contactMethodMeta: Record<ContactMethod, { label: string; particle: string }> = {
   kakao: { label: "카카오톡 / 문자", particle: "으로" },
   email: { label: "이메일", particle: "로" },
@@ -134,7 +138,7 @@ function FormFields({
     <div className="flex flex-col gap-5 items-start w-full">
       {/* 관심 플랜 */}
       <div className="flex flex-col gap-2 items-start w-full">
-        <p className={labelCls}>관심 플랜*</p>
+        <p className={labelCls}>관심 플랜<RequiredMark /></p>
         <div className={`flex items-start w-full ${vertical ? "flex-col gap-3" : "gap-10"}`}>
           {planOptions.map(({ value, label }) => (
             <button key={value} type="button" onClick={() => setPlan(value)} className="flex gap-2 items-center">
@@ -148,11 +152,11 @@ function FormFields({
       {/* 학원/기관명 + 담당자 */}
       <div className={`flex items-start w-full ${vertical ? "flex-col gap-5" : "gap-5"}`}>
         <div className="flex flex-1 flex-col gap-2 items-start w-full">
-          <label className={labelCls}>학원 / 기관명*</label>
+          <label className={labelCls}>학원 / 기관명<RequiredMark /></label>
           <input type="text" value={institution} onChange={(e) => setInstitution(e.target.value)} placeholder="학원 / 기관명을 입력해주세요." required className={inputCls} />
         </div>
         <div className="flex flex-1 flex-col gap-2 items-start w-full">
-          <label className={labelCls}>담당자 성함*</label>
+          <label className={labelCls}>담당자 성함<RequiredMark /></label>
           <input type="text" value={repName} onChange={(e) => setRepName(e.target.value)} placeholder="성함을 입력해주세요." required className={inputCls} />
         </div>
       </div>
@@ -160,11 +164,11 @@ function FormFields({
       {/* 이메일 + 연락처 */}
       <div className={`flex items-start w-full ${vertical ? "flex-col gap-5" : "gap-5"}`}>
         <div className="flex flex-1 flex-col gap-2 items-start w-full">
-          <label className={labelCls}>이메일*</label>
+          <label className={labelCls}>이메일<RequiredMark /></label>
           <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="이메일을 입력해주세요." required className={inputCls} />
         </div>
         <div className="flex flex-1 flex-col gap-2 items-start w-full">
-          <label className={labelCls}>연락처*</label>
+          <label className={labelCls}>연락처<RequiredMark /></label>
           <input
             type="tel"
             inputMode="numeric"
@@ -185,7 +189,7 @@ function FormFields({
 
       {/* 연락 방법 */}
       <div className="flex flex-col gap-2 items-start w-full">
-        <p className={labelCls}>연락 방법*</p>
+        <p className={labelCls}>연락 방법<RequiredMark /></p>
         <div className={`flex items-start w-full ${vertical ? "flex-col gap-3" : "gap-5"}`}>
           {contactOptions.map(({ value, label }) => (
             <button key={value} type="button" onClick={() => setContactMethod(value)} className="flex gap-2 items-center min-w-[137px]">
