@@ -7,7 +7,9 @@ type BlogHtmlContentProps = {
 };
 
 const MIN_HTML_FRAME_HEIGHT = 720;
+const BLOG_HTML_ANCHOR_SCROLL_OFFSET = 112;
 const BLOG_HTML_RESIZE_MESSAGE_TYPE = "classit-blog-html-resize";
+const BLOG_HTML_ANCHOR_SCROLL_MESSAGE_TYPE = "classit-blog-html-anchor-scroll";
 const BLOG_HTML_NO_SCROLLBAR_STYLE = `
   <style>
     html,
@@ -99,6 +101,46 @@ const BLOG_HTML_AUTO_RESIZE_SCRIPT = `
       window.setTimeout(scheduleHeight, 1000);
     })();
   </script>`;
+const BLOG_HTML_ANCHOR_SCROLL_SCRIPT = `
+  <script>
+    (() => {
+      const messageType = "${BLOG_HTML_ANCHOR_SCROLL_MESSAGE_TYPE}";
+
+      const getTarget = (hash) => {
+        if (!hash || hash === "#") return null;
+
+        let id = hash.slice(1);
+        try {
+          id = decodeURIComponent(id);
+        } catch {
+          return null;
+        }
+
+        return document.getElementById(id) || document.getElementsByName(id)[0] || null;
+      };
+
+      const postAnchorScroll = (target) => {
+        const rect = target.getBoundingClientRect();
+        parent.postMessage({ type: messageType, scrollY: rect.top + window.scrollY }, "*");
+      };
+
+      document.addEventListener("click", (event) => {
+        const link = event.target?.closest?.('a[href^="#"]');
+        if (!link) return;
+
+        const target = getTarget(link.getAttribute("href"));
+        if (!target) return;
+
+        event.preventDefault();
+        postAnchorScroll(target);
+      });
+
+      window.addEventListener("load", () => {
+        const target = getTarget(window.location.hash);
+        if (target) window.setTimeout(() => postAnchorScroll(target), 0);
+      });
+    })();
+  </script>`;
 
 function extractHtmlBody(html: string) {
   const styleBlocks = Array.from(html.matchAll(/<style\b[^>]*>[\s\S]*?<\/style>/gi))
@@ -143,6 +185,7 @@ export function buildBlogHtmlDocument(html: string) {
 ${normalizeBlogHtml(html)}
 ${BLOG_HTML_NO_SCROLLBAR_STYLE}
 ${BLOG_HTML_AUTO_RESIZE_SCRIPT}
+${BLOG_HTML_ANCHOR_SCROLL_SCRIPT}
 </body>
 </html>`;
 }
@@ -157,28 +200,48 @@ export function getBlogHtmlMessageHeight(value: unknown) {
   return Math.max(Math.ceil(message.height), MIN_HTML_FRAME_HEIGHT);
 }
 
+export function getBlogHtmlAnchorScrollY(value: unknown) {
+  if (!value || typeof value !== "object") return null;
+
+  const message = value as { scrollY?: unknown; type?: unknown };
+  if (message.type !== BLOG_HTML_ANCHOR_SCROLL_MESSAGE_TYPE) return null;
+  if (typeof message.scrollY !== "number" || !Number.isFinite(message.scrollY)) return null;
+
+  return Math.max(Math.ceil(message.scrollY), 0);
+}
+
 export default function BlogHtmlContent({ html }: BlogHtmlContentProps) {
   const [heightState, setHeightState] = useState({ height: MIN_HTML_FRAME_HEIGHT, html });
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const height = heightState.html === html ? heightState.height : MIN_HTML_FRAME_HEIGHT;
 
   useEffect(() => {
-    const handleResizeMessage = (event: MessageEvent) => {
+    const handleIframeMessage = (event: MessageEvent) => {
       if (event.source !== iframeRef.current?.contentWindow) return;
 
       const nextHeight = getBlogHtmlMessageHeight(event.data);
-      if (nextHeight === null) return;
+      if (nextHeight !== null) {
+        setHeightState((current) => {
+          if (current.html === html && current.height === nextHeight) return current;
+          return { height: nextHeight, html };
+        });
+        return;
+      }
 
-      setHeightState((current) => {
-        if (current.html === html && current.height === nextHeight) return current;
-        return { height: nextHeight, html };
+      const anchorScrollY = getBlogHtmlAnchorScrollY(event.data);
+      if (anchorScrollY === null) return;
+
+      const iframeTop = iframeRef.current.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({
+        top: Math.max(iframeTop + anchorScrollY - BLOG_HTML_ANCHOR_SCROLL_OFFSET, 0),
+        behavior: "smooth",
       });
     };
 
-    window.addEventListener("message", handleResizeMessage);
+    window.addEventListener("message", handleIframeMessage);
 
     return () => {
-      window.removeEventListener("message", handleResizeMessage);
+      window.removeEventListener("message", handleIframeMessage);
     };
   }, [html]);
 

@@ -1,6 +1,6 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
-import BlogHtmlContent, { buildBlogHtmlDocument, getBlogHtmlMessageHeight } from "./BlogHtmlContent";
+import BlogHtmlContent, { buildBlogHtmlDocument, getBlogHtmlAnchorScrollY, getBlogHtmlMessageHeight } from "./BlogHtmlContent";
 import BlogMarkdownContent, { normalizeBlogHtml } from "./BlogMarkdownContent";
 
 function renderMarkdown(markdown: string) {
@@ -127,5 +127,17 @@ Next line`);
     expect(html).not.toContain('class="w-full border');
     expect(html).not.toContain('class="w-full bg-[');
     expect(html).not.toContain('class="w-full overflow-hidden');
+  });
+
+  it("bridges embedded html table-of-contents hash links to the parent page scroll", () => {
+    const document = buildBlogHtmlDocument('<nav><a href="#section-2">목차</a></nav><h2 id="section-2">섹션</h2>');
+
+    expect(document).toContain("classit-blog-html-anchor-scroll");
+    expect(document).toContain('a[href^="#"]');
+    expect(document).toContain("parent.postMessage");
+    expect(document).toContain("scrollY");
+    expect(getBlogHtmlAnchorScrollY({ type: "classit-blog-html-anchor-scroll", scrollY: 300.2 })).toBe(301);
+    expect(getBlogHtmlAnchorScrollY({ type: "classit-blog-html-anchor-scroll", scrollY: -10 })).toBe(0);
+    expect(getBlogHtmlAnchorScrollY({ type: "classit-blog-html-resize", scrollY: 300 })).toBeNull();
   });
 });

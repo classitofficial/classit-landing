@@ -4,6 +4,9 @@ import { useMemo, useState } from "react";
 import { BlogListItem } from "@/app/components/blog/BlogCards";
 import type { BlogPost } from "@/lib/blog/types";
 
+export const BLOG_NO_SEARCH_RESULTS_CLASS_NAME =
+  "px-5 py-8 text-center text-[14px] font-medium leading-[21px] text-[#a9b1c1]";
+
 function SearchIcon() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -22,6 +25,18 @@ function matchesPost(post: BlogPost, query: string) {
   return target.includes(query);
 }
 
+export function shouldShowNoSearchResults({
+  hasQuery,
+  postCount,
+  visiblePostCount,
+}: {
+  hasQuery: boolean;
+  postCount: number;
+  visiblePostCount: number;
+}) {
+  return hasQuery && postCount > 0 && visiblePostCount === 0;
+}
+
 export default function BlogSearchSection({ posts }: { posts: BlogPost[] }) {
   const [query, setQuery] = useState("");
   const normalizedQuery = query.trim().toLowerCase();
@@ -29,6 +44,11 @@ export default function BlogSearchSection({ posts }: { posts: BlogPost[] }) {
     if (!normalizedQuery) return posts;
     return posts.filter((post) => matchesPost(post, normalizedQuery));
   }, [normalizedQuery, posts]);
+  const showNoSearchResults = shouldShowNoSearchResults({
+    hasQuery: normalizedQuery.length > 0,
+    postCount: posts.length,
+    visiblePostCount: visiblePosts.length,
+  });
 
   return (
     <div className="flex flex-col gap-6">
@@ -41,14 +61,15 @@ export default function BlogSearchSection({ posts }: { posts: BlogPost[] }) {
         />
         <SearchIcon />
       </label>
-      {visiblePosts.length > 0 ? (
+      {visiblePosts.length > 0 && (
         <div className="flex flex-col gap-8">
           {visiblePosts.map((post) => (
             <BlogListItem key={post.id} post={post} showThumbnailBorder />
           ))}
         </div>
-      ) : (
-        <div className="rounded-2xl border border-[#1b1f2a] bg-[#0f1219] px-5 py-8 text-center text-[14px] font-medium leading-[21px] text-[#a9b1c1]">
+      )}
+      {showNoSearchResults && (
+        <div className={BLOG_NO_SEARCH_RESULTS_CLASS_NAME}>
           검색 결과가 없습니다.
         </div>
       )}

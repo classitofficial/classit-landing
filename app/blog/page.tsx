@@ -8,7 +8,9 @@ import { getBlogIndexPosts } from "@/lib/blog/selection";
 import { getPublicBlogBanners, getPublicBlogPosts, getPublicFeaturedBlogPosts } from "@/lib/blog/supabase";
 
 export const metadata: Metadata = {
-  title: "블로그",
+  title: {
+    absolute: "클래스잇 | 블로그",
+  },
   description: "효율적인 온라인 교육 운영을 위한 Classit 블로그입니다.",
   alternates: {
     canonical: "/blog",
@@ -42,12 +44,6 @@ export default async function BlogPage() {
             클래스잇 블로그
           </h1>
         </div>
-
-        {posts.length === 0 && (
-          <div className="rounded-2xl border border-[#1b1f2a] bg-[#0f1219] p-10 text-center text-[#a9b1c1]">
-            게시된 블로그 글이 없습니다.
-          </div>
-        )}
 
         {featuredPosts.length > 0 && <BlogFeaturedCarousel posts={featuredPosts} />}
 
