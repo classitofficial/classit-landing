@@ -24,6 +24,7 @@ function post(overrides: Partial<BlogPost> = {}): BlogPost {
     seo_title: null,
     seo_description: null,
     author_name: "Classit",
+    deleted_at: null,
     created_at: "2026-05-28T00:00:00.000Z",
     updated_at: "2026-05-28T00:00:00.000Z",
     ...overrides,

@@ -17,6 +17,7 @@ function post(id: string): BlogPost {
     seo_title: null,
     seo_description: null,
     author_name: null,
+    deleted_at: null,
     created_at: "2026-05-25T00:00:00.000Z",
     updated_at: "2026-05-25T00:00:00.000Z",
   };

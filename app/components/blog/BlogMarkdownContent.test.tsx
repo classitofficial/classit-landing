@@ -1,5 +1,6 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
+import BlogHtmlContent, { buildBlogHtmlDocument, getBlogHtmlMessageHeight } from "./BlogHtmlContent";
 import BlogMarkdownContent, { normalizeBlogHtml } from "./BlogMarkdownContent";
 
 function renderMarkdown(markdown: string) {
@@ -101,5 +102,25 @@ Next line`);
     expect(html).not.toContain("onclick");
     expect(html).not.toContain("<script");
     expect(html).not.toContain("javascript:");
+  });
+
+  it("hides embedded html scrollbars without clipping document overflow", () => {
+    const document = buildBlogHtmlDocument("<style>body { overflow: auto; }</style><main>HTML body</main>");
+    const userOverflowIndex = document.indexOf("overflow: auto");
+    const noScrollbarIndex = document.lastIndexOf("scrollbar-width: none !important");
+    const html = renderToStaticMarkup(<BlogHtmlContent html="<main>HTML body</main>" />);
+
+    expect(userOverflowIndex).toBeGreaterThan(-1);
+    expect(noScrollbarIndex).toBeGreaterThan(userOverflowIndex);
+    expect(document).toContain("parent.postMessage");
+    expect(document).not.toContain("background: #0B0E14");
+    expect(document).not.toContain("overflow: hidden !important");
+    expect(getBlogHtmlMessageHeight({ type: "classit-blog-html-resize", height: 4600 })).toBe(4600);
+    expect(html).toContain('scrolling="no"');
+    expect(html).toContain('sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"');
+    expect(html).not.toContain("allow-same-origin");
+    expect(html).not.toContain("border");
+    expect(html).not.toContain("bg-[");
+    expect(html).not.toContain("overflow-hidden");
   });
 });

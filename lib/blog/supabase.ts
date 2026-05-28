@@ -31,6 +31,7 @@ export async function getPublicBlogPosts(options: PublicBlogPostsOptions = {}): 
   const params = new URLSearchParams({
     select: "*",
     status: "eq.published",
+    deleted_at: "is.null",
     order: "published_at.desc.nullslast,created_at.desc",
   });
 
@@ -54,6 +55,7 @@ export async function getPublicFeaturedBlogPosts(): Promise<BlogPost[]> {
   const params = new URLSearchParams({
     select: "*",
     status: "eq.published",
+    deleted_at: "is.null",
     is_featured: "eq.true",
     order: "published_at.desc.nullslast,created_at.desc",
   });
@@ -75,6 +77,7 @@ export async function getPublicBlogPostBySlug(slug: string): Promise<BlogPost | 
     select: "*",
     slug: `eq.${slug}`,
     status: "eq.published",
+    deleted_at: "is.null",
     limit: "1",
   });
 
@@ -95,6 +98,7 @@ export async function getPublicBlogBanners(): Promise<BlogBanner[]> {
   const params = new URLSearchParams({
     select: "*",
     is_active: "eq.true",
+    deleted_at: "is.null",
     order: "sort_order.asc,created_at.asc",
   });
 

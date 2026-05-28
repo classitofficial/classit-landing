@@ -15,6 +15,7 @@ export type BlogPost = {
   seo_title: string | null;
   seo_description: string | null;
   author_name: string | null;
+  deleted_at: string | null;
   created_at: string;
   updated_at: string;
 };
@@ -27,6 +28,7 @@ export type BlogBanner = {
   link_url: string | null;
   sort_order: number;
   is_active: boolean;
+  deleted_at: string | null;
   created_at: string;
   updated_at: string;
 };
