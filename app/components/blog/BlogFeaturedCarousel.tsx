@@ -1,10 +1,23 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { KeyboardEvent as ReactKeyboardEvent, PointerEvent as ReactPointerEvent } from "react";
+import type { MouseEvent as ReactMouseEvent, PointerEvent as ReactPointerEvent } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { getBlogContentPreview } from "@/lib/blog/preview";
 import type { BlogPost } from "@/lib/blog/types";
+
+const CLICK_SUPPRESSION_DISTANCE = 16;
+const SLIDE_MOVE_DISTANCE = 48;
+
+export function shouldSuppressCarouselClick(distanceX: number) {
+  return Math.abs(distanceX) > CLICK_SUPPRESSION_DISTANCE;
+}
+
+export function getCarouselClickTargetPost(posts: BlogPost[], activeIndex: number, distanceX: number) {
+  if (posts.length === 0 || shouldSuppressCarouselClick(distanceX)) return null;
+  return posts[activeIndex % posts.length] ?? null;
+}
 
 export default function BlogFeaturedCarousel({ posts }: { posts: BlogPost[] }) {
   const router = useRouter();
@@ -24,8 +37,6 @@ export default function BlogFeaturedCarousel({ posts }: { posts: BlogPost[] }) {
   }
 
   function handlePointerDown(event: ReactPointerEvent<HTMLDivElement>) {
-    if (posts.length < 2) return;
-
     dragRef.current = {
       pointerId: event.pointerId,
       startX: event.clientX,
@@ -38,9 +49,11 @@ export default function BlogFeaturedCarousel({ posts }: { posts: BlogPost[] }) {
     if (dragRef.current.pointerId !== event.pointerId) return;
 
     const distance = event.clientX - dragRef.current.startX;
-    setDragOffset(distance);
+    if (posts.length > 1) {
+      setDragOffset(distance);
+    }
 
-    if (Math.abs(distance) > 8) {
+    if (shouldSuppressCarouselClick(distance)) {
       dragRef.current.suppressClick = true;
     }
   }
@@ -49,7 +62,19 @@ export default function BlogFeaturedCarousel({ posts }: { posts: BlogPost[] }) {
     if (dragRef.current.pointerId !== event.pointerId) return;
 
     const distance = event.clientX - dragRef.current.startX;
-    if (Math.abs(distance) > 48) {
+    const clickTargetPost = getCarouselClickTargetPost(posts, activeIndex, distance);
+
+    if (event.pointerType === "mouse" && event.button !== 0) {
+      dragRef.current.pointerId = -1;
+      setDragOffset(0);
+      event.currentTarget.releasePointerCapture(event.pointerId);
+      return;
+    }
+
+    if (clickTargetPost) {
+      dragRef.current.suppressClick = true;
+      router.push(`/blog/${clickTargetPost.slug}`);
+    } else if (posts.length > 1 && Math.abs(distance) > SLIDE_MOVE_DISTANCE) {
       moveSlide(distance > 0 ? "prev" : "next");
       dragRef.current.suppressClick = true;
     }
@@ -59,20 +84,11 @@ export default function BlogFeaturedCarousel({ posts }: { posts: BlogPost[] }) {
     setDragOffset(0);
   }
 
-  function handleCardClick(post: BlogPost) {
+  function handleLinkClick(event: ReactMouseEvent<HTMLAnchorElement>) {
     if (dragRef.current.suppressClick) {
+      event.preventDefault();
       dragRef.current.suppressClick = false;
-      return;
     }
-
-    router.push(`/blog/${post.slug}`);
-  }
-
-  function handleCardKeyDown(event: ReactKeyboardEvent<HTMLDivElement>, post: BlogPost) {
-    if (event.key !== "Enter" && event.key !== " ") return;
-
-    event.preventDefault();
-    router.push(`/blog/${post.slug}`);
   }
 
   useEffect(() => {
@@ -96,6 +112,7 @@ export default function BlogFeaturedCarousel({ posts }: { posts: BlogPost[] }) {
         onPointerUp={handlePointerUp}
         onPointerCancel={() => {
           dragRef.current.pointerId = -1;
+          dragRef.current.suppressClick = false;
           setDragOffset(0);
         }}
         onDragStart={(event) => event.preventDefault()}
@@ -109,19 +126,13 @@ export default function BlogFeaturedCarousel({ posts }: { posts: BlogPost[] }) {
           }}
         >
           {posts.map((post) => {
-            const imageUrl = post.featured_image_url || post.thumbnail_url;
-            const title = post.featured_title || post.title;
+            const imageUrl = post.thumbnail_url;
+            const title = post.title;
             const description = getBlogContentPreview(post);
 
             return (
               <div key={post.id} className="w-full shrink-0">
-                <div
-                  role="link"
-                  tabIndex={0}
-                  onClick={() => handleCardClick(post)}
-                  onKeyDown={(event) => handleCardKeyDown(event, post)}
-                  className="group block outline-none"
-                >
+                <Link href={`/blog/${post.slug}`} draggable={false} onClick={handleLinkClick} className="group block outline-none">
                   <article className="relative h-[350px] overflow-hidden rounded-2xl border border-[rgba(255,255,255,0.04)] md:h-[480px]">
                     {imageUrl ? (
                       <img src={imageUrl} alt="" draggable={false} className="absolute inset-0 size-full object-cover" />
@@ -140,7 +151,7 @@ export default function BlogFeaturedCarousel({ posts }: { posts: BlogPost[] }) {
                       </p>
                     </div>
                   </article>
-                </div>
+                </Link>
               </div>
             );
           })}

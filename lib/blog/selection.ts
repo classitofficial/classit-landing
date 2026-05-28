@@ -1,11 +1,8 @@
 import type { BlogPost } from "@/lib/blog/types";
 
-export function getBlogIndexPosts(posts: BlogPost[], featuredPosts: BlogPost[]) {
-  const featuredIds = new Set(featuredPosts.map((post) => post.id));
-  const regularPosts = posts.filter((post) => !featuredIds.has(post.id));
-
+export function getBlogIndexPosts(posts: BlogPost[]) {
   return {
-    regularPosts,
-    topPosts: regularPosts.slice(0, 3),
+    regularPosts: posts.slice(3),
+    topPosts: posts.slice(0, 3),
   };
 }

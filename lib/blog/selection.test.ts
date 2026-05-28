@@ -11,14 +11,8 @@ function post(id: string): BlogPost {
     content: "",
     content_format: "markdown",
     thumbnail_url: null,
-    thumbnail_path: null,
     status: "published",
     is_featured: false,
-    featured_sort_order: null,
-    featured_image_url: null,
-    featured_image_path: null,
-    featured_title: null,
-    featured_description: null,
     published_at: null,
     seo_title: null,
     seo_description: null,
@@ -29,13 +23,12 @@ function post(id: string): BlogPost {
 }
 
 describe("blog index post selection", () => {
-  it("removes carousel posts from the regular list and recent top posts", () => {
-    const posts = [post("featured-a"), post("latest-a"), post("featured-b"), post("latest-b"), post("latest-c"), post("latest-d")];
-    const featuredPosts = [post("featured-a"), post("featured-b")];
+  it("splits the public post list into top three and remaining posts by position", () => {
+    const posts = [post("post-1"), post("post-2"), post("post-3"), post("post-4"), post("post-5")];
 
-    const result = getBlogIndexPosts(posts, featuredPosts);
+    const result = getBlogIndexPosts(posts);
 
-    expect(result.regularPosts.map((item) => item.id)).toEqual(["latest-a", "latest-b", "latest-c", "latest-d"]);
-    expect(result.topPosts.map((item) => item.id)).toEqual(["latest-a", "latest-b", "latest-c"]);
+    expect(result.topPosts.map((item) => item.id)).toEqual(["post-1", "post-2", "post-3"]);
+    expect(result.regularPosts.map((item) => item.id)).toEqual(["post-4", "post-5"]);
   });
 });

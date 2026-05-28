@@ -36,9 +36,7 @@ describe("public blog Supabase queries", () => {
     expect(url.pathname).toBe("/rest/v1/blog_posts");
     expect(url.searchParams.get("status")).toBe("eq.published");
     expect(url.searchParams.get("is_featured")).toBe("eq.true");
-    expect(url.searchParams.get("order")).toBe(
-      "featured_sort_order.asc.nullslast,published_at.desc.nullslast,created_at.desc",
-    );
+    expect(url.searchParams.get("order")).toBe("published_at.desc.nullslast,created_at.desc");
     expect(url.searchParams.has("limit")).toBe(false);
   });
 

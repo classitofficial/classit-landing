@@ -55,7 +55,7 @@ export async function getPublicFeaturedBlogPosts(): Promise<BlogPost[]> {
     select: "*",
     status: "eq.published",
     is_featured: "eq.true",
-    order: "featured_sort_order.asc.nullslast,published_at.desc.nullslast,created_at.desc",
+    order: "published_at.desc.nullslast,created_at.desc",
   });
 
   const response = await fetch(`${config.url}/rest/v1/${TABLE}?${params}`, {

@@ -49,7 +49,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
 
   return (
     <BlogShell>
-      <article className="mx-auto flex w-full max-w-[640px] flex-col gap-[52px] px-5 pb-[104px] pt-[144px] md:px-10 md:pb-36 md:pt-[172px]">
+      <article className="mx-auto flex w-full max-w-[680px] flex-col gap-[52px] px-5 pb-[104px] pt-[144px] md:px-5 md:pb-36 md:pt-[172px]">
         <header className="flex flex-col gap-3">
           <h1 className="text-[28px] font-bold leading-9 tracking-[-0.7px] text-white md:text-[32px] md:leading-[44px]">
             {post.title}

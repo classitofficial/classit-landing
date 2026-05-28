@@ -29,7 +29,7 @@ export default async function BlogPage() {
     getPublicFeaturedBlogPosts(),
     getPublicBlogBanners(),
   ]);
-  const { regularPosts, topPosts } = getBlogIndexPosts(posts, featuredPosts);
+  const { regularPosts, topPosts } = getBlogIndexPosts(posts);
   const contentGridClassName =
     managedBanners.length > 0 ? "grid gap-[52px] lg:grid-cols-[1fr_330px]" : "grid gap-[52px]";
   return (
