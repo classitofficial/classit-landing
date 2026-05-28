@@ -22,6 +22,10 @@ const BLOG_HTML_NO_SCROLLBAR_STYLE = `
       width: 0 !important;
       height: 0 !important;
     }
+
+    body > * {
+      border-radius: 0 !important;
+    }
   </style>`;
 const BLOG_HTML_AUTO_RESIZE_SCRIPT = `
   <script>
@@ -182,7 +186,7 @@ export default function BlogHtmlContent({ html }: BlogHtmlContentProps) {
     <iframe
       ref={iframeRef}
       title="블로그 HTML 콘텐츠"
-      className="w-full rounded-2xl"
+      className="w-full"
       srcDoc={buildBlogHtmlDocument(html)}
       sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"
       scrolling="no"

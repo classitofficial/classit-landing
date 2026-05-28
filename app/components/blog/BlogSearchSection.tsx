@@ -44,7 +44,7 @@ export default function BlogSearchSection({ posts }: { posts: BlogPost[] }) {
       {visiblePosts.length > 0 ? (
         <div className="flex flex-col gap-8">
           {visiblePosts.map((post) => (
-            <BlogListItem key={post.id} post={post} />
+            <BlogListItem key={post.id} post={post} showThumbnailBorder />
           ))}
         </div>
       ) : (

@@ -57,10 +57,6 @@ export default async function BlogDetailPage({ params }: PageProps) {
           <PostMeta post={post} />
         </header>
 
-        {post.thumbnail_url && (
-          <img src={post.thumbnail_url} alt="" className="max-h-[520px] w-full rounded-2xl object-cover" />
-        )}
-
         <BlogMarkdownContent content={post.content} format={post.content_format} />
 
         <Link

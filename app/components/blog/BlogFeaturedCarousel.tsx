@@ -133,7 +133,7 @@ export default function BlogFeaturedCarousel({ posts }: { posts: BlogPost[] }) {
             return (
               <div key={post.id} className="w-full shrink-0">
                 <Link href={`/blog/${post.slug}`} draggable={false} onClick={handleLinkClick} className="group block outline-none">
-                  <article className="relative h-[350px] overflow-hidden rounded-2xl border border-[rgba(255,255,255,0.04)] md:h-[480px]">
+                  <article className="relative h-[350px] overflow-hidden rounded-2xl border border-[#1B1F2A] md:h-[480px]">
                     {imageUrl ? (
                       <img src={imageUrl} alt="" draggable={false} className="absolute inset-0 size-full object-cover" />
                     ) : (
@@ -141,12 +141,12 @@ export default function BlogFeaturedCarousel({ posts }: { posts: BlogPost[] }) {
                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(61,130,245,0.45),transparent_38%)]" />
                       </div>
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-b from-[rgba(18,18,18,0)] to-[#121212]" />
+                    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(11,14,20,0)_0%,rgba(11,14,20,0.58)_55%,#0B0E14_100%)]" />
                     <div className="absolute bottom-6 left-6 right-6 flex flex-col gap-2 md:bottom-10 md:left-10 md:right-10">
                       <h2 className="line-clamp-2 text-[20px] font-bold leading-7 tracking-[-0.5px] text-white md:text-[24px] md:leading-8">
                         {title}
                       </h2>
-                      <p className="line-clamp-3 text-[14px] font-medium leading-[21px] tracking-[-0.35px] text-[#eaeaea] md:text-[16px] md:leading-6">
+                      <p className="line-clamp-2 text-[14px] font-medium leading-[21px] tracking-[-0.35px] text-[#eaeaea] md:text-[16px] md:leading-6">
                         {description}
                       </p>
                     </div>

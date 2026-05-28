@@ -46,6 +46,12 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  // 네이버 서치어드바이저 소유권 확인용 메타 태그입니다.
+  verification: {
+    other: {
+      "naver-site-verification": "b1700c2954dd2fadb94823a47ed0b5b33cf770cb",
+    },
+  },
   // 브라우저 탭, 북마크, 검색 결과 등에 쓰이는 사이트 아이콘입니다.
   icons: {
     icon: "/images/favicon.png",

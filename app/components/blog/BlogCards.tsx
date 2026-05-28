@@ -3,6 +3,8 @@ import { ClassitIcon } from "@/app/components/blog/BlogChrome";
 import { getBlogContentPreview } from "@/lib/blog/preview";
 import type { BlogPost } from "@/lib/blog/types";
 
+const BLOG_LIST_THUMBNAIL_BORDER = "border border-[#1B1F2A]";
+
 export function formatDate(value: string | null) {
   if (!value) return "미발행";
   const date = new Date(value);
@@ -47,7 +49,7 @@ export function BlogGridCard({ post }: { post: BlogPost }) {
   return (
     <Link href={`/blog/${post.slug}`} className="group block">
       <article className="flex flex-col gap-5">
-        <div className="relative aspect-square overflow-hidden rounded-2xl">
+        <div className={`relative aspect-square overflow-hidden rounded-2xl ${BLOG_LIST_THUMBNAIL_BORDER}`}>
           <Thumbnail post={post} className="absolute inset-0 size-full" />
         </div>
         <div className="flex flex-col gap-4">
@@ -62,11 +64,13 @@ export function BlogGridCard({ post }: { post: BlogPost }) {
   );
 }
 
-export function BlogListItem({ post }: { post: BlogPost }) {
+export function BlogListItem({ post, showThumbnailBorder = false }: { post: BlogPost; showThumbnailBorder?: boolean }) {
+  const thumbnailBorderClassName = showThumbnailBorder ? BLOG_LIST_THUMBNAIL_BORDER : "";
+
   return (
     <Link href={`/blog/${post.slug}`} className="block">
       <article className="flex flex-col gap-5 md:flex-row md:gap-4">
-        <div className="relative aspect-square w-full shrink-0 overflow-hidden rounded-2xl md:size-[148px] md:w-[148px]">
+        <div className={`relative aspect-square w-full shrink-0 overflow-hidden rounded-2xl md:size-[148px] md:w-[148px] ${thumbnailBorderClassName}`}>
           <Thumbnail post={post} className="absolute inset-0 size-full" />
         </div>
         <div className="flex min-w-0 flex-1 flex-col gap-4 md:justify-center md:gap-3">

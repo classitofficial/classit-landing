@@ -105,22 +105,27 @@ Next line`);
   });
 
   it("hides embedded html scrollbars without clipping document overflow", () => {
-    const document = buildBlogHtmlDocument("<style>body { overflow: auto; }</style><main>HTML body</main>");
+    const document = buildBlogHtmlDocument("<style>body { overflow: auto; }</style><main style='border-radius: 32px'>HTML body</main>");
     const userOverflowIndex = document.indexOf("overflow: auto");
     const noScrollbarIndex = document.lastIndexOf("scrollbar-width: none !important");
     const html = renderToStaticMarkup(<BlogHtmlContent html="<main>HTML body</main>" />);
 
     expect(userOverflowIndex).toBeGreaterThan(-1);
     expect(noScrollbarIndex).toBeGreaterThan(userOverflowIndex);
+    expect(document).toContain("body > *");
+    expect(document).toContain("border-radius: 0 !important");
+    expect(document.lastIndexOf("border-radius: 0 !important")).toBeGreaterThan(document.indexOf("border-radius: 32px"));
     expect(document).toContain("parent.postMessage");
     expect(document).not.toContain("background: #0B0E14");
     expect(document).not.toContain("overflow: hidden !important");
     expect(getBlogHtmlMessageHeight({ type: "classit-blog-html-resize", height: 4600 })).toBe(4600);
     expect(html).toContain('scrolling="no"');
     expect(html).toContain('sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"');
+    expect(html).toContain('class="w-full"');
     expect(html).not.toContain("allow-same-origin");
-    expect(html).not.toContain("border");
-    expect(html).not.toContain("bg-[");
-    expect(html).not.toContain("overflow-hidden");
+    expect(html).not.toContain('class="w-full rounded');
+    expect(html).not.toContain('class="w-full border');
+    expect(html).not.toContain('class="w-full bg-[');
+    expect(html).not.toContain('class="w-full overflow-hidden');
   });
 });

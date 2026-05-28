@@ -37,6 +37,10 @@ describe("BlogFeaturedCarousel", () => {
 
     expect(html).toContain('href="/blog/featured-post"');
     expect(html).toContain("Featured Post");
+    expect(html).toContain("border-[#1B1F2A]");
+    expect(html).toContain("rgba(11,14,20,0.58)_55%");
+    expect(html).toContain("line-clamp-2 text-[14px]");
+    expect(html).not.toContain("line-clamp-3 text-[14px]");
   });
 
   it("suppresses navigation only after a swipe-distance pointer move", () => {

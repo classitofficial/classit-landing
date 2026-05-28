@@ -81,21 +81,65 @@ function CtaButton({ label }: { label: string }) {
   );
 }
 
+function PlanPriceColumn({
+  current,
+  discount,
+  label,
+  original,
+  valueClassName,
+}: {
+  current: string;
+  discount?: string;
+  label: string;
+  original?: string;
+  valueClassName: string;
+}) {
+  return (
+    <div className="flex flex-1 flex-col gap-1 items-start min-w-0">
+      <p className="text-[#f8faff] text-[14px] font-medium leading-[21px] tracking-[-0.21px] w-full">
+        {label}
+      </p>
+      <div className="flex flex-col items-start w-full">
+        {original && discount && (
+          <div className="flex gap-1 items-center w-full">
+            <p className="text-[#a9b1c1] text-[12px] font-medium leading-[18px] tracking-[-0.18px] line-through whitespace-nowrap">
+              {original}
+            </p>
+            <p className="text-[#f98585] text-[12px] font-medium leading-[18px] tracking-[-0.18px] whitespace-nowrap">
+              {discount}↓
+            </p>
+          </div>
+        )}
+        <p className={valueClassName}>
+          {current}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function DiscountNote() {
+  return (
+    <p className="text-[#a9b1c1] text-[12px] font-medium leading-[18px] tracking-[-0.18px] w-full">
+      * 온라인 신청 전용 할인가입니다.
+    </p>
+  );
+}
+
 function PremiumCard({ mobile }: { mobile?: boolean }) {
   const p = mobile ? "p-5" : "p-5 min-[769px]:p-8";
   const gap = mobile ? "gap-6" : "gap-8";
+  const cardHeight = mobile ? "" : "h-full";
+  const bodyHeight = mobile ? "" : "flex-1";
   const priceValueClass = mobile
     ? "text-[#f8faff] text-[20px] font-bold leading-[30px] tracking-[-0.3px] whitespace-nowrap"
     : "text-[#f8faff] text-[24px] font-bold leading-[32px] tracking-[-0.36px] whitespace-nowrap";
   const priceRowClass = mobile
     ? "flex gap-4 items-stretch w-full"
     : "flex gap-4 items-start w-full";
-  const priceColumnClass = mobile
-    ? "flex flex-1 flex-col justify-between items-start min-w-0"
-    : "flex flex-1 flex-col items-start min-w-0";
   return (
     <div
-      className="flex flex-col items-center rounded-[16px] w-full p-1"
+      className={`flex ${cardHeight} flex-col items-center rounded-[16px] w-full p-1`}
       style={{ background: "linear-gradient(90deg, #3d82f5 0%, #0360ef 100%)" }}
     >
       <div className="flex items-center justify-center py-4 px-1 w-full">
@@ -104,7 +148,7 @@ function PremiumCard({ mobile }: { mobile?: boolean }) {
         </span>
       </div>
       <div
-        className={`flex flex-col ${gap} items-start ${p} rounded-[16px] w-full`}
+        className={`flex ${bodyHeight} flex-col ${gap} items-start ${p} rounded-[16px] w-full`}
         style={{ background: "linear-gradient(180deg, #262c3a 0%, #0f1219 100%)" }}
       >
         <div className="flex flex-col gap-2 items-start w-full">
@@ -114,24 +158,25 @@ function PremiumCard({ mobile }: { mobile?: boolean }) {
               AI와 함께 자동으로 운영하는 교육 플랫폼
             </p>
             <div className={priceRowClass}>
-              <div className={priceColumnClass}>
-                <p className="text-[#f8faff] text-[14px] font-medium leading-[21px] tracking-[-0.21px] w-full">
-                  초기 세팅비(최초 1회)
-                </p>
-                <p className={priceValueClass}>
-                  550,000원
-                </p>
-              </div>
-              <div className={priceColumnClass}>
-                <p className="text-[#f8faff] text-[14px] font-medium leading-[21px] tracking-[-0.21px] w-full">
-                  월 관리비
-                </p>
-                <p className={priceValueClass}>
-                  390,000원
-                </p>
-              </div>
+              <PlanPriceColumn
+                current="550,000원"
+                discount="44%"
+                label="개설비(최초 1회)"
+                original="990,000원"
+                valueClassName={priceValueClass}
+              />
+              <PlanPriceColumn
+                current="390,000원"
+                discount="11%"
+                label="월 관리비"
+                original="440,000원"
+                valueClassName={priceValueClass}
+              />
             </div>
-            <CtaButton label="도입 상담 신청하기" />
+            <div className="flex flex-col gap-2 items-start w-full">
+              <CtaButton label="도입 상담 신청하기" />
+              <DiscountNote />
+            </div>
           </div>
         </div>
         <Divider />
@@ -148,16 +193,13 @@ function PremiumCard({ mobile }: { mobile?: boolean }) {
 function EnterpriseCard({ mobile }: { mobile?: boolean }) {
   const p = mobile ? "p-5" : "p-5 min-[769px]:p-8";
   const gap = mobile ? "gap-8" : "gap-8";
-  const h = mobile ? "" : "h-[610px]";
+  const h = mobile ? "" : "flex-1";
   const priceValueClass = mobile
     ? "text-[#f8faff] text-[20px] font-bold leading-[30px] tracking-[-0.3px] whitespace-nowrap"
     : "text-[#f8faff] text-[24px] font-bold leading-[32px] tracking-[-0.36px] whitespace-nowrap";
   const priceRowClass = mobile
     ? "flex gap-4 items-stretch w-full"
     : "flex gap-4 items-start w-full";
-  const priceColumnClass = mobile
-    ? "flex flex-1 flex-col justify-between items-start min-w-0"
-    : "flex flex-1 flex-col items-start min-w-0";
   return (
     <div
       className={`flex flex-col ${gap} ${h} items-start ${p} rounded-[16px] w-full`}
@@ -170,22 +212,16 @@ function EnterpriseCard({ mobile }: { mobile?: boolean }) {
             맞춤형 관리 시스템으로 운영하는 완성형 교육 플랫폼
           </p>
           <div className={priceRowClass}>
-            <div className={priceColumnClass}>
-              <p className="text-[#f8faff] text-[14px] font-medium leading-[21px] tracking-[-0.21px] w-full">
-                초기 세팅비(최초 1회)
-              </p>
-              <p className={priceValueClass}>
-                990,000원
-              </p>
-            </div>
-            <div className={priceColumnClass}>
-              <p className="text-[#f8faff] text-[14px] font-medium leading-[21px] tracking-[-0.21px] w-full">
-                월 관리비
-              </p>
-              <p className={priceValueClass}>
-                별도 협의
-              </p>
-            </div>
+            <PlanPriceColumn
+              current="별도 협의"
+              label="개설비(최초 1회)"
+              valueClassName={priceValueClass}
+            />
+            <PlanPriceColumn
+              current="별도 협의"
+              label="월 관리비"
+              valueClassName={priceValueClass}
+            />
           </div>
           <CtaButton label="컨설팅 문의하기" />
         </div>
@@ -239,12 +275,14 @@ export default function PricingSection() {
             플랜을 선택해보세요.
           </p>
         </div>
-        <div className="flex gap-5 items-end justify-center w-full px-10">
-          <div className="max-w-[440px] w-full min-w-0">
+        <div className="flex gap-5 items-stretch justify-center w-full px-10">
+          <div className="flex max-w-[440px] w-full min-w-0">
             <PremiumCard />
           </div>
-          <div className="max-w-[440px] w-full min-w-0">
+          <div className="flex flex-col max-w-[440px] w-full min-w-0">
+            <div aria-hidden="true" className="h-[60px] shrink-0" />
             <EnterpriseCard />
+            <div aria-hidden="true" className="h-1 shrink-0" />
           </div>
         </div>
       </div>
