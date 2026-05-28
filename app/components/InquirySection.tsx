@@ -202,7 +202,7 @@ function FormFields({
 
       {/* 추가 내용 */}
       <div className="flex flex-col gap-2 items-start w-full">
-        <label className={labelCls}>추가 내용(선택)</label>
+        <label className={labelCls}>추가 내용</label>
         <textarea
           value={comments}
           onChange={(e) => setComments(e.target.value)}
