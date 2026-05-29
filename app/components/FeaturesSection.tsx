@@ -43,7 +43,7 @@ const features = [
       "결제 완료 알림, 학습 리포트 등",
       "필요한 내용은 모두 카카오 알림톡으로 자동 발송됩니다.",
     ],
-    pcImg: "slide_2.png",
+    pcImg: "new_slide_2.png",
   },
   {
     badge: "3",
