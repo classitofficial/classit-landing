@@ -53,11 +53,7 @@ export const metadata: Metadata = {
   },
   // 브라우저 탭, 북마크, 검색 결과 등에 쓰이는 사이트 아이콘입니다.
   icons: {
-    icon: [
-      { url: "/favicon.ico", sizes: "256x256", type: "image/x-icon" },
-      { url: "/images/favicon.png", sizes: "192x192", type: "image/png" },
-    ],
-    shortcut: "/favicon.ico",
+    icon: [{ url: "/images/favicon.png", sizes: "192x192", type: "image/png" }],
     apple: [{ url: "/images/favicon.png", sizes: "192x192", type: "image/png" }],
   },
   // 카카오톡, Slack, Facebook 등에서 공유될 때 쓰이는 Open Graph 미리보기 정보입니다.
