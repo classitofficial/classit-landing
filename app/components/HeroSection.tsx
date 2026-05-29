@@ -66,7 +66,7 @@ export default function HeroSection() {
           {/* 대시보드 이미지 - 모바일 */}
           <div className="sm:hidden w-full mb-[52px] mx-auto">
             <img
-              alt="zerofee edu 플랫폼 대시보드"
+              alt="Classit 플랫폼 대시보드"
               src={imgDashboardMobile}
               className="w-full h-auto block"
             />
@@ -80,7 +80,7 @@ export default function HeroSection() {
       {/* 대시보드 이미지 - 데스크톱 (흐름에 포함, overflow-hidden으로 크롭) */}
       <div className="hidden sm:block relative z-10 shrink-0 w-full max-w-[1040px] mx-auto rounded-tl-[48px] rounded-tr-[48px] overflow-hidden px-10">
         <img
-          alt="zerofee edu 플랫폼 대시보드"
+          alt="Classit 플랫폼 대시보드"
           src={imgDashboard}
           className="w-full h-auto block"
         />

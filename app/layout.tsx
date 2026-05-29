@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { DesignFeedbackWidget } from "./components/dev/DesignFeedbackWidget";
-import { DEFAULT_OG_IMAGE, DEFAULT_TWITTER_IMAGE, SITE_URL } from "./shared-metadata";
+import { DEFAULT_OG_IMAGE, DEFAULT_TWITTER_IMAGE, SITE_DESCRIPTION, SITE_URL } from "./shared-metadata";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -20,8 +20,7 @@ export const metadata: Metadata = {
     template: "%s | Classit",
   },
   // 검색 결과 설명과 SNS 공유 설명의 기본 문구입니다.
-  description:
-    "인터넷 강의 수강, AI 수강생 관리, 결제 및 알림톡 자동화까지 온라인 학원 운영 솔루션 클래스잇",
+  description: SITE_DESCRIPTION,
   // 브라우저나 OS가 앱/사이트 이름을 표시할 때 사용하는 이름입니다.
   applicationName: "Classit",
   // 검색엔진에 페이지 주제를 보조적으로 알려주는 키워드입니다.
@@ -54,7 +53,12 @@ export const metadata: Metadata = {
   },
   // 브라우저 탭, 북마크, 검색 결과 등에 쓰이는 사이트 아이콘입니다.
   icons: {
-    icon: "/images/favicon.png",
+    icon: [
+      { url: "/favicon.ico", sizes: "256x256", type: "image/x-icon" },
+      { url: "/images/favicon.png", sizes: "192x192", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: [{ url: "/images/favicon.png", sizes: "192x192", type: "image/png" }],
   },
   // 카카오톡, Slack, Facebook 등에서 공유될 때 쓰이는 Open Graph 미리보기 정보입니다.
   openGraph: {
@@ -63,8 +67,7 @@ export const metadata: Metadata = {
     // 공유 카드에 표시되는 사이트 이름입니다.
     siteName: "Classit",
     // 공유 카드의 설명 문구입니다.
-    description:
-      "인터넷 강의 수강, AI 수강생 관리, 결제 및 알림톡 자동화까지 온라인 학원 운영 솔루션 클래스잇",
+    description: SITE_DESCRIPTION,
     // 공유 카드가 가리키는 대표 URL입니다.
     url: "/",
     // 랜딩 페이지처럼 일반 웹사이트 페이지임을 나타냅니다.
@@ -83,8 +86,7 @@ export const metadata: Metadata = {
     // Twitter 카드의 제목입니다.
     title: "클래스잇",
     // Twitter 카드의 설명 문구입니다.
-    description:
-      "인터넷 강의 수강, AI 수강생 관리, 결제 및 알림톡 자동화까지 온라인 학원 운영 솔루션 클래스잇",
+    description: SITE_DESCRIPTION,
     // Twitter 카드에 표시될 대표 이미지입니다.
     images: [DEFAULT_TWITTER_IMAGE],
   },
