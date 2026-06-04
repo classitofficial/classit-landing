@@ -42,6 +42,21 @@ vi.mock("@/lib/blog/supabase", () => ({
 }));
 
 describe("BlogDetailPage", () => {
+  it("renders BlogPosting JSON-LD from the current post", async () => {
+    const element = await BlogDetailPage({ params: Promise.resolve({ slug: "current" }) });
+    const html = renderToStaticMarkup(element);
+
+    expect(html).toContain('type="application/ld+json"');
+    expect(html).toContain('"@type":"BlogPosting"');
+    expect(html).toContain('"headline":"온라인 강의 사이트 만들기 전에 꼭 알아야 할 것들, 외주 개발 vs LMS 솔루션 완전 비교"');
+    expect(html).toContain('"description":"Summary"');
+    expect(html).toContain('"url":"https://www.classit.co.kr/blog/current"');
+    expect(html).toContain('"datePublished":"2026-05-28T00:00:00.000Z"');
+    expect(html).toContain('"dateModified":"2026-05-28T00:00:00.000Z"');
+    expect(html).toContain('"author":{"@type":"Person","name":"Classit"}');
+    expect(html).toContain('"image":["https://www.classit.co.kr/images/classit-og-1200x630.png"]');
+  });
+
   it("matches the current design feedback for detail heading and more posts area", async () => {
     const element = await BlogDetailPage({ params: Promise.resolve({ slug: "current" }) });
     const html = renderToStaticMarkup(element);
