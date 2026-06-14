@@ -48,27 +48,16 @@ export default async function BlogPage() {
         {featuredPosts.length > 0 && <BlogFeaturedCarousel posts={featuredPosts} />}
 
         {topPosts.length > 0 && (
-          <div className="relative -mx-5 overflow-x-auto overscroll-x-contain pb-1 snap-x snap-mandatory [scrollbar-width:none] md:mx-0 md:overflow-visible md:pb-0 [&::-webkit-scrollbar]:hidden">
+          <div className="relative -mx-5 overflow-x-auto overscroll-x-contain px-5 pb-1 snap-x snap-mandatory scroll-px-5 [scrollbar-width:none] md:mx-0 md:overflow-visible md:px-0 md:pb-0 [&::-webkit-scrollbar]:hidden">
             <div className="flex gap-4 md:grid md:auto-cols-fr md:grid-flow-row md:grid-cols-3 md:gap-5">
-              {topPosts.map((post, idx) => {
-                const isFirst = idx === 0;
-                const isLast = idx === topPosts.length - 1;
-                // 모바일: 처음은 왼쪽 20px(p-5), 마지막은 오른쪽 20px(p-5)
-                // 카드 크기 350px 고정(모바일에서)
-                const paddingClass = [
-                  isFirst ? "pl-5" : "",
-                  isLast ? "pr-5" : "",
-                  "md:pl-0 md:pr-0"
-                ].join(" ");
-                return (
-                  <div
-                    key={post.id}
-                    className={`snap-start flex-shrink-0 w-[350px] max-w-[350px] md:w-auto ${paddingClass}`}
-                  >
-                    <BlogGridCard post={post} />
-                  </div>
-                );
-              })}
+              {topPosts.map((post) => (
+                <div
+                  key={post.id}
+                  className="snap-center flex-shrink-0 w-[calc(100vw-40px)] max-w-[350px] md:w-auto md:max-w-none md:[scroll-snap-align:none]"
+                >
+                  <BlogGridCard post={post} />
+                </div>
+              ))}
             </div>
           </div>
         )}

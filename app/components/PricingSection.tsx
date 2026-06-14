@@ -102,10 +102,10 @@ function PlanPriceColumn({
       <div className="flex flex-col items-start w-full">
         {original && discount && (
           <div className="flex gap-1 items-center w-full">
-            <p className="text-[#a9b1c1] text-[12px] font-medium leading-[18px] tracking-[-0.18px] line-through whitespace-nowrap">
+            <p className="text-[#a9b1c1] text-[14px] font-medium leading-[18px] tracking-[-0.18px] line-through whitespace-nowrap">
               {original}
             </p>
-            <p className="text-[#FA9D9D] text-[12px] font-medium leading-[18px] tracking-[-0.18px] whitespace-nowrap">
+            <p className="text-[#FA9D9D] text-[14px] font-medium leading-[18px] tracking-[-0.18px] whitespace-nowrap">
               {discount}↓
             </p>
           </div>

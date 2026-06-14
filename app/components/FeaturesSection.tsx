@@ -2,6 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 
+const FEATURE_PDF_FILE_ID = "1oKAUO2jYnazNITBgxj4z4Ryykb4X0E9V";
+const FEATURE_PDF_VIEW_URL = `https://drive.google.com/file/d/${FEATURE_PDF_FILE_ID}/view?usp=sharing`;
+
 function useFadeInOnScroll() {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
@@ -76,6 +79,23 @@ function FeatureBadge({ number }: { number: string }) {
       alt={`기능 ${number}`}
       className="block size-7"
     />
+  );
+}
+
+function FeaturePdfButton({ className = "" }: { className?: string }) {
+  return (
+    <a
+      href={FEATURE_PDF_VIEW_URL}
+      target="_blank"
+      rel="noreferrer"
+      className={`btn-gradient btn-gradient-blue flex h-[52px] items-center justify-center gap-1 rounded-[32px] px-6 py-2 text-[14px] font-bold leading-[21px] text-[#fefefe] transition-transform hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#b4d9fb] ${className}`}
+      aria-label="더 많은 기능 살펴보기 PDF를 새 탭에서 열기"
+    >
+      <span aria-hidden="true" className="flex size-4 items-center justify-center text-[18px] leading-none">
+        +
+      </span>
+      더 많은 기능 살펴보기
+    </a>
   );
 }
 
@@ -199,6 +219,7 @@ export default function FeaturesSection() {
             <MobileFeatureCard key={index} feature={feature} index={index} />
           ))}
         </div>
+        <FeaturePdfButton className="mx-auto" />
       </div>
 
       {/* 데스크톱 레이아웃 */}
@@ -215,10 +236,18 @@ export default function FeaturesSection() {
             </div>
 
             {/* Right scrollable feature rows */}
-            <div className="flex flex-col gap-[52px] flex-1 min-w-0">
-              {features.map((feature, index) => (
-                <DesktopFeatureCard key={index} feature={feature} />
-              ))}
+            <div className="flex flex-col flex-1 min-w-0">
+              <div className="flex flex-col gap-[52px]">
+                {features.map((feature, index) => (
+                  <DesktopFeatureCard key={index} feature={feature} />
+                ))}
+              </div>
+              <div className="mt-10 flex gap-10 items-center justify-start w-full">
+                <div className="relative flex-[540] min-w-0 max-w-[540px] flex justify-center">
+                  <FeaturePdfButton />
+                </div>
+                <div className="flex-[370] min-w-0" aria-hidden="true" />
+              </div>
             </div>
           </div>
         </div>

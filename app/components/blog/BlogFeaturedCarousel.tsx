@@ -133,7 +133,7 @@ export default function BlogFeaturedCarousel({ posts }: { posts: BlogPost[] }) {
             return (
               <div key={post.id} className="w-full shrink-0">
                 <Link href={`/blog/${post.slug}`} draggable={false} onClick={handleLinkClick} className="group block outline-none">
-                  <article className="relative h-[350px] overflow-hidden rounded-2xl border border-[#1B1F2A] md:h-[480px]">
+                  <article className="relative h-[350px] overflow-hidden md:h-[480px]">
                     {imageUrl ? (
                       <img src={imageUrl} alt="" draggable={false} className="absolute inset-0 size-full object-cover" />
                     ) : (
