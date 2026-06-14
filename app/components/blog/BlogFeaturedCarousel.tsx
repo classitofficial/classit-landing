@@ -16,7 +16,7 @@ export function shouldSuppressCarouselClick(distanceX: number) {
 
 export function getCarouselClickTargetPost(posts: BlogPost[], activeIndex: number, distanceX: number) {
   if (posts.length === 0 || shouldSuppressCarouselClick(distanceX)) return null;
-  return posts[activeIndex % posts.length] ?? null;
+  return posts[activeIndex % posts.length] ?? null; 
 }
 
 export default function BlogFeaturedCarousel({ posts }: { posts: BlogPost[] }) {
