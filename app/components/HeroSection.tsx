@@ -24,17 +24,17 @@ export default function HeroSection() {
           <div className="flex flex-col items-center gap-4">
             <div className="btn-gradient btn-gradient-black bg-[rgba(255,255,255,0.1)] border border-white flex items-center justify-center gap-1 h-10 px-4 rounded-[32px]">
               <p className="text-[#f8faff] text-[14px] font-bold leading-[21px] whitespace-nowrap">
-                바로 운영할 수 있는 온라인 학원
+                강의 등록부터 수강생 관리, 결제까지
               </p>
             </div>
 
             <div className="text-center">
               <h1 className="text-[#f8faff] font-black tracking-[-0.8px] sm:tracking-[-1.2px] text-[32px] leading-[48px] sm:text-[48px] sm:leading-[72px] sm:whitespace-nowrap">
                 <span className="hidden sm:block">
-                  하나의 플랫폼에서<br/>효율적인 교육 운영을 시작하세요
+                  선생님과 학생을 잇고<br/>오프라인과 온라인을 잇는, 클래스잇
                 </span>
                 <span className="block sm:hidden">
-                  하나의 플랫폼에서<br/>효율적인 교육 운영을<br/>시작하세요
+                  선생님과 학생을 잇고<br/>오프라인과 온라인을 잇는,<br/>클래스잇
                 </span>
               </h1>
             </div>

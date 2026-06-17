@@ -46,7 +46,7 @@ const features = [
       "결제 완료 알림, 학습 리포트 등",
       "필요한 내용은 모두 카카오 알림톡으로 자동 발송됩니다.",
     ],
-    pcImg: "new_slide_2.png",
+    pcImg: "fixed2ndImg.png",
   },
   {
     badge: "3",
@@ -88,7 +88,7 @@ function FeaturePdfButton({ className = "" }: { className?: string }) {
       href={FEATURE_PDF_VIEW_URL}
       target="_blank"
       rel="noreferrer"
-      className={`btn-gradient btn-gradient-blue flex h-[52px] items-center justify-center gap-1 rounded-[32px] px-6 py-2 text-[14px] font-bold leading-[21px] text-[#fefefe] transition-transform hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#b4d9fb] ${className}`}
+      className={`btn-gradient btn-gradient-blue flex h-[52px] items-center justify-center gap-1 rounded-[32px] px-6 py-2 text-[14px] font-bold leading-[21px] text-[#fefefe] transition-transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#b4d9fb] ${className}`}
       aria-label="더 많은 기능 살펴보기 PDF를 새 탭에서 열기"
     >
       <span aria-hidden="true" className="flex size-4 items-center justify-center text-[18px] leading-none">

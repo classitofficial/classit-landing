@@ -39,7 +39,7 @@ export default async function BlogPage() {
       <section className="mx-auto flex w-full max-w-[1090px] flex-col gap-[52px] px-5 pb-[104px] pt-[144px] md:px-10 md:pb-36 md:pt-[172px]">
         <div className="text-center">
           <h1 className="text-[28px] font-bold leading-9 tracking-[-0.42px] text-[#fefefe]">
-            효율적인 온라인 교육 운영
+            학원 운영 파트너
             <br />
             클래스잇 블로그
           </h1>

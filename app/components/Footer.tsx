@@ -99,7 +99,7 @@ export default function Footer() {
           </div>
           <p>주소 : 경기도 고양시 덕양구 동축로70, A동 9층 901호(동산동, 현대프리미어캠퍼스)</p>
           {/* <p>통신판매업신고번호 : 2026-고양덕양구-1043</p> */}
-          <p>메일 : classit.official@gmail.com</p>
+          <p>메일 : contact@classit.co.kr</p>
           <p className="font-bold">Copyright ⓒ 2026 classit. All rights reserved.</p>
         </div>
 
