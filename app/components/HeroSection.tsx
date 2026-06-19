@@ -53,7 +53,7 @@ export default function HeroSection() {
             </button>
 
             <button
-              onClick={() => window.open("https://pf.kakao.com/_XEjbX", "_blank", "noopener,noreferrer")}
+              onClick={() => window.open("https://pf.kakao.com/_XEjbX/chat", "_blank", "noopener,noreferrer")}
               className="btn-gradient btn-gradient-yellow flex items-center gap-1 h-[52px] px-6 rounded-[32px] border border-white hover:opacity-90 transition-opacity w-[172px]"
             >
               <img alt="" src={imgMessageIcon} className="size-4" />

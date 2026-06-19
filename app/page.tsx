@@ -37,7 +37,7 @@ const classitJsonLd = {
       ],
       "contactPoint": {
         "@type": "ContactPoint",
-        "url": "https://pf.kakao.com/_XEjbX",
+        "url": "https://pf.kakao.com/_XEjbX/chat",
         "contactType": "customer service",
         "availableLanguage": "Korean",
       },
