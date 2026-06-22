@@ -8,7 +8,7 @@ const imgEdit = "/images/edit-01.png";
 
 export default function HeroSection() {
   return (
-    <section className="relative w-full overflow-hidden bg-[#0b0e14] flex flex-col min-h-[100svh] sm:h-[100svh]">
+    <section className="relative w-full overflow-hidden bg-[#0b0e14] flex flex-col sm:h-[100svh]">
       {/* 배경 글로우 */}
       <div className="absolute inset-0 pointer-events-none">
         <img
