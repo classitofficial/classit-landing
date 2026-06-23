@@ -8,7 +8,7 @@ const imgEdit = "/images/edit-01.png";
 
 export default function HeroSection() {
   return (
-    <section className="relative w-full overflow-hidden bg-[#0b0e14] flex flex-col sm:h-[100svh]">
+    <section className="relative w-full overflow-hidden bg-[#0b0e14] flex flex-col pb-[113px] sm:h-[100svh] sm:pb-0">
       {/* 배경 글로우 */}
       <div className="absolute inset-0 pointer-events-none">
         <img
@@ -24,7 +24,7 @@ export default function HeroSection() {
           <div className="flex flex-col items-center gap-4">
             <div className="btn-gradient btn-gradient-black bg-[rgba(255,255,255,0.1)] border border-white flex items-center justify-center gap-1 h-10 px-4 rounded-[32px]">
               <p className="text-[#f8faff] text-[14px] font-bold leading-[21px] whitespace-nowrap">
-                강의 등록부터 수강생 관리, 결제까지
+                온라인 학원 운영을 더 쉽게 만드는 AI LMS
               </p>
             </div>
 
@@ -44,21 +44,21 @@ export default function HeroSection() {
           <div className="flex flex-col sm:flex-row gap-2 items-center">
             <button
               onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-              className="btn-gradient btn-gradient-blue flex items-center gap-1 h-[52px] px-6 rounded-[32px] border border-white hover:opacity-90 transition-opacity w-[172px]"
+              className="btn-gradient btn-gradient-blue flex items-center justify-center gap-1 h-[52px] px-6 rounded-[32px] border border-white hover:opacity-90 transition-opacity w-[172px]"
             >
               <img alt="" src={imgEdit} className="size-4" />
               <span className="text-[#f8faff] text-[14px] font-bold leading-[21px] whitespace-nowrap">
-                도입 상담 신청하기
+                전문가 상담 신청하기
               </span>
             </button>
 
             <button
               onClick={() => window.open("https://pf.kakao.com/_XEjbX/chat", "_blank", "noopener,noreferrer")}
-              className="btn-gradient btn-gradient-yellow flex items-center gap-1 h-[52px] px-6 rounded-[32px] border border-white hover:opacity-90 transition-opacity w-[172px]"
+              className="btn-gradient btn-gradient-yellow flex items-center justify-center gap-1 h-[52px] px-6 rounded-[32px] border border-white hover:opacity-90 transition-opacity w-[172px]"
             >
               <img alt="" src={imgMessageIcon} className="size-4" />
               <span className="text-[#3b1d1d] text-[14px] font-bold leading-[21px] whitespace-nowrap">
-                카톡 간편 문의하기
+                간편 문의하기
               </span>
             </button>
           </div>

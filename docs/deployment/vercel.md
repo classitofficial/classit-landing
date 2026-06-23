@@ -22,15 +22,6 @@ SLACK_CHANNEL_ID=...
 
 이 저장소는 공개 조회만 담당하므로 Supabase service role key나 storage secret을 설정하지 않는다.
 
-임시 디자인 피드백을 배포 환경에서 받을 때만 추가한다.
-
-```bash
-DESIGN_FEEDBACK_ENABLED=1
-SLACK_DESIGN_FEEDBACK_CHANNEL_ID=...
-```
-
-`NEXT_PUBLIC_DESIGN_FEEDBACK_VISIBLE=1`을 빌드 환경에 추가하면 모든 방문자에게 우측 하단 버튼이 바로 보인다. 이 값을 빼면 `https://classit.kr/?design-feedback=1`로 접속한 브라우저에서만 버튼이 켜진다. 피드백 수집이 끝나면 `DESIGN_FEEDBACK_ENABLED`를 제거하고 다시 배포한다.
-
 ## Domains
 
 - 공개 랜딩: `classit.kr`

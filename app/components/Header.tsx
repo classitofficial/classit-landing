@@ -3,7 +3,48 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+
+const SECOND_MS = 1000;
+const MINUTE_SECONDS = 60;
+const HOUR_SECONDS = 60 * MINUTE_SECONDS;
+const DAY_SECONDS = 24 * HOUR_SECONDS;
+const KAKAO_INQUIRY_URL = "https://pf.kakao.com/_XEjbX/chat";
+const MESSAGE_ICON_SRC = "/icons/message.svg";
+
+export const PROMOTION_END_AT_MS = Date.parse("2026-06-30T23:59:59+09:00");
+
+export type PromotionCountdown = {
+  readonly days: number;
+  readonly hours: number;
+  readonly minutes: number;
+  readonly seconds: number;
+  readonly label: string;
+};
+
+function padTime(value: number) {
+  return String(value).padStart(2, "0");
+}
+
+export function getPromotionCountdown(nowMs: number): PromotionCountdown | null {
+  const remainingMs = PROMOTION_END_AT_MS - nowMs;
+
+  if (remainingMs <= 0) return null;
+
+  const totalSeconds = Math.floor(remainingMs / SECOND_MS);
+  const days = Math.floor(totalSeconds / DAY_SECONDS);
+  const hours = Math.floor((totalSeconds % DAY_SECONDS) / HOUR_SECONDS);
+  const minutes = Math.floor((totalSeconds % HOUR_SECONDS) / MINUTE_SECONDS);
+  const seconds = totalSeconds % MINUTE_SECONDS;
+
+  return {
+    days,
+    hours,
+    minutes,
+    seconds,
+    label: `D-${days} ${padTime(hours)}:${padTime(minutes)}:${padTime(seconds)}`,
+  };
+}
 
 function scrollToSection(id: string, attempt = 0) {
   const section = document.getElementById(id);
@@ -17,9 +58,41 @@ function scrollToSection(id: string, attempt = 0) {
   }
 }
 
+export function MobilePromotionFloating({
+  countdown,
+  onInquiry,
+}: {
+  readonly countdown: PromotionCountdown | null;
+  readonly onInquiry: () => void;
+}) {
+  if (!countdown) return null;
+
+  return (
+    <div className="backdrop-blur-[4px] fixed bottom-0 left-0 right-0 z-[60] flex flex-col items-center gap-2 bg-[rgba(11,14,20,0.8)] px-5 py-2 pb-[calc(8px+env(safe-area-inset-bottom))] md:hidden">
+      <p
+        className="text-white text-[14px] font-medium leading-[21px] tracking-[-0.21px] whitespace-nowrap"
+        aria-label="선착순 온라인 특가 종료까지 남은 시간"
+      >
+        선착순 온라인 특가 {countdown.label}
+      </p>
+      <button
+        type="button"
+        onClick={onInquiry}
+        className="btn-gradient btn-gradient-yellow flex h-[52px] w-full items-center justify-center gap-1 rounded-[32px] border border-white px-6 py-2 hover:opacity-90 active:scale-[0.98] transition-[opacity,transform]"
+      >
+        <Image src={MESSAGE_ICON_SRC} alt="" width={16} height={16} className="size-4" />
+        <span className="text-[#3b1d1d] text-[14px] font-bold leading-[21px] whitespace-nowrap">
+          간편 문의하기
+        </span>
+      </button>
+    </div>
+  );
+}
+
 export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
+  const [promotionCountdown, setPromotionCountdown] = useState<PromotionCountdown | null>(null);
 
   useEffect(() => {
     if (pathname !== "/") return;
@@ -34,6 +107,22 @@ export default function Header() {
     return () => window.removeEventListener("hashchange", scrollToHash);
   }, [pathname]);
 
+  useEffect(() => {
+    const refreshCountdown = () => {
+      const nextCountdown = getPromotionCountdown(Date.now());
+      setPromotionCountdown(nextCountdown);
+      return nextCountdown !== null;
+    };
+
+    if (!refreshCountdown()) return;
+
+    const intervalId = window.setInterval(() => {
+      if (!refreshCountdown()) window.clearInterval(intervalId);
+    }, SECOND_MS);
+
+    return () => window.clearInterval(intervalId);
+  }, []);
+
   function moveToSection(id: string) {
     if (pathname === "/") {
       scrollToSection(id);
@@ -44,20 +133,25 @@ export default function Header() {
     router.push(`/#${id}`);
   }
 
+  function openKakaoInquiry() {
+    window.open(KAKAO_INQUIRY_URL, "_blank", "noopener,noreferrer");
+  }
+
   return (
-    <header className="fixed top-8 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-40px)] md:w-[calc(100%-80px)] max-w-[1360px] h-[64px] md:h-[80px]">
-      <div className="backdrop-blur-[10px] bg-[rgba(255,255,255,0.04)] border border-[rgba(255,255,255,0.04)] flex items-center justify-between px-6 md:pl-10 md:pr-5 rounded-[40px] h-full">
-        <div className="flex items-center gap-8">
-          <Link href="/" aria-label="홈으로 이동">
-          <Image
-            src="/images/header-logo-mobile.svg"
-            alt="Classit"
-            width={112}
-            height={24}
-            priority
-            className="block h-6 w-[112px] md:hidden"
-          />
-          <svg className="hidden md:block" width="130" height="28" viewBox="0 0 130 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <>
+      <header className="fixed top-8 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-40px)] md:w-[calc(100%-80px)] max-w-[1360px] h-[64px] md:h-[80px]">
+        <div className="backdrop-blur-[10px] bg-[rgba(255,255,255,0.04)] border border-[rgba(255,255,255,0.04)] flex items-center justify-between px-6 md:pl-10 md:pr-5 rounded-[40px] h-full">
+          <div className="flex items-center gap-8">
+            <Link href="/" aria-label="홈으로 이동">
+              <Image
+                src="/images/header-logo-mobile.svg"
+                alt="Classit"
+                width={112}
+                height={24}
+                priority
+                className="block h-6 w-[112px] md:hidden"
+              />
+              <svg className="hidden md:block" width="130" height="28" viewBox="0 0 130 28" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M0 14C0 6.26801 6.26801 0 14 0C21.732 0 28 6.26801 28 14C28 21.732 21.732 28 14 28H6C2.68629 28 0 25.3137 0 22V14Z" fill="url(#paint0_linear_2670_39576)"/>
             <path d="M11.7607 7.03122H19.0908V10.5312H11.7607C11.5048 10.5313 11.2834 10.623 11.1006 10.8027C10.9178 10.9825 10.8243 11.2008 10.8242 11.4531C10.8242 11.7051 10.9169 11.9407 11.0996 12.1299H11.1006C11.2834 12.3097 11.5048 12.4013 11.7607 12.4013H15.541C16.0821 12.4013 16.5947 12.4807 17.0801 12.6396L17.2871 12.7129C17.8333 12.9131 18.31 13.1949 18.7148 13.5586C19.1195 13.9221 19.4418 14.359 19.6787 14.8701C19.9168 15.3807 20.0361 15.9406 20.0361 16.5468C20.0361 17.1529 19.9169 17.739 19.6787 18.2754C19.4401 18.805 19.119 19.2729 18.7139 19.6806C18.3089 20.079 17.8336 20.395 17.2861 20.6299C16.7404 20.8554 16.1576 20.9687 15.541 20.9687H8.58398V17.4687H15.541C15.7971 17.4687 16.0193 17.3772 16.2021 17.1972C16.3848 17.0174 16.4774 16.799 16.4775 16.5468C16.4775 16.2954 16.3845 16.105 16.1924 16.0195C16.0104 15.9386 15.792 15.8984 15.541 15.8984H11.7607C11.1352 15.8984 10.55 15.7808 10.0029 15.5478C9.45661 15.3129 8.97931 14.9972 8.57422 14.5986C8.21972 14.2419 7.92824 13.8357 7.70215 13.3799L7.60938 13.1816C7.38025 12.645 7.26564 12.0676 7.26562 11.4521C7.26562 10.9134 7.35373 10.4051 7.5293 9.92575L7.60938 9.72263C7.84805 9.18526 8.16914 8.71589 8.57422 8.31735C8.97921 7.91891 9.45451 7.60601 10.002 7.38181H10.0029C10.5483 7.14734 11.1351 7.03126 11.7607 7.03122Z" fill="white" stroke="white" strokeWidth="0.0625"/>
             <path d="M43.7615 12.684C42.623 12.684 41.732 13.0681 41.0885 13.7851C40.445 14.5276 40.1232 15.475 40.1232 16.6528C40.1232 17.2161 40.1975 17.7538 40.3707 18.2147C40.5192 18.7012 40.7667 19.1109 41.0885 19.4437C41.3855 19.8022 41.7815 20.0839 42.227 20.2887C42.6725 20.4935 43.1675 20.596 43.7615 20.596C44.5535 20.596 45.2465 20.4167 45.89 20.0326C46.5087 19.6742 47.0285 19.1365 47.474 18.3939L50.8152 21.2873C50.3697 21.8506 49.9242 22.3627 49.4292 22.8236C48.9342 23.2589 48.3897 23.6429 47.8205 23.9758C47.2265 24.2831 46.6077 24.5391 45.9147 24.7439C45.2217 24.8976 44.4545 25 43.6377 25C42.4002 25 41.2617 24.7952 40.2222 24.4111C39.158 24.0014 38.2422 23.4637 37.475 22.7468C36.683 22.0042 36.089 21.1337 35.6682 20.1095C35.2227 19.0853 35 17.933 35 16.6528C35 15.3726 35.2227 14.2203 35.6682 13.1961C36.1137 12.1719 36.7077 11.3014 37.4997 10.5588C38.267 9.8419 39.1827 9.27859 40.247 8.86891C41.2865 8.48484 42.4002 8.28 43.6377 8.28C45.1722 8.28 46.5582 8.61286 47.7462 9.25298C48.9095 9.91871 49.949 10.8405 50.84 12.0183L47.474 14.8861C47.078 14.1947 46.5582 13.657 45.9395 13.2473C45.296 12.8889 44.5782 12.684 43.7615 12.684Z" fill="white"/>
@@ -73,39 +167,62 @@ export default function Header() {
             <stop offset="1" stopColor="#0360EF"/>
             </linearGradient>
             </defs> 
-          </svg>
-          </Link>
+              </svg>
+            </Link>
+            <button
+              onClick={() => moveToSection("pricing")}
+              className="hidden md:block cursor-pointer text-[#fefefe] text-[16px] font-medium leading-6 tracking-[-0.24px] whitespace-nowrap hover:opacity-80 transition-opacity"
+            >
+              가격안내
+            </button>
+            <Link
+              href="/blog"
+              className="hidden md:block text-[#fefefe] text-[16px] font-medium leading-6 tracking-[-0.24px] whitespace-nowrap hover:opacity-80 transition-opacity"
+            >
+              블로그
+            </Link>
+          </div>
+
+          <div className="hidden md:flex items-center gap-2">
+          {promotionCountdown && (
+            <p
+              className="hidden lg:block text-white text-[16px] font-medium leading-[21px] tracking-[-0.21px] whitespace-nowrap"
+              aria-label="선착순 온라인 특가 종료까지 남은 시간"
+            >
+              선착순 온라인 특가 {promotionCountdown.label}
+            </p>
+          )}
           <button
-            onClick={() => moveToSection("pricing")}
-            className="hidden md:block cursor-pointer text-[#fefefe] text-[16px] font-medium leading-6 tracking-[-0.24px] whitespace-nowrap hover:opacity-80 transition-opacity"
+            type="button"
+            onClick={() => moveToSection("contact")}
+            className="btn-gradient btn-gradient-blue flex items-center justify-center h-[52px] px-6 rounded-[32px] border border-white hover:opacity-90 active:scale-[0.98] transition-[opacity,transform]"
           >
-            가격안내
+            <span className="text-[#fefefe] text-[14px] font-bold leading-[21px] whitespace-nowrap">
+              전문가 상담 신청하기
+            </span>
           </button>
+          {promotionCountdown && (
+            <button
+              type="button"
+              onClick={openKakaoInquiry}
+              className="hidden lg:flex btn-gradient btn-gradient-yellow items-center justify-center h-[52px] px-6 rounded-[32px] border border-white hover:opacity-90 active:scale-[0.98] transition-[opacity,transform]"
+            >
+              <span className="text-[#3b1d1d] text-[14px] font-bold leading-[21px] whitespace-nowrap">
+                간편 문의하기
+              </span>
+            </button>
+          )}
+          </div>
           <Link
             href="/blog"
-            className="hidden md:block text-[#fefefe] text-[16px] font-medium leading-6 tracking-[-0.24px] whitespace-nowrap hover:opacity-80 transition-opacity"
+            className="md:hidden text-[#fefefe] text-[16px] font-medium leading-6 tracking-[-0.24px] whitespace-nowrap hover:opacity-80 transition-opacity"
           >
             블로그
           </Link>
+
         </div>
-
-        {/* 오른쪽: CTA */}
-        <button
-          onClick={() => moveToSection("contact")}
-          className="hidden md:flex btn-gradient btn-gradient-blue items-center gap-1 h-[52px] px-6 rounded-[32px] border border-white hover:opacity-90 transition-opacity"
-        >
-          <span className="text-[#fefefe] text-[14px] font-bold leading-[21px] whitespace-nowrap">
-            도입 상담 신청하기
-          </span>
-        </button>
-        <Link
-            href="/blog"
-            className="md:hidden text-[#fefefe] text-[16px] font-medium leading-6 tracking-[-0.24px] whitespace-nowrap hover:opacity-80 transition-opacity"
-        >
-          블로그
-        </Link>
-
-      </div>
-    </header>
+      </header>
+      <MobilePromotionFloating countdown={promotionCountdown} onInquiry={openKakaoInquiry} />
+    </>
   );
 }

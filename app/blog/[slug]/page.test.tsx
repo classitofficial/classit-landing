@@ -57,7 +57,7 @@ describe("BlogDetailPage", () => {
     expect(html).toContain('"image":["https://www.classit.co.kr/images/classit-og-1200x630.png"]');
   });
 
-  it("matches the current design feedback for detail heading and more posts area", async () => {
+  it("keeps the detail heading and more posts area compact", async () => {
     const element = await BlogDetailPage({ params: Promise.resolve({ slug: "current" }) });
     const html = renderToStaticMarkup(element);
 

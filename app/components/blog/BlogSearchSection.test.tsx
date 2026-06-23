@@ -17,7 +17,7 @@ describe("BlogSearchSection", () => {
     expect(shouldShowNoSearchResults({ hasQuery: true, postCount: 3, visiblePostCount: 0 })).toBe(true);
   });
 
-  it("keeps the empty-result message unframed per design feedback", () => {
+  it("keeps the empty-result message unframed", () => {
     expect(BLOG_NO_SEARCH_RESULTS_CLASS_NAME).not.toContain("border");
     expect(BLOG_NO_SEARCH_RESULTS_CLASS_NAME).not.toContain("bg-");
   });
