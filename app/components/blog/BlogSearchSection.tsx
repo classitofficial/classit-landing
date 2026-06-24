@@ -56,7 +56,7 @@ export default function BlogSearchSection({ posts }: { posts: BlogPost[] }) {
         <input
           value={query}
           onChange={(event) => setQuery(event.target.value)}
-          placeholder="블로그 검색어를 입력해주세요."
+          placeholder="아티클 검색어를 입력해주세요."
           className="min-w-0 flex-1 bg-transparent text-[14px] font-medium leading-[21px] tracking-[-0.21px] text-[#f8faff] outline-none placeholder:text-[#5e677a]"
         />
         <SearchIcon />

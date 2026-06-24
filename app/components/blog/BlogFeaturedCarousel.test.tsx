@@ -32,14 +32,16 @@ function post(overrides: Partial<BlogPost> = {}): BlogPost {
 }
 
 describe("BlogFeaturedCarousel", () => {
-  it("renders each carousel card as a direct blog detail link", () => {
-    const html = renderToStaticMarkup(<BlogFeaturedCarousel posts={[post()]} />);
+  it("renders each carousel card as a direct article detail link", () => {
+    const html = renderToStaticMarkup(<BlogFeaturedCarousel posts={[post(), post({ id: "post-2", slug: "post-2" })]} />);
 
     expect(html).toContain('href="/blog/featured-post"');
     expect(html).toContain("Featured Post");
-    expect(html).toContain("border-[#1B1F2A]");
+    expect(html).toContain("relative h-[350px] overflow-hidden md:h-[480px]");
     expect(html).toContain("rgba(11,14,20,0.58)_55%");
     expect(html).toContain("line-clamp-2 text-[14px]");
+    expect(html).toContain("추천 아티클 슬라이드");
+    expect(html).toContain("1번째 추천 아티클 보기");
     expect(html).not.toContain("line-clamp-3 text-[14px]");
   });
 

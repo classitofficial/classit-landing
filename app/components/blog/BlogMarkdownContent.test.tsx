@@ -87,7 +87,7 @@ Next line`);
       />,
     );
 
-    expect(html).toContain("블로그 HTML 콘텐츠");
+    expect(html).toContain("아티클 HTML 콘텐츠");
     expect(html).toContain("class=&quot;post&quot;");
     expect(html).toContain("HTML 본문");
     expect(html).toContain("잘 보여야 합니다.");

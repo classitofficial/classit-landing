@@ -158,12 +158,12 @@ export default function BlogFeaturedCarousel({ posts }: { posts: BlogPost[] }) {
         </div>
       </div>
       {posts.length > 1 && (
-        <div className="flex justify-center gap-1" aria-label="추천 블로그 슬라이드">
+        <div className="flex justify-center gap-1" aria-label="추천 아티클 슬라이드">
           {posts.map((post, index) => (
             <button
               key={post.id}
               type="button"
-              aria-label={`${index + 1}번째 추천 블로그 보기`}
+              aria-label={`${index + 1}번째 추천 아티클 보기`}
               aria-current={activeIndex === index}
               onClick={() => setActiveIndex(index)}
               className={`h-2 rounded transition-all ${

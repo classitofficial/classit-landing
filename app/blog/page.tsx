@@ -9,9 +9,9 @@ import { getPublicBlogBanners, getPublicBlogPosts, getPublicFeaturedBlogPosts } 
 
 export const metadata: Metadata = {
   title: {
-    absolute: "클래스잇 | 블로그",
+    absolute: "클래스잇 | 아티클",
   },
-  description: "효율적인 온라인 교육 운영을 위한 Classit 블로그입니다.",
+  description: "효율적인 온라인 교육 운영을 위한 Classit 아티클입니다.",
   alternates: {
     canonical: "/blog",
   },
@@ -41,7 +41,7 @@ export default async function BlogPage() {
           <h1 className="text-[28px] font-bold leading-9 tracking-[-0.42px] text-[#fefefe]">
             학원 운영 파트너
             <br />
-            클래스잇 블로그
+            클래스잇 아티클
           </h1>
         </div>
 

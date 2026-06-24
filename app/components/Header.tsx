@@ -179,7 +179,7 @@ export default function Header() {
               href="/blog"
               className="hidden md:block text-[#fefefe] text-[16px] font-medium leading-6 tracking-[-0.24px] whitespace-nowrap hover:opacity-80 transition-opacity"
             >
-              블로그
+              아티클
             </Link>
           </div>
 
@@ -217,7 +217,7 @@ export default function Header() {
             href="/blog"
             className="md:hidden text-[#fefefe] text-[16px] font-medium leading-6 tracking-[-0.24px] whitespace-nowrap hover:opacity-80 transition-opacity"
           >
-            블로그
+            아티클
           </Link>
 
         </div>

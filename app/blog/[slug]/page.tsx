@@ -20,7 +20,7 @@ const getBlogPostJsonLd = (post: BlogPost) => {
 
   return {
     "@context": "https://schema.org",
-    "@type": "BlogPosting",
+    "@type": "Article",
     "headline": post.seo_title || post.title,
     "description": post.seo_description || post.summary,
     "image": [post.thumbnail_url || fallbackImageUrl],
@@ -52,7 +52,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!post) {
     return {
-      title: "블로그",
+      title: "아티클",
     };
   }
 
@@ -118,7 +118,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
             />
             <section className="flex flex-col gap-[52px]">
               <h2 className="text-[20px] font-bold leading-7 tracking-[-0.5px] text-white">
-                더 많은 블로그
+                더 많은 아티클
               </h2>
               <div className="flex flex-col gap-8">
                 {morePosts.map((item) => (

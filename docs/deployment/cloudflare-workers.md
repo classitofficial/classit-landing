@@ -1,6 +1,6 @@
 # Cloudflare Workers 배포 가이드
 
-Classit 공개 랜딩과 공개 블로그는 Next.js App Router 앱이므로 Cloudflare Workers + OpenNext로 배포한다.
+Classit 공개 랜딩과 공개 아티클은 Next.js App Router 앱이므로 Cloudflare Workers + OpenNext로 배포한다.
 
 ## 로컬 검증
 
@@ -24,7 +24,7 @@ NEXT_PUBLIC_SUPABASE_URL
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
 ```
 
-이 저장소는 공개 조회만 담당하므로 Supabase service role key나 storage secret을 설정하지 않는다. 블로그/배너 작성과 업로드는 별도 관리자 프로젝트에서 처리한다.
+이 저장소는 공개 조회만 담당하므로 Supabase service role key나 storage secret을 설정하지 않는다. 아티클/배너 작성과 업로드는 별도 관리자 프로젝트에서 처리한다.
 
 로컬 Cloudflare preview가 필요하면 `.dev.vars.example`을 `.dev.vars`로 복사한 뒤 필요한 값을 채운다. `.dev.vars`는 커밋하지 않는다.
 
@@ -52,12 +52,12 @@ pnpm run deploy:cf
 Cloudflare Workers의 Custom Domains에서 아래 도메인을 연결한다.
 
 ```text
-classit.kr
-www.classit.kr
+classit.co.kr
+www.classit.co.kr
 ```
 
 DNS도 Cloudflare에서 관리하면 같은 계정 안에서 Worker custom domain 연결만 진행하면 된다.
 
 ## 이후 공개 데이터 캐시
 
-현재 OpenNext incremental cache는 별도 R2 캐시 없이 시작한다. 공개 블로그/배너 조회량이 늘어나면 R2 bucket을 만들고 `open-next.config.ts`에 R2 incremental cache를 활성화한다.
+현재 OpenNext incremental cache는 별도 R2 캐시 없이 시작한다. 공개 아티클/배너 조회량이 늘어나면 R2 bucket을 만들고 `open-next.config.ts`에 R2 incremental cache를 활성화한다.

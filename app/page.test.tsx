@@ -25,7 +25,7 @@ describe("Home", () => {
     expect(html).not.toContain("bubble.io");
   });
 
-  it("does not point Organization sameAs at its own blog", () => {
+  it("does not point Organization sameAs at its own article index", () => {
     const html = renderToStaticMarkup(Home());
 
     expect(html).not.toContain(`"sameAs":["${SITE_URL}/blog"]`);

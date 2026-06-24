@@ -1,6 +1,6 @@
 # Vercel 배포 가이드
 
-Classit 공개 랜딩과 공개 블로그는 Vercel의 기본 Next.js 배포로 운영한다.
+Classit 공개 랜딩과 공개 아티클은 Vercel의 기본 Next.js 배포로 운영한다.
 
 ## Build Settings
 
@@ -24,8 +24,9 @@ SLACK_CHANNEL_ID=...
 
 ## Domains
 
-- 공개 랜딩: `classit.kr`
-- 공개 블로그: `classit.kr/blog`
+- 공개 랜딩: `www.classit.co.kr`
+- 공개 아티클: `www.classit.co.kr/blog`
+- 보조 도메인: `classit.co.kr` → `www.classit.co.kr`
 - 관리자 콘솔: 별도 프로젝트에서 `admin.classit.co.kr`로 운영
 
-Vercel Domains에서 `classit.kr`를 연결하고, 안내되는 DNS 레코드를 도메인 DNS 관리 화면에 추가한다.
+Vercel Domains에서 `classit.co.kr`와 `www.classit.co.kr`를 연결하고, `classit.co.kr`는 `www.classit.co.kr`로 리다이렉트한다.

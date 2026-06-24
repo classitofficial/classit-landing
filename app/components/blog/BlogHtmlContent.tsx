@@ -248,7 +248,7 @@ export default function BlogHtmlContent({ html }: BlogHtmlContentProps) {
   return (
     <iframe
       ref={iframeRef}
-      title="블로그 HTML 콘텐츠"
+      title="아티클 HTML 콘텐츠"
       className="w-full"
       srcDoc={buildBlogHtmlDocument(html)}
       sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"
