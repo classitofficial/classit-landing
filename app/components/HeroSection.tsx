@@ -44,7 +44,7 @@ export default function HeroSection() {
           <div className="flex flex-col sm:flex-row gap-2 items-center">
             <button
               onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-              className="btn-gradient btn-gradient-blue flex items-center justify-center gap-1 h-[52px] px-6 rounded-[32px] border border-white hover:opacity-90 transition-opacity w-[172px]"
+              className="btn-gradient btn-gradient-blue flex items-center justify-center gap-1 h-[52px] px-6 rounded-[32px] border border-white hover:opacity-90 transition-opacity w-[184px]"
             >
               <img alt="" src={imgEdit} className="size-4" />
               <span className="text-[#f8faff] text-[14px] font-bold leading-[21px] whitespace-nowrap">
@@ -54,7 +54,7 @@ export default function HeroSection() {
 
             <button
               onClick={() => window.open("https://pf.kakao.com/_XEjbX/chat", "_blank", "noopener,noreferrer")}
-              className="btn-gradient btn-gradient-yellow flex items-center justify-center gap-1 h-[52px] px-6 rounded-[32px] border border-white hover:opacity-90 transition-opacity w-[172px]"
+              className="btn-gradient btn-gradient-yellow flex items-center justify-center gap-1 h-[52px] px-6 rounded-[32px] border border-white hover:opacity-90 transition-opacity w-[184px]"
             >
               <img alt="" src={imgMessageIcon} className="size-4" />
               <span className="text-[#3b1d1d] text-[14px] font-bold leading-[21px] whitespace-nowrap">
