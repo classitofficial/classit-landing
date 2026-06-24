@@ -30,6 +30,7 @@ describe("BlogCards", () => {
     const html = renderToStaticMarkup(<BlogGridCard post={post()} />);
 
     expect(html).toContain("border-[#1B1F2A]");
+    expect(html).toContain('alt="Blog Post에 관한 대표 이미지"');
   });
 
   it("adds the blog-list thumbnail border only when requested for list items", () => {

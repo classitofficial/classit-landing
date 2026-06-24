@@ -33,9 +33,10 @@ function post(overrides: Partial<BlogPost> = {}): BlogPost {
 
 describe("BlogFeaturedCarousel", () => {
   it("renders each carousel card as a direct article detail link", () => {
-    const html = renderToStaticMarkup(<BlogFeaturedCarousel posts={[post(), post({ id: "post-2", slug: "post-2" })]} />);
+    const html = renderToStaticMarkup(<BlogFeaturedCarousel posts={[post({ thumbnail_url: "https://example.com/featured.png" }), post({ id: "post-2", slug: "post-2" })]} />);
 
     expect(html).toContain('href="/blog/featured-post"');
+    expect(html).toContain('alt="Featured Post에 관한 대표 이미지"');
     expect(html).toContain("Featured Post");
     expect(html).toContain("relative h-[350px] overflow-hidden md:h-[480px]");
     expect(html).toContain("rgba(11,14,20,0.58)_55%");

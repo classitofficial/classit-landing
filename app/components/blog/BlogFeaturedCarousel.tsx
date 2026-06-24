@@ -135,7 +135,7 @@ export default function BlogFeaturedCarousel({ posts }: { posts: BlogPost[] }) {
                 <Link href={`/blog/${post.slug}`} draggable={false} onClick={handleLinkClick} className="group block outline-none">
                   <article className="relative h-[350px] overflow-hidden md:h-[480px]">
                     {imageUrl ? (
-                      <img src={imageUrl} alt="" draggable={false} className="absolute inset-0 size-full object-cover" />
+                      <img src={imageUrl} alt={`${title}에 관한 대표 이미지`} draggable={false} className="absolute inset-0 size-full object-cover" />
                     ) : (
                       <div className="absolute inset-0 size-full bg-[linear-gradient(135deg,#111827_0%,#0b0e14_48%,#123d91_100%)]">
                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(61,130,245,0.45),transparent_38%)]" />

@@ -56,6 +56,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
+  const postImageAlt = `${post.title}에 관한 대표 이미지`;
+
   return {
     title: post.seo_title || post.title,
     description: post.seo_description || post.summary,
@@ -69,7 +71,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       type: "article",
       siteName: "Classit",
       locale: "ko_KR",
-      images: getOpenGraphImages(post.thumbnail_url),
+      images: getOpenGraphImages(post.thumbnail_url, postImageAlt),
     },
   };
 }

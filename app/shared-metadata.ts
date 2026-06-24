@@ -12,8 +12,14 @@ export const DEFAULT_OG_IMAGE = {
 
 export const DEFAULT_TWITTER_IMAGE = "/images/classit-og-1200x630.png";
 
-export function getOpenGraphImages(imageUrl?: string | null) {
+export function getOpenGraphImages(imageUrl?: string | null, imageAlt?: string) {
   if (!imageUrl) return [DEFAULT_OG_IMAGE];
 
-  return [imageUrl, DEFAULT_OG_IMAGE];
+  return [
+    {
+      url: imageUrl,
+      alt: imageAlt || DEFAULT_OG_IMAGE.alt,
+    },
+    DEFAULT_OG_IMAGE,
+  ];
 }

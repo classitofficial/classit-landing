@@ -7,8 +7,11 @@ describe("shared metadata", () => {
   });
 
   it("uses a page thumbnail before the default OG image", () => {
-    expect(getOpenGraphImages("https://cdn.classit.kr/blog/post.png")).toEqual([
-      "https://cdn.classit.kr/blog/post.png",
+    expect(getOpenGraphImages("https://cdn.classit.kr/blog/post.png", "아티클 대표 이미지")).toEqual([
+      {
+        url: "https://cdn.classit.kr/blog/post.png",
+        alt: "아티클 대표 이미지",
+      },
       DEFAULT_OG_IMAGE,
     ]);
   });

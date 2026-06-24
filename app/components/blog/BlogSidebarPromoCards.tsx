@@ -2,7 +2,8 @@ import { getPublicBlogBanners } from "@/lib/blog/supabase";
 import type { BlogBanner } from "@/lib/blog/types";
 
 function ManagedBannerCard({ banner }: { banner: BlogBanner }) {
-  const image = <img src={banner.image_url} alt="" className="w-[330px] rounded-2xl border border-white/10 object-contain" />;
+  const imageAlt = `${banner.title} 프로모션 배너`;
+  const image = <img src={banner.image_url} alt={imageAlt} className="w-[330px] rounded-2xl border border-white/10 object-contain" />;
 
   if (!banner.link_url) {
     return image;

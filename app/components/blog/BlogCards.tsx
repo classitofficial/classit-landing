@@ -5,6 +5,10 @@ import type { BlogPost } from "@/lib/blog/types";
 
 const BLOG_LIST_THUMBNAIL_BORDER = "border border-[#1B1F2A]";
 
+function getArticleThumbnailAlt(post: Pick<BlogPost, "title">) {
+  return `${post.title}에 관한 대표 이미지`;
+}
+
 export function formatDate(value: string | null) {
   if (!value) return "미발행";
   const date = new Date(value);
@@ -16,7 +20,7 @@ export function formatDate(value: string | null) {
 
 function Thumbnail({ post, className }: { post: BlogPost; className: string }) {
   if (post.thumbnail_url) {
-    return <img src={post.thumbnail_url} alt="" draggable={false} className={`${className} object-cover`} />;
+    return <img src={post.thumbnail_url} alt={getArticleThumbnailAlt(post)} draggable={false} className={`${className} object-cover`} />;
   }
 
   return (

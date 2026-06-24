@@ -4,16 +4,35 @@ import BlogFeaturedCarousel from "@/app/components/blog/BlogFeaturedCarousel";
 import BlogSearchSection from "@/app/components/blog/BlogSearchSection";
 import BlogSidebarPromoCards from "@/app/components/blog/BlogSidebarPromoCards";
 import { BlogShell } from "@/app/components/blog/BlogChrome";
+import { DEFAULT_OG_IMAGE, DEFAULT_TWITTER_IMAGE } from "@/app/shared-metadata";
 import { getBlogIndexPosts } from "@/lib/blog/selection";
 import { getPublicBlogBanners, getPublicBlogPosts, getPublicFeaturedBlogPosts } from "@/lib/blog/supabase";
 
+const ARTICLE_META_TITLE = "클래스잇 | 아티클";
+const ARTICLE_META_DESCRIPTION = "효율적인 온라인 교육 운영을 위한 Classit 아티클입니다.";
+
 export const metadata: Metadata = {
   title: {
-    absolute: "클래스잇 | 아티클",
+    absolute: ARTICLE_META_TITLE,
   },
-  description: "효율적인 온라인 교육 운영을 위한 Classit 아티클입니다.",
+  description: ARTICLE_META_DESCRIPTION,
   alternates: {
     canonical: "/blog",
+  },
+  openGraph: {
+    title: ARTICLE_META_TITLE,
+    description: ARTICLE_META_DESCRIPTION,
+    url: "/blog",
+    type: "website",
+    siteName: "Classit",
+    locale: "ko_KR",
+    images: [DEFAULT_OG_IMAGE],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: ARTICLE_META_TITLE,
+    description: ARTICLE_META_DESCRIPTION,
+    images: [DEFAULT_TWITTER_IMAGE],
   },
 };
 
